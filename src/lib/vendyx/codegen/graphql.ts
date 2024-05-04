@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -362,6 +363,155 @@ export type VariantList = List & {
   items: Array<Variant>;
 };
 
+export type CommonOrderFragment = {
+  __typename?: 'Order';
+  id: string;
+  code: string;
+  subtotal: number;
+  total: number;
+  totalQuantity: number;
+  lines: {
+    __typename?: 'OrderLineList';
+    items: Array<{
+      __typename?: 'OrderLine';
+      id: string;
+      linePrice: number;
+      quantity: number;
+      unitPrice: number;
+      productVariant: {
+        __typename?: 'Variant';
+        id: string;
+        product: {
+          __typename?: 'Product';
+          name: string;
+          slug: string;
+          assets: {
+            __typename?: 'AssetList';
+            items: Array<{ __typename?: 'Asset'; id: string; source: string }>;
+          };
+        };
+      };
+    }>;
+  };
+} & { ' $fragmentName'?: 'CommonOrderFragment' };
+
+export type CommonProductFragment = {
+  __typename?: 'Product';
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  onlineOnly: boolean;
+} & { ' $fragmentName'?: 'CommonProductFragment' };
+
+export type CommonVariantFragment = {
+  __typename?: 'Variant';
+  id: string;
+  stock: number;
+  price: number;
+} & { ' $fragmentName'?: 'CommonVariantFragment' };
+
+export type CommonAssetFragment = {
+  __typename?: 'Asset';
+  id: string;
+  name: string;
+  source: string;
+} & { ' $fragmentName'?: 'CommonAssetFragment' };
+
+export type CreateOrderMutationMutationVariables = Exact<{
+  input?: InputMaybe<CreateOrderInput>;
+}>;
+
+export type CreateOrderMutationMutation = {
+  __typename?: 'Mutation';
+  createOrder?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
+export type AddLineToOrderMutationMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  input: CreateOrderLineInput;
+}>;
+
+export type AddLineToOrderMutationMutation = {
+  __typename?: 'Mutation';
+  addLineToOrder: { __typename?: 'Order' } & {
+    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  };
+};
+
+export type UpdateOrderLineMutationMutationVariables = Exact<{
+  lineId: Scalars['ID']['input'];
+  input: UpdateOrderLineInput;
+}>;
+
+export type UpdateOrderLineMutationMutation = {
+  __typename?: 'Mutation';
+  updateOrderLine: { __typename?: 'Order' } & {
+    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  };
+};
+
+export type RemoveOrderLineMutationMutationVariables = Exact<{
+  lineId: Scalars['ID']['input'];
+}>;
+
+export type RemoveOrderLineMutationMutation = {
+  __typename?: 'Mutation';
+  removeOrderLine: { __typename?: 'Order' } & {
+    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  };
+};
+
+export type GetOrderQueryQueryVariables = Exact<{
+  orderId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type GetOrderQueryQuery = {
+  __typename?: 'Query';
+  order?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
+export type GetProductsQueryVariables = Exact<{
+  input?: InputMaybe<ListInput>;
+}>;
+
+export type GetProductsQuery = {
+  __typename?: 'Query';
+  products: {
+    __typename?: 'ProductList';
+    count: number;
+    items: Array<
+      {
+        __typename?: 'Product';
+        variants: {
+          __typename?: 'VariantList';
+          items: Array<
+            { __typename?: 'Variant' } & {
+              ' $fragmentRefs'?: { CommonVariantFragment: CommonVariantFragment };
+            }
+          >;
+        };
+        assets: {
+          __typename?: 'AssetList';
+          items: Array<
+            { __typename?: 'Asset' } & {
+              ' $fragmentRefs'?: { CommonAssetFragment: CommonAssetFragment };
+            }
+          >;
+        };
+      } & { ' $fragmentRefs'?: { CommonProductFragment: CommonProductFragment } }
+    >;
+  };
+};
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -379,3 +529,286 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
+export const CommonOrderFragmentDoc = new TypedDocumentString(
+  `
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `,
+  { fragmentName: 'CommonOrder' }
+) as unknown as TypedDocumentString<CommonOrderFragment, unknown>;
+export const CommonProductFragmentDoc = new TypedDocumentString(
+  `
+    fragment CommonProduct on Product {
+  id
+  name
+  slug
+  description
+  onlineOnly
+}
+    `,
+  { fragmentName: 'CommonProduct' }
+) as unknown as TypedDocumentString<CommonProductFragment, unknown>;
+export const CommonVariantFragmentDoc = new TypedDocumentString(
+  `
+    fragment CommonVariant on Variant {
+  id
+  stock
+  price
+}
+    `,
+  { fragmentName: 'CommonVariant' }
+) as unknown as TypedDocumentString<CommonVariantFragment, unknown>;
+export const CommonAssetFragmentDoc = new TypedDocumentString(
+  `
+    fragment CommonAsset on Asset {
+  id
+  name
+  source
+}
+    `,
+  { fragmentName: 'CommonAsset' }
+) as unknown as TypedDocumentString<CommonAssetFragment, unknown>;
+export const CreateOrderMutationDocument = new TypedDocumentString(`
+    mutation CreateOrderMutation($input: CreateOrderInput) {
+  createOrder(input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  CreateOrderMutationMutation,
+  CreateOrderMutationMutationVariables
+>;
+export const AddLineToOrderMutationDocument = new TypedDocumentString(`
+    mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {
+  addLineToOrder(orderId: $orderId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  AddLineToOrderMutationMutation,
+  AddLineToOrderMutationMutationVariables
+>;
+export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
+    mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {
+  updateOrderLine(lineId: $lineId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  UpdateOrderLineMutationMutation,
+  UpdateOrderLineMutationMutationVariables
+>;
+export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
+    mutation RemoveOrderLineMutation($lineId: ID!) {
+  removeOrderLine(lineId: $lineId) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  RemoveOrderLineMutationMutation,
+  RemoveOrderLineMutationMutationVariables
+>;
+export const GetOrderQueryDocument = new TypedDocumentString(`
+    query GetOrderQuery($orderId: ID) {
+  order(id: $orderId) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<GetOrderQueryQuery, GetOrderQueryQueryVariables>;
+export const GetProductsDocument = new TypedDocumentString(`
+    query GetProducts($input: ListInput) {
+  products(input: $input) {
+    count
+    items {
+      ...CommonProduct
+      variants(input: {take: 0}) {
+        items {
+          ...CommonVariant
+        }
+      }
+      assets {
+        items {
+          ...CommonAsset
+        }
+      }
+    }
+  }
+}
+    fragment CommonProduct on Product {
+  id
+  name
+  slug
+  description
+  onlineOnly
+}
+fragment CommonVariant on Variant {
+  id
+  stock
+  price
+}
+fragment CommonAsset on Asset {
+  id
+  name
+  source
+}`) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;
