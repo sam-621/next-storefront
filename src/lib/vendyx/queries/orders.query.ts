@@ -2,7 +2,7 @@ import { getFragmentData, graphql } from '../codegen';
 import { vendyxFetcher } from '../fetcher.vendyx';
 import { CommonOrder } from '../fragments';
 
-export const GetOrderQuery = graphql(`
+const GetOrderQuery = graphql(`
   query GetOrderQuery($orderId: ID) {
     order(id: $orderId) {
       ...CommonOrder

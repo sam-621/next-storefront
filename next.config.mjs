@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'via.placeholder.com'
+        hostname: 'res.cloudinary.com'
       }
     ]
   }

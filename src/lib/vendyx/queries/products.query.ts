@@ -1,30 +1,22 @@
-import { graphql } from '../codegen';
+import { getFragmentData, graphql } from '../codegen';
 import { type ListInput } from '../codegen/graphql';
 import { vendyxFetcher } from '../fetcher.vendyx';
+import { CommonProduct } from '../fragments';
 
-export const GetProductQuery = graphql(`
+const GetProductQuery = graphql(`
   query GetProducts($input: ListInput) {
     products(input: $input) {
       count
       items {
         ...CommonProduct
-        variants(input: { take: 0 }) {
-          items {
-            ...CommonVariant
-          }
-        }
-        assets {
-          items {
-            ...CommonAsset
-          }
-        }
       }
     }
   }
 `);
 
-export const getProducts = async (input: ListInput) => {
+export const getProducts = async (input?: ListInput) => {
   const { products } = await vendyxFetcher(GetProductQuery, { input });
+  const data = getFragmentData(CommonProduct, products.items);
 
-  return products;
+  return data;
 };

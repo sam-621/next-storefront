@@ -14,12 +14,8 @@ import * as types from './graphql';
 const documents = {
   '\n  fragment CommonOrder on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          product {\n            name\n            slug\n            assets {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n':
     types.CommonOrderFragmentDoc,
-  '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n  }\n':
+  '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n    variants(input: { take: 1 }) {\n      items {\n        id\n        stock\n        price\n      }\n    }\n    assets {\n      items {\n        id\n        name\n        source\n      }\n    }\n  }\n':
     types.CommonProductFragmentDoc,
-  '\n  fragment CommonVariant on Variant {\n    id\n    stock\n    price\n  }\n':
-    types.CommonVariantFragmentDoc,
-  '\n  fragment CommonAsset on Asset {\n    id\n    name\n    source\n  }\n':
-    types.CommonAssetFragmentDoc,
   '\n  mutation CreateOrderMutation($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      ...CommonOrder\n    }\n  }\n':
     types.CreateOrderMutationDocument,
   '\n  mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
@@ -30,7 +26,7 @@ const documents = {
     types.RemoveOrderLineMutationDocument,
   '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n':
     types.GetOrderQueryDocument,
-  '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n        variants(input: { take: 0 }) {\n          items {\n            ...CommonVariant\n          }\n        }\n        assets {\n          items {\n            ...CommonAsset\n          }\n        }\n      }\n    }\n  }\n':
+  '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n      }\n    }\n  }\n':
     types.GetProductsDocument
 };
 
@@ -44,20 +40,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n  }\n'
+  source: '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n    variants(input: { take: 1 }) {\n      items {\n        id\n        stock\n        price\n      }\n    }\n    assets {\n      items {\n        id\n        name\n        source\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CommonProductFragmentDoc;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n  fragment CommonVariant on Variant {\n    id\n    stock\n    price\n  }\n'
-): typeof import('./graphql').CommonVariantFragmentDoc;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: '\n  fragment CommonAsset on Asset {\n    id\n    name\n    source\n  }\n'
-): typeof import('./graphql').CommonAssetFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -92,7 +76,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n        variants(input: { take: 0 }) {\n          items {\n            ...CommonVariant\n          }\n        }\n        assets {\n          items {\n            ...CommonAsset\n          }\n        }\n      }\n    }\n  }\n'
+  source: '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n      }\n    }\n  }\n'
 ): typeof import('./graphql').GetProductsDocument;
 
 export function graphql(source: string) {

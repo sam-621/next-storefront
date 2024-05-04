@@ -7,21 +7,19 @@ export const CommonProduct = graphql(`
     slug
     description
     onlineOnly
-  }
-`);
-
-export const CommonVariant = graphql(`
-  fragment CommonVariant on Variant {
-    id
-    stock
-    price
-  }
-`);
-
-export const CommonAsset = graphql(`
-  fragment CommonAsset on Asset {
-    id
-    name
-    source
+    variants(input: { take: 1 }) {
+      items {
+        id
+        stock
+        price
+      }
+    }
+    assets {
+      items {
+        id
+        name
+        source
+      }
+    }
   }
 `);

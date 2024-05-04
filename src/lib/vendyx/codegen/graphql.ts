@@ -402,21 +402,15 @@ export type CommonProductFragment = {
   slug: string;
   description?: string | null;
   onlineOnly: boolean;
+  variants: {
+    __typename?: 'VariantList';
+    items: Array<{ __typename?: 'Variant'; id: string; stock: number; price: number }>;
+  };
+  assets: {
+    __typename?: 'AssetList';
+    items: Array<{ __typename?: 'Asset'; id: string; name: string; source: string }>;
+  };
 } & { ' $fragmentName'?: 'CommonProductFragment' };
-
-export type CommonVariantFragment = {
-  __typename?: 'Variant';
-  id: string;
-  stock: number;
-  price: number;
-} & { ' $fragmentName'?: 'CommonVariantFragment' };
-
-export type CommonAssetFragment = {
-  __typename?: 'Asset';
-  id: string;
-  name: string;
-  source: string;
-} & { ' $fragmentName'?: 'CommonAssetFragment' };
 
 export type CreateOrderMutationMutationVariables = Exact<{
   input?: InputMaybe<CreateOrderInput>;
@@ -489,25 +483,9 @@ export type GetProductsQuery = {
     __typename?: 'ProductList';
     count: number;
     items: Array<
-      {
-        __typename?: 'Product';
-        variants: {
-          __typename?: 'VariantList';
-          items: Array<
-            { __typename?: 'Variant' } & {
-              ' $fragmentRefs'?: { CommonVariantFragment: CommonVariantFragment };
-            }
-          >;
-        };
-        assets: {
-          __typename?: 'AssetList';
-          items: Array<
-            { __typename?: 'Asset' } & {
-              ' $fragmentRefs'?: { CommonAssetFragment: CommonAssetFragment };
-            }
-          >;
-        };
-      } & { ' $fragmentRefs'?: { CommonProductFragment: CommonProductFragment } }
+      { __typename?: 'Product' } & {
+        ' $fragmentRefs'?: { CommonProductFragment: CommonProductFragment };
+      }
     >;
   };
 };
@@ -570,30 +548,24 @@ export const CommonProductFragmentDoc = new TypedDocumentString(
   slug
   description
   onlineOnly
+  variants(input: {take: 1}) {
+    items {
+      id
+      stock
+      price
+    }
+  }
+  assets {
+    items {
+      id
+      name
+      source
+    }
+  }
 }
     `,
   { fragmentName: 'CommonProduct' }
 ) as unknown as TypedDocumentString<CommonProductFragment, unknown>;
-export const CommonVariantFragmentDoc = new TypedDocumentString(
-  `
-    fragment CommonVariant on Variant {
-  id
-  stock
-  price
-}
-    `,
-  { fragmentName: 'CommonVariant' }
-) as unknown as TypedDocumentString<CommonVariantFragment, unknown>;
-export const CommonAssetFragmentDoc = new TypedDocumentString(
-  `
-    fragment CommonAsset on Asset {
-  id
-  name
-  source
-}
-    `,
-  { fragmentName: 'CommonAsset' }
-) as unknown as TypedDocumentString<CommonAssetFragment, unknown>;
 export const CreateOrderMutationDocument = new TypedDocumentString(`
     mutation CreateOrderMutation($input: CreateOrderInput) {
   createOrder(input: $input) {
@@ -782,16 +754,6 @@ export const GetProductsDocument = new TypedDocumentString(`
     count
     items {
       ...CommonProduct
-      variants(input: {take: 0}) {
-        items {
-          ...CommonVariant
-        }
-      }
-      assets {
-        items {
-          ...CommonAsset
-        }
-      }
     }
   }
 }
@@ -801,14 +763,18 @@ export const GetProductsDocument = new TypedDocumentString(`
   slug
   description
   onlineOnly
-}
-fragment CommonVariant on Variant {
-  id
-  stock
-  price
-}
-fragment CommonAsset on Asset {
-  id
-  name
-  source
+  variants(input: {take: 1}) {
+    items {
+      id
+      stock
+      price
+    }
+  }
+  assets {
+    items {
+      id
+      name
+      source
+    }
+  }
 }`) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;

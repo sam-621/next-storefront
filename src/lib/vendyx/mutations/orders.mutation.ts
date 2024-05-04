@@ -7,7 +7,7 @@ import {
 import { vendyxFetcher } from '../fetcher.vendyx';
 import { CommonOrder } from '../fragments';
 
-export const CreateOrderMutation = graphql(`
+const CreateOrderMutation = graphql(`
   mutation CreateOrderMutation($input: CreateOrderInput) {
     createOrder(input: $input) {
       ...CommonOrder
@@ -25,7 +25,7 @@ export const createOrder = async ({ line }: CreateOrderInput) => {
   return order;
 };
 
-export const AddLineToOrderMutation = graphql(`
+const AddLineToOrderMutation = graphql(`
   mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {
     addLineToOrder(orderId: $orderId, input: $input) {
       ...CommonOrder
@@ -44,7 +44,7 @@ export const addLineToOrder = async (orderId: string, input: CreateOrderLineInpu
   return order;
 };
 
-export const UpdateOrderLineMutation = graphql(`
+const UpdateOrderLineMutation = graphql(`
   mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {
     updateOrderLine(lineId: $lineId, input: $input) {
       ...CommonOrder
@@ -63,7 +63,7 @@ export const updateOrderLine = async (lineId: string, input: UpdateOrderLineInpu
   return order;
 };
 
-export const RemoveOrderLineMutation = graphql(`
+const RemoveOrderLineMutation = graphql(`
   mutation RemoveOrderLineMutation($lineId: ID!) {
     removeOrderLine(lineId: $lineId) {
       ...CommonOrder
