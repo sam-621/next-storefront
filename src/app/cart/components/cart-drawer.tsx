@@ -23,19 +23,23 @@ export const CartDrawer: FC<Props> = ({ cart }) => {
         handleClose={() => setIsOpen(false)}
         footer={<CartFooter cart={cart} />}
       >
-        <div className="divide-y divide-gray-200 h-full flex flex-col gap-6">
-          {lines?.length ? (
-            <>
-              {lines.map(line => (
-                <CartItem key={line.id} line={line} />
-              ))}
-            </>
-          ) : (
-            <div className="grid items-center h-full">
-              <p className="text-center text-gray-500">Tu carrito está vacío</p>
+        {lines?.length ? (
+          <div className="mt-8">
+            <div className="flow-root">
+              <ul role="list" className="-my-6 divide-y divide-gray-200">
+                <div className="divide-y divide-gray-200 h-full flex flex-col gap-6">
+                  {lines.map(line => (
+                    <CartItem key={line.id} line={line} />
+                  ))}
+                </div>
+              </ul>
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="grid items-center mt-8">
+            <p className="text-center text-gray-500">Tu carrito está vacío</p>
+          </div>
+        )}
       </Drawer>
     </div>
   );

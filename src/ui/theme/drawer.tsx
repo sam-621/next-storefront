@@ -42,13 +42,7 @@ export const Drawer: FC<Props> = ({ isOpen, title, handleClose, footer, children
                     </div>
                   </div>
 
-                  <div className="mt-8">
-                    <div className="flow-root">
-                      <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {children}
-                      </ul>
-                    </div>
-                  </div>
+                  {children}
                 </div>
 
                 {footer}
