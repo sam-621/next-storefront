@@ -4,7 +4,7 @@ import { Logo } from '../items';
 
 export const Header = () => {
   return (
-    <header className="flex justify-between items-center h-16 border-b border-gray-200">
+    <header className="flex justify-between items-center h-16 border-b border-gray-200 mb-8">
       <div>
         <Logo />
       </div>
