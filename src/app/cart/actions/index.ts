@@ -1,3 +1,3 @@
-export * from './add-item.action';
-export * from './remove-item.action';
-export * from './update-item.action';
+export * from './add-to-cart.action';
+export * from './remove-from-cart.action';
+export * from './update-cart.action';

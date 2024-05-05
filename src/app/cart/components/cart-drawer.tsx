@@ -1,39 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { type FC, useState } from 'react';
 
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
-
+import { type CommonOrderFragment } from '@/lib/vendyx';
 import { Drawer } from '@/ui/theme';
 
+import { CartButton } from './cart-button';
 import { CartFooter } from './cart-footer';
 import { CartItem } from './cart-item';
 
-export const CartDrawer = () => {
+export const CartDrawer: FC<Props> = ({ cart }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const lines = cart?.lines.items;
+
   return (
     <div>
-      <button onClick={() => setIsOpen(true)} className="flex gap-2 items-center group">
-        <ShoppingBagIcon className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 cursor-pointer" />
-        <span className="text-gray-700 group-hover:text-gray-800">0</span>
-      </button>
+      <CartButton onClick={() => setIsOpen(true)} quantity={cart?.totalQuantity} />
       <Drawer
         title="Carrito de compras"
         isOpen={isOpen}
         handleClose={() => setIsOpen(false)}
-        footer={<CartFooter />}
+        footer={<CartFooter cart={cart} />}
       >
         <div className="divide-y divide-gray-200 h-full flex flex-col gap-6">
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {lines?.length ? (
+            <>
+              {lines.map(line => (
+                <CartItem key={line.id} line={line} />
+              ))}
+            </>
+          ) : (
+            <div className="grid items-center h-full">
+              <p className="text-center text-gray-500">Tu carrito está vacío</p>
+            </div>
+          )}
         </div>
       </Drawer>
     </div>
   );
 };
+
+interface Props {
+  cart: CommonOrderFragment | null | undefined;
+}

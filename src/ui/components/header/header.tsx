@@ -1,4 +1,4 @@
-import { CartDrawer } from '@/app/cart/components';
+import { Cart } from '@/app/cart/components';
 
 import { Logo } from '../items';
 
@@ -12,7 +12,7 @@ export const Header = () => {
         <ShoppingBagIcon className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500 cursor-pointer" />
         <span className="text-gray-700 group-hover:text-gray-800">0</span>
       </div> */}
-      <CartDrawer />
+      <Cart />
     </header>
   );
 };

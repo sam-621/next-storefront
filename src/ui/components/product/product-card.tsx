@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import Image from 'next/image';
 
+import { AddToCart } from '@/app/cart/components';
 import { getFormattedPrice } from '@/lib/utils';
 import { type CommonProductFragment } from '@/lib/vendyx';
 
@@ -31,9 +32,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
         </p>
       </div>
       <div>
-        <button className="opacity-0 bg-gray-100 px-8 py-2 w-full rounded text-gray-900 text-sm font-medium group-hover:opacity-100 hover:bg-gray-200">
-          Agregar al carrito
-        </button>
+        <AddToCart variantId={defaultVariant.id} quantity={1} />
       </div>
     </article>
   );
