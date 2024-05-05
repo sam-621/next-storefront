@@ -18,11 +18,11 @@ export const Drawer: FC<Props> = ({ isOpen, title, handleClose, footer, children
         <div className="absolute inset-0 overflow-hidden">
           <div
             className={cn(
-              'pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 transition-transform',
+              'pointer-events-none fixed inset-y-0 right-0 flex w-full md:w-fit md:pl-10 transition-transform',
               !isOpen && 'translate-x-full'
             )}
           >
-            <div className="pointer-events-auto w-screen max-w-md">
+            <div className="pointer-events-auto w-full md:w-screen md:max-w-md">
               <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                   <div className="flex items-start justify-between">

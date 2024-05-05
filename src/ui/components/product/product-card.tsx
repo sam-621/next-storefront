@@ -32,7 +32,11 @@ export const ProductCard: FC<Props> = ({ product }) => {
         </p>
       </div>
       <div>
-        <AddToCart variantId={defaultVariant.id} quantity={1} />
+        <AddToCart
+          variantId={defaultVariant.id}
+          quantity={1}
+          className="lg:opacity-0 lg:group-hover:opacity-100"
+        />
       </div>
     </article>
   );

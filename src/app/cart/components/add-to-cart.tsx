@@ -5,9 +5,11 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
+import { cn } from '@/ui/utils';
+
 import { addToCart } from '../actions';
 
-const SubmitButton: FC<SubmitButtonProps> = ({ text }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ text, className }) => {
   const { pending } = useFormStatus();
 
   return (
@@ -17,7 +19,10 @@ const SubmitButton: FC<SubmitButtonProps> = ({ text }) => {
         e.stopPropagation();
       }}
       disabled={pending}
-      className="flex gap-2 justify-center items-center opacity-0 bg-gray-100 px-8 py-2 w-full rounded text-gray-900 text-sm font-medium group-hover:opacity-100 hover:bg-gray-200"
+      className={cn(
+        'flex gap-2 justify-center items-center bg-gray-100 px-8 py-2 w-full rounded text-gray-900 text-sm font-medium hover:bg-gray-200',
+        className
+      )}
     >
       {pending && <ArrowPathIcon className="animate-spin" width={16} height={16} />}
       {pending ? 'Agregando...' : text}
@@ -25,7 +30,12 @@ const SubmitButton: FC<SubmitButtonProps> = ({ text }) => {
   );
 };
 
-export const AddToCart: FC<Props> = ({ variantId, quantity = 1, text = 'Agregar al carrito' }) => {
+export const AddToCart: FC<Props> = ({
+  variantId,
+  quantity = 1,
+  text = 'Agregar al carrito',
+  className
+}) => {
   const [, action] = useFormState(addToCart, null);
 
   const actionWithVariant = action.bind(null, { quantity, productVariantId: variantId });
@@ -34,7 +44,7 @@ export const AddToCart: FC<Props> = ({ variantId, quantity = 1, text = 'Agregar 
 
   return (
     <form action={actionWithVariant}>
-      <SubmitButton text={text} />
+      <SubmitButton text={text} className={className} />
     </form>
   );
 };
@@ -46,8 +56,10 @@ interface Props {
    */
   quantity?: number;
   text?: string;
+  className?: string;
 }
 
 interface SubmitButtonProps {
   text: string;
+  className?: string;
 }
