@@ -5,7 +5,7 @@ import { cn } from '../utils';
 export const Input: FC<Props> = ({ label, className, ...rest }) => {
   return (
     <div className="w-full">
-      <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+      <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-700">
         {label}
       </label>
       <div className="relative mt-2 rounded-md shadow-sm">
