@@ -35,8 +35,6 @@ export type Address = Node & {
   references?: Maybe<Scalars['String']['output']>;
   streetLine1: Scalars['String']['output'];
   streetLine2?: Maybe<Scalars['String']['output']>;
-  /** Colony or neighborhood */
-  suburb: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
 };
 
@@ -460,6 +458,20 @@ export type RemoveOrderLineMutationMutation = {
   };
 };
 
+export type AddCustomerToOrderMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  input: CreateCustomerInput;
+}>;
+
+export type AddCustomerToOrderMutation = {
+  __typename?: 'Mutation';
+  addCustomerToOrder?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
 export type GetOrderQueryQueryVariables = Exact<{
   orderId?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -713,6 +725,43 @@ export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<
   RemoveOrderLineMutationMutation,
   RemoveOrderLineMutationMutationVariables
+>;
+export const AddCustomerToOrderDocument = new TypedDocumentString(`
+    mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {
+  addCustomerToOrder(orderId: $orderId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  AddCustomerToOrderMutation,
+  AddCustomerToOrderMutationVariables
 >;
 export const GetOrderQueryDocument = new TypedDocumentString(`
     query GetOrderQuery($orderId: ID) {
