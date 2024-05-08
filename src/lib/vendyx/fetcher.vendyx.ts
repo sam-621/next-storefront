@@ -19,7 +19,6 @@ export const vendyxFetcher = async <R, V>(
   });
 
   const { data, errors } = await result.json();
-
   if (errors?.length) {
     // throw new ApiError(ApiErrorMessages.UnexpectedError, errors);
     console.log('Error', errors);

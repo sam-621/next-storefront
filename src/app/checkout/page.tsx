@@ -1,5 +1,5 @@
-import { AddressInfoForm } from './components/address-info-form';
-import { ContactInfoForm } from './components/contact-info-form';
+import { AddressInfoForm } from './components/checkout-forms/address-info-form';
+import { ContactInfoForm } from './components/checkout-forms/contact-info-form';
 import { OrderSummary } from './components/order-summary/order-summary';
 
 export default async function Checkout() {
