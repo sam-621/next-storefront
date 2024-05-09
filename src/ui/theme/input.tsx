@@ -2,7 +2,7 @@ import { type FC, type InputHTMLAttributes } from 'react';
 
 import { cn } from '../utils';
 
-export const Input: FC<Props> = ({ label, className, ...rest }) => {
+export const Input: FC<Props> = ({ label, error, className, ...rest }) => {
   return (
     <div className="w-full">
       <label htmlFor={label} className="block text-sm font-medium leading-6 text-gray-700">
@@ -18,10 +18,12 @@ export const Input: FC<Props> = ({ label, className, ...rest }) => {
           {...rest}
         />
       </div>
+      {error && <span className={cn('text-red-500 text-xs')}>{error}</span>}
     </div>
   );
 };
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
+  error?: string;
 };

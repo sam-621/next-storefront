@@ -28,5 +28,25 @@ export const CommonOrder = graphql(`
         }
       }
     }
+    customer {
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
+      phoneCountryCode
+    }
+    shippingAddress {
+      id
+      streetLine1
+      streetLine2
+      postalCode
+      city
+      province
+      country
+      phoneCountryCode
+      phoneNumber
+      references
+    }
   }
 `);

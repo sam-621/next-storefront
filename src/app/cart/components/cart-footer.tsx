@@ -23,7 +23,7 @@ export const CartFooter: FC<Props> = ({ cart }) => {
           </Link>
         ) : (
           <button
-            className="flex justify-center items-center px-6 py-3 w-full bg-slate-300 disabled:text-slate-500 disabled:border-slate-200 font-medium rounded-md cursor-not-allowed"
+            className="flex justify-center items-center px-6 py-3 w-full text-white cursor-not-allowed bg-indigo-600 opacity-50 hover:bg-indigo-600 font-medium rounded-md"
             disabled
           >
             Checkout

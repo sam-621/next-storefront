@@ -390,6 +390,28 @@ export type CommonOrderFragment = {
       };
     }>;
   };
+  customer?: {
+    __typename?: 'Customer';
+    id: string;
+    firstName?: string | null;
+    lastName: string;
+    email: string;
+    phoneNumber?: string | null;
+    phoneCountryCode?: string | null;
+  } | null;
+  shippingAddress?: {
+    __typename?: 'Address';
+    id: string;
+    streetLine1: string;
+    streetLine2?: string | null;
+    postalCode: string;
+    city: string;
+    province: string;
+    country: string;
+    phoneCountryCode?: string | null;
+    phoneNumber?: string | null;
+    references?: string | null;
+  } | null;
 } & { ' $fragmentName'?: 'CommonOrderFragment' };
 
 export type CommonProductFragment = {
@@ -561,6 +583,26 @@ export const CommonOrderFragmentDoc = new TypedDocumentString(
       }
     }
   }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
 }
     `,
   { fragmentName: 'CommonOrder' }
@@ -624,6 +666,26 @@ export const CreateOrderMutationDocument = new TypedDocumentString(`
       }
     }
   }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
 }`) as unknown as TypedDocumentString<
   CreateOrderMutationMutation,
   CreateOrderMutationMutationVariables
@@ -660,6 +722,26 @@ export const AddLineToOrderMutationDocument = new TypedDocumentString(`
         }
       }
     }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
   }
 }`) as unknown as TypedDocumentString<
   AddLineToOrderMutationMutation,
@@ -698,6 +780,26 @@ export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
       }
     }
   }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
 }`) as unknown as TypedDocumentString<
   UpdateOrderLineMutationMutation,
   UpdateOrderLineMutationMutationVariables
@@ -734,6 +836,26 @@ export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
         }
       }
     }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
   }
 }`) as unknown as TypedDocumentString<
   RemoveOrderLineMutationMutation,
@@ -772,6 +894,26 @@ export const AddCustomerToOrderDocument = new TypedDocumentString(`
       }
     }
   }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
 }`) as unknown as TypedDocumentString<
   AddCustomerToOrderMutation,
   AddCustomerToOrderMutationVariables
@@ -809,6 +951,26 @@ export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
       }
     }
   }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
 }`) as unknown as TypedDocumentString<
   AddShippingAddressToOrderMutation,
   AddShippingAddressToOrderMutationVariables
@@ -845,6 +1007,26 @@ export const GetOrderQueryDocument = new TypedDocumentString(`
         }
       }
     }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
   }
 }`) as unknown as TypedDocumentString<GetOrderQueryQuery, GetOrderQueryQueryVariables>;
 export const GetProductsDocument = new TypedDocumentString(`

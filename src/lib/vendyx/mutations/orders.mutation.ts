@@ -102,7 +102,7 @@ export const addCustomerToOrder = async (orderId: string, input: CreateCustomerI
   return order;
 };
 
-export const AddShippingAddressToOrder = graphql(`
+export const AddShippingAddressToOrderMutation = graphql(`
   mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {
     addShippingAddressToOrder(orderId: $orderId, input: $input) {
       ...CommonOrder
@@ -111,7 +111,7 @@ export const AddShippingAddressToOrder = graphql(`
 `);
 
 export const addShippingAddressToOrder = async (orderId: string, input: CreateAddressInput) => {
-  const { addShippingAddressToOrder } = await vendyxFetcher(AddShippingAddressToOrder, {
+  const { addShippingAddressToOrder } = await vendyxFetcher(AddShippingAddressToOrderMutation, {
     orderId,
     input
   });
