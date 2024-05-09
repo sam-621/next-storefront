@@ -3,13 +3,14 @@ import { type FC } from 'react';
 import Image from 'next/image';
 
 import { AddToCart } from '@/app/cart/components';
+import { DEFAULT_PRODUCT_IMAGE } from '@/lib/constants';
 import { getFormattedPrice } from '@/lib/utils';
 import { type CommonProductFragment } from '@/lib/vendyx';
 
 export const ProductCard: FC<Props> = ({ product }) => {
   const { name, variants, assets } = product;
 
-  const defaultAsset = assets.items[0]?.source;
+  const defaultAsset = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
   const defaultVariant = variants.items[0];
 
   return (
@@ -17,10 +18,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
       <div className="relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:h-80">
         <Image
           fill
-          src={
-            defaultAsset ??
-            'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg'
-          }
+          src={defaultAsset}
           alt={name}
           className="h-full w-full object-cover object-center"
         />

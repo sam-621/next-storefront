@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import Image from 'next/image';
 
+import { DEFAULT_PRODUCT_IMAGE } from '@/lib/constants';
 import { getFormattedPrice } from '@/lib/utils';
 import { type CommonOrderFragment } from '@/lib/vendyx';
 
@@ -11,20 +12,12 @@ import { CartRemoveButton } from './cart-remove-button';
 export const CartItem: FC<Props> = ({ line }) => {
   const { unitPrice, quantity } = line;
   const { name, assets } = line.productVariant.product;
-  const image = assets.items[0]?.source;
+  const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
 
   return (
     <li className="flex py-6">
       <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-        <Image
-          fill
-          src={
-            image ??
-            'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg'
-          }
-          alt={name}
-          className="h-full w-full object-cover object-center"
-        />
+        <Image fill src={image} alt={name} className="h-full w-full object-cover object-center" />
       </div>
 
       <div className="ml-4 flex flex-1 flex-col">
