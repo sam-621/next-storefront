@@ -14,12 +14,21 @@ export const CartFooter: FC<Props> = ({ cart }) => {
       </div>
       <p className="mt-0.5 text-sm text-gray-500">Envío e impuestos son calculados al pagar.</p>
       <div className="mt-6">
-        <Link
-          href="/checkout"
-          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-        >
-          Pagar
-        </Link>
+        {cart?.lines?.items?.length ? (
+          <Link
+            className="flex justify-center items-center px-6 py-3 w-full text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md"
+            href="/checkout"
+          >
+            Checkout
+          </Link>
+        ) : (
+          <button
+            className="flex justify-center items-center px-6 py-3 w-full bg-slate-300 disabled:text-slate-500 disabled:border-slate-200 font-medium rounded-md cursor-not-allowed"
+            disabled
+          >
+            Checkout
+          </button>
+        )}
       </div>
     </div>
   );
