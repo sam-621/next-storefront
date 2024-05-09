@@ -74,7 +74,6 @@ export type CreateAddressInput = {
   references?: InputMaybe<Scalars['String']['input']>;
   streetLine1: Scalars['String']['input'];
   streetLine2?: InputMaybe<Scalars['String']['input']>;
-  suburb: Scalars['String']['input'];
 };
 
 export type CreateCustomerInput = {
@@ -199,7 +198,6 @@ export type OptionValue = Node & {
 
 export type Order = Node & {
   __typename?: 'Order';
-  address?: Maybe<Address>;
   code: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   customer?: Maybe<Customer>;
@@ -209,6 +207,7 @@ export type Order = Node & {
   /** The date and time when a payment has been added to the order */
   placedAt?: Maybe<Scalars['Date']['output']>;
   shipment?: Maybe<Shipment>;
+  shippingAddress?: Maybe<Address>;
   state: OrderState;
   /** Order lines total less discounts */
   subtotal: Scalars['Int']['output'];
@@ -466,6 +465,20 @@ export type AddCustomerToOrderMutationVariables = Exact<{
 export type AddCustomerToOrderMutation = {
   __typename?: 'Mutation';
   addCustomerToOrder?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
+export type AddShippingAddressToOrderMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  input: CreateAddressInput;
+}>;
+
+export type AddShippingAddressToOrderMutation = {
+  __typename?: 'Mutation';
+  addShippingAddressToOrder?:
     | ({ __typename?: 'Order' } & {
         ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
       })
@@ -762,6 +775,43 @@ export const AddCustomerToOrderDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<
   AddCustomerToOrderMutation,
   AddCustomerToOrderMutationVariables
+>;
+export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
+    mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {
+  addShippingAddressToOrder(orderId: $orderId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  AddShippingAddressToOrderMutation,
+  AddShippingAddressToOrderMutationVariables
 >;
 export const GetOrderQueryDocument = new TypedDocumentString(`
     query GetOrderQuery($orderId: ID) {

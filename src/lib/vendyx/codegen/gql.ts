@@ -26,6 +26,8 @@ const documents = {
     types.RemoveOrderLineMutationDocument,
   '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
     types.AddCustomerToOrderDocument,
+  '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+    types.AddShippingAddressToOrderDocument,
   '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n':
     types.GetOrderQueryDocument,
   '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n      }\n    }\n  }\n':
@@ -74,6 +76,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
 ): typeof import('./graphql').AddCustomerToOrderDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+): typeof import('./graphql').AddShippingAddressToOrderDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,5 +1,6 @@
 import { getFragmentData, graphql } from '../codegen';
 import {
+  type CreateAddressInput,
   type CreateCustomerInput,
   type CreateOrderInput,
   type CreateOrderLineInput,
@@ -97,6 +98,25 @@ export const addCustomerToOrder = async (orderId: string, input: CreateCustomerI
   });
 
   const order = getFragmentData(CommonOrder, addCustomerToOrder);
+
+  return order;
+};
+
+export const AddShippingAddressToOrder = graphql(`
+  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {
+    addShippingAddressToOrder(orderId: $orderId, input: $input) {
+      ...CommonOrder
+    }
+  }
+`);
+
+export const addShippingAddressToOrder = async (orderId: string, input: CreateAddressInput) => {
+  const { addShippingAddressToOrder } = await vendyxFetcher(AddShippingAddressToOrder, {
+    orderId,
+    input
+  });
+
+  const order = getFragmentData(CommonOrder, addShippingAddressToOrder);
 
   return order;
 };
