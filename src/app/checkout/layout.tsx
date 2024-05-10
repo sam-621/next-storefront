@@ -1,7 +1,8 @@
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 import { Logo } from '@/ui/components/items';
+
+import { CheckoutSteps } from './components/checkout-steps';
 
 export default function RootLayout({
   children
@@ -15,15 +16,9 @@ export default function RootLayout({
           <Link href="/" className="absolute">
             <Logo />
           </Link>
-          <div className="flex gap-4 items-center justify-center w-full">
-            <p className="text-sm text-gray-700">Carrito</p>
-            <ChevronRightIcon className="size-3 text-gray-300" />
-            <p className="text-sm text-indigo-600">Información de pago</p>
-            <ChevronRightIcon className="size-3 text-gray-300" />
-            <p className="text-sm text-gray-700">Confirmación</p>
-          </div>
+          <CheckoutSteps />
         </header>
-        <hr className="" />
+        <hr />
       </div>
       {children}
     </>

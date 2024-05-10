@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import Link from 'next/link';
 
+import { CheckoutStepsField, CheckoutStepsValues } from '@/lib/constants';
 import { getFormattedPrice } from '@/lib/utils';
 import { type CommonOrderFragment } from '@/lib/vendyx';
 
@@ -17,7 +18,7 @@ export const CartFooter: FC<Props> = ({ cart }) => {
         {cart?.lines?.items?.length ? (
           <Link
             className="flex justify-center items-center px-6 py-3 w-full text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md"
-            href="/checkout"
+            href={`/checkout?${CheckoutStepsField}=${CheckoutStepsValues.information}`}
           >
             Checkout
           </Link>

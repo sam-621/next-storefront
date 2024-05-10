@@ -2,9 +2,10 @@
 
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-import { CacheTags, CookiesNames } from '@/lib/constants';
+import { CacheTags, CheckoutStepsField, CheckoutStepsValues, CookiesNames } from '@/lib/constants';
 import { FormMessages } from '@/lib/forms';
 import { addCustomerToOrder, addShippingAddressToOrder } from '@/lib/vendyx';
 
@@ -72,4 +73,6 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
       error: true
     };
   }
+
+  redirect(`/checkout?${CheckoutStepsField}=${CheckoutStepsValues.payment}`);
 };
