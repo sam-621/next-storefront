@@ -20,14 +20,14 @@ export const CartFooter: FC<Props> = ({ cart }) => {
             className="flex justify-center items-center px-6 py-3 w-full text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md"
             href={`/checkout?${CheckoutStepsField}=${CheckoutStepsValues.information}`}
           >
-            Checkout
+            Proceder al pago
           </Link>
         ) : (
           <button
             className="flex justify-center items-center px-6 py-3 w-full text-white cursor-not-allowed bg-indigo-600 opacity-50 hover:bg-indigo-600 font-medium rounded-md"
             disabled
           >
-            Checkout
+            Proceder al pago
           </button>
         )}
       </div>

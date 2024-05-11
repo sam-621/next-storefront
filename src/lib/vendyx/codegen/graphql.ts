@@ -599,6 +599,18 @@ export type GetOrderQueryQuery = {
     | null;
 };
 
+export type GetAvailablePaymentMethodsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAvailablePaymentMethodsQuery = {
+  __typename?: 'Query';
+  availablePaymentMethods: Array<{
+    __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    description?: string | null;
+  }>;
+};
+
 export type GetProductsQueryVariables = Exact<{
   input?: InputMaybe<ListInput>;
 }>;
@@ -1352,6 +1364,18 @@ export const GetOrderQueryDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<GetOrderQueryQuery, GetOrderQueryQueryVariables>;
+export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
+    query GetAvailablePaymentMethods {
+  availablePaymentMethods {
+    id
+    name
+    description
+  }
+}
+    `) as unknown as TypedDocumentString<
+  GetAvailablePaymentMethodsQuery,
+  GetAvailablePaymentMethodsQueryVariables
+>;
 export const GetProductsDocument = new TypedDocumentString(`
     query GetProducts($input: ListInput) {
   products(input: $input) {
