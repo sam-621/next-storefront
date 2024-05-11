@@ -586,6 +586,20 @@ export type AddShipmentToOrderMutationMutation = {
     | null;
 };
 
+export type AddPaymentToOrderMutationMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  input: AddPaymentToOrderInput;
+}>;
+
+export type AddPaymentToOrderMutationMutation = {
+  __typename?: 'Mutation';
+  addPaymentToOrder?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
 export type GetOrderQueryQueryVariables = Exact<{
   orderId?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -1289,6 +1303,83 @@ export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<
   AddShipmentToOrderMutationMutation,
   AddShipmentToOrderMutationMutationVariables
+>;
+export const AddPaymentToOrderMutationDocument = new TypedDocumentString(`
+    mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {
+  addPaymentToOrder(orderId: $orderId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  AddPaymentToOrderMutationMutation,
+  AddPaymentToOrderMutationMutationVariables
 >;
 export const GetOrderQueryDocument = new TypedDocumentString(`
     query GetOrderQuery($orderId: ID) {

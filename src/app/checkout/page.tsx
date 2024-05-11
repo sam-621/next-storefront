@@ -7,7 +7,7 @@ import { CheckoutStepsValues } from '@/lib/constants';
 import { getCart } from '../cart/data';
 import { CheckoutForm } from './components/checkout-info-form/checkout-info-form';
 import { OrderSummary } from './components/order-summary/order-summary';
-import { PaymentMethodsForm } from './components/payment-methods-form/payment-methods-form';
+import { PaymentMethods } from './components/payment-methods-form/payment-methods';
 import { PaymentMethodsSkeleton } from './components/payment-methods-skeleton';
 
 export default async function Checkout({ searchParams }: Props) {
@@ -25,7 +25,7 @@ export default async function Checkout({ searchParams }: Props) {
         {currentStep === CheckoutStepsValues.information && <CheckoutForm order={cart} />}
         {currentStep === CheckoutStepsValues.payment && (
           <Suspense fallback={<PaymentMethodsSkeleton />}>
-            <PaymentMethodsForm />
+            <PaymentMethods />
           </Suspense>
         )}
       </div>
