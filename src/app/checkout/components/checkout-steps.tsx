@@ -1,19 +1,20 @@
 'use client';
 
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { CheckoutStepsField, CheckoutStepsValues } from '@/lib/constants';
 import { cn } from '@/ui/utils';
 
 export const CheckoutSteps = () => {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const currentStep = searchParams.get(CheckoutStepsField);
 
   const isInInformationStep = currentStep === CheckoutStepsValues.information;
   const isInPaymentStep = currentStep === CheckoutStepsValues.payment;
-  const isInCompleteStep = currentStep === CheckoutStepsValues.complete;
+  const isInCompleteStep = pathname === '/checkout/success';
 
   return (
     <div className="flex gap-4 items-center justify-center w-full">

@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 
-import { getFormattedPrice } from '@/lib/utils';
+import { getFormattedPhoneNumber, getFormattedPrice } from '@/lib/utils';
 import { type CommonOrderFragment } from '@/lib/vendyx';
 import { cn } from '@/ui/utils';
 
@@ -8,7 +8,7 @@ import { OrderSummaryItem } from './order-summary-item';
 
 export const OrderSummary: FC<Props> = ({ order }) => {
   const lines = order.lines.items;
-  const { shipment } = order;
+  const { shipment, shippingAddress, payment } = order;
 
   return (
     <div className="flex flex-col gap-6">
@@ -22,7 +22,6 @@ export const OrderSummary: FC<Props> = ({ order }) => {
           </>
         ))}
       </div>
-      {/* <hr /> */}
       <div>
         <div className="flex flex-col gap-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
@@ -42,6 +41,38 @@ export const OrderSummary: FC<Props> = ({ order }) => {
         <p className="text-gray-900 font-medium">Total</p>
         <p className="text-gray-900 font-medium">{getFormattedPrice(order.total)}</p>
       </div>
+      {shippingAddress && (
+        <>
+          <hr />
+          <div className="flex justify-between">
+            <div>
+              <div className="flex flex-col gap-2">
+                <p className="text-base font-medium text-gray-900">Dirección</p>
+                <div className="text-gray-600 text-sm">
+                  <p>{shippingAddress.streetLine1}</p>
+                  {shippingAddress.streetLine2 && <p>{shippingAddress.streetLine2}</p>}
+                  <p>
+                    {shippingAddress.postalCode} {shippingAddress.city}, {shippingAddress.province}
+                  </p>
+                  <p>{shippingAddress.country}</p>
+                  {shippingAddress.phoneCountryCode && shippingAddress.phoneNumber && (
+                    <p>
+                      +{shippingAddress.phoneCountryCode}{' '}
+                      {getFormattedPhoneNumber(shippingAddress.phoneNumber)}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            {payment && (
+              <div className="flex flex-col gap-2">
+                <p className="text-base font-medium text-gray-900">Método de pago</p>
+                <p className="text-gray-600 text-sm">{payment.method.name}</p>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

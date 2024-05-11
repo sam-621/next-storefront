@@ -15,7 +15,7 @@ export default async function Checkout({ searchParams }: Props) {
 
   const currentStep = searchParams.step;
 
-  if (!cart) {
+  if (!cart || !cart?.lines?.items?.length) {
     redirect('/');
   }
 

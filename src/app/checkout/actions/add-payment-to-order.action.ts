@@ -1,16 +1,17 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { CacheTags, CheckoutStepsField, CheckoutStepsValues, CookiesNames } from '@/lib/constants';
+import { CookiesNames } from '@/lib/constants';
 import { FormMessages } from '@/lib/forms';
 import { addPaymentToOrder } from '@/lib/vendyx';
 
 export const addPayment = async (_: any, paymentMethodId: string) => {
+  let cartId;
+
   try {
-    const cartId = cookies().get(CookiesNames.cartId)?.value;
+    cartId = cookies().get(CookiesNames.cartId)?.value;
 
     if (!cartId) {
       return 'Error al generar la orden';
@@ -18,7 +19,7 @@ export const addPayment = async (_: any, paymentMethodId: string) => {
 
     await addPaymentToOrder(cartId, { methodId: paymentMethodId });
 
-    revalidateTag(CacheTags.cart[0]);
+    cookies().delete(CookiesNames.cartId);
   } catch (error) {
     return {
       message: FormMessages.unexpectedError,
@@ -26,5 +27,5 @@ export const addPayment = async (_: any, paymentMethodId: string) => {
     };
   }
 
-  redirect(`/checkout?${CheckoutStepsField}=${CheckoutStepsValues.complete}`);
+  redirect(`/checkout/success?code=${cartId}`);
 };

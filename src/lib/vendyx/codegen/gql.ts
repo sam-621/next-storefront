@@ -32,7 +32,7 @@ const documents = {
     types.AddShipmentToOrderMutationDocument,
   '\n  mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
     types.AddPaymentToOrderMutationDocument,
-  '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  query GetOrderQuery($orderId: ID, $code: String) {\n    order(id: $orderId, code: $code) {\n      ...CommonOrder\n    }\n  }\n':
     types.GetOrderQueryDocument,
   '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      description\n    }\n  }\n':
     types.GetAvailablePaymentMethodsDocument,
@@ -106,7 +106,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  query GetOrderQuery($orderId: ID, $code: String) {\n    order(id: $orderId, code: $code) {\n      ...CommonOrder\n    }\n  }\n'
 ): typeof import('./graphql').GetOrderQueryDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

@@ -602,6 +602,7 @@ export type AddPaymentToOrderMutationMutation = {
 
 export type GetOrderQueryQueryVariables = Exact<{
   orderId?: InputMaybe<Scalars['ID']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type GetOrderQueryQuery = {
@@ -1382,8 +1383,8 @@ export const AddPaymentToOrderMutationDocument = new TypedDocumentString(`
   AddPaymentToOrderMutationMutationVariables
 >;
 export const GetOrderQueryDocument = new TypedDocumentString(`
-    query GetOrderQuery($orderId: ID) {
-  order(id: $orderId) {
+    query GetOrderQuery($orderId: ID, $code: String) {
+  order(id: $orderId, code: $code) {
     ...CommonOrder
   }
 }
