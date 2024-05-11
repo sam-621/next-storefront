@@ -1,7 +1,7 @@
 import { graphql } from '../codegen';
 import { vendyxFetcher } from '../fetcher.vendyx';
 
-export const GetAvailableShippingMethodsQuery = graphql(`
+const GetAvailableShippingMethodsQuery = graphql(`
   query GetAvailableShippingMethods {
     availableShippingMethods {
       id

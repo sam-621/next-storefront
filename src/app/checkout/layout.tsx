@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import Link from 'next/link';
 
 import { Logo } from '@/ui/components/items';
@@ -16,7 +18,9 @@ export default function RootLayout({
           <Link href="/" className="absolute">
             <Logo />
           </Link>
-          <CheckoutSteps />
+          <Suspense>
+            <CheckoutSteps />
+          </Suspense>
         </header>
         <hr />
       </div>

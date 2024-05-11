@@ -2,7 +2,7 @@ import { graphql } from '../codegen';
 import { type AddPaymentToOrderInput } from '../codegen/graphql';
 import { vendyxFetcher } from '../fetcher.vendyx';
 
-export const AddPaymentToOrderMutation = graphql(`
+const AddPaymentToOrderMutation = graphql(`
   mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {
     addPaymentToOrder(orderId: $orderId, input: $input) {
       ...CommonOrder

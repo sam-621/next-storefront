@@ -103,7 +103,7 @@ export const addCustomerToOrder = async (orderId: string, input: CreateCustomerI
   return order;
 };
 
-export const AddShippingAddressToOrderMutation = graphql(`
+const AddShippingAddressToOrderMutation = graphql(`
   mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {
     addShippingAddressToOrder(orderId: $orderId, input: $input) {
       ...CommonOrder
@@ -122,7 +122,7 @@ export const addShippingAddressToOrder = async (orderId: string, input: CreateAd
   return order;
 };
 
-export const AddShipmentToOrderMutation = graphql(`
+const AddShipmentToOrderMutation = graphql(`
   mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {
     addShipmentToOrder(orderId: $orderId, input: $input) {
       ...CommonOrder
