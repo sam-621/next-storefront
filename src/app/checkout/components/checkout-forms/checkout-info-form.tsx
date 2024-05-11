@@ -9,7 +9,6 @@ import { type CommonOrderFragment } from '@/lib/vendyx';
 import { cn } from '@/ui/utils';
 
 import { addInfoToOrder } from '../../actions/add-info-to-order.action';
-import { ShippingMethods } from '../shipping-methods/shipping-methods';
 import { CheckoutContactForm } from './checkout-contact-form';
 import { CheckoutShippingForm } from './checkout-shipping-form';
 
@@ -24,8 +23,6 @@ export const CheckoutForm: FC<Props> = ({ order }) => {
       <CheckoutContactForm fieldErrors={fieldErrors} customer={customer} />
       <hr />
       <CheckoutShippingForm fieldErrors={fieldErrors} address={shippingAddress} />
-      <hr />
-      <ShippingMethods />
       <hr />
       <SubmitButton />
     </form>

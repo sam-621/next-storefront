@@ -21,6 +21,14 @@ export type Scalars = {
   Date: { input: any; output: any };
 };
 
+export type AddPaymentToOrderInput = {
+  methodId: Scalars['ID']['input'];
+};
+
+export type AddShipmentToOrderInput = {
+  shippingMethodId: Scalars['ID']['input'];
+};
+
 export type Address = Node & {
   __typename?: 'Address';
   city: Scalars['String']['output'];
@@ -132,6 +140,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCustomerToOrder?: Maybe<Order>;
   addLineToOrder: Order;
+  addPaymentToOrder?: Maybe<Order>;
+  addShipmentToOrder?: Maybe<Order>;
   addShippingAddressToOrder?: Maybe<Order>;
   createOrder?: Maybe<Order>;
   removeOrderLine: Order;
@@ -145,6 +155,16 @@ export type MutationAddCustomerToOrderArgs = {
 
 export type MutationAddLineToOrderArgs = {
   input: CreateOrderLineInput;
+  orderId: Scalars['ID']['input'];
+};
+
+export type MutationAddPaymentToOrderArgs = {
+  input: AddPaymentToOrderInput;
+  orderId: Scalars['ID']['input'];
+};
+
+export type MutationAddShipmentToOrderArgs = {
+  input: AddShipmentToOrderInput;
   orderId: Scalars['ID']['input'];
 };
 
@@ -253,7 +273,8 @@ export type Payment = Node & {
   amount: Scalars['Int']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
-  transactionId: Scalars['String']['output'];
+  method: PaymentMethod;
+  transactionId?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
 };
 
@@ -261,6 +282,16 @@ export type PaymentList = List & {
   __typename?: 'PaymentList';
   count: Scalars['Int']['output'];
   items: Array<Payment>;
+};
+
+export type PaymentMethod = Node & {
+  __typename?: 'PaymentMethod';
+  createdAt: Scalars['Date']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enabled: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
 };
 
 export type Product = Node & {
@@ -293,6 +324,8 @@ export type ProductList = List & {
 
 export type Query = {
   __typename?: 'Query';
+  availablePaymentMethods: Array<PaymentMethod>;
+  availableShippingMethods: Array<ShippingMethod>;
   order?: Maybe<Order>;
   product?: Maybe<Product>;
   products: ProductList;
@@ -324,9 +357,11 @@ export type QueryVariantsArgs = {
 
 export type Shipment = Node & {
   __typename?: 'Shipment';
-  amount?: Maybe<Scalars['Int']['output']>;
+  amount: Scalars['Int']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
+  method: ShippingMethod;
+  order: Order;
   trackingCode?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
 };
@@ -335,6 +370,16 @@ export type ShipmentList = List & {
   __typename?: 'ShipmentList';
   count: Scalars['Int']['output'];
   items: Array<Shipment>;
+};
+
+export type ShippingMethod = Node & {
+  __typename?: 'ShippingMethod';
+  createdAt: Scalars['Date']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enabled: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
 };
 
 export type UpdateOrderLineInput = {
@@ -411,6 +456,26 @@ export type CommonOrderFragment = {
     phoneCountryCode?: string | null;
     phoneNumber?: string | null;
     references?: string | null;
+  } | null;
+  shipment?: {
+    __typename?: 'Shipment';
+    id: string;
+    amount: number;
+    trackingCode?: string | null;
+    method: { __typename?: 'ShippingMethod'; id: string; name: string };
+  } | null;
+  payment?: {
+    __typename?: 'Payment';
+    id: string;
+    amount: number;
+    transactionId?: string | null;
+    method: {
+      __typename?: 'PaymentMethod';
+      id: string;
+      name: string;
+      description?: string | null;
+      enabled: boolean;
+    };
   } | null;
 } & { ' $fragmentName'?: 'CommonOrderFragment' };
 
@@ -507,6 +572,20 @@ export type AddShippingAddressToOrderMutation = {
     | null;
 };
 
+export type AddShipmentToOrderMutationMutationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  input: AddShipmentToOrderInput;
+}>;
+
+export type AddShipmentToOrderMutationMutation = {
+  __typename?: 'Mutation';
+  addShipmentToOrder?:
+    | ({ __typename?: 'Order' } & {
+        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+      })
+    | null;
+};
+
 export type GetOrderQueryQueryVariables = Exact<{
   orderId?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -535,6 +614,13 @@ export type GetProductsQuery = {
       }
     >;
   };
+};
+
+export type GetAvailableShippingMethodsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAvailableShippingMethodsQuery = {
+  __typename?: 'Query';
+  availableShippingMethods: Array<{ __typename?: 'ShippingMethod'; id: string }>;
 };
 
 export class TypedDocumentString<TResult, TVariables>
@@ -602,6 +688,26 @@ export const CommonOrderFragmentDoc = new TypedDocumentString(
     phoneCountryCode
     phoneNumber
     references
+  }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
   }
 }
     `,
@@ -686,6 +792,26 @@ export const CreateOrderMutationDocument = new TypedDocumentString(`
     phoneNumber
     references
   }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
 }`) as unknown as TypedDocumentString<
   CreateOrderMutationMutation,
   CreateOrderMutationMutationVariables
@@ -742,6 +868,26 @@ export const AddLineToOrderMutationDocument = new TypedDocumentString(`
     phoneCountryCode
     phoneNumber
     references
+  }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
   }
 }`) as unknown as TypedDocumentString<
   AddLineToOrderMutationMutation,
@@ -800,6 +946,26 @@ export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
     phoneNumber
     references
   }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
 }`) as unknown as TypedDocumentString<
   UpdateOrderLineMutationMutation,
   UpdateOrderLineMutationMutationVariables
@@ -856,6 +1022,26 @@ export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
     phoneCountryCode
     phoneNumber
     references
+  }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
   }
 }`) as unknown as TypedDocumentString<
   RemoveOrderLineMutationMutation,
@@ -914,6 +1100,26 @@ export const AddCustomerToOrderDocument = new TypedDocumentString(`
     phoneNumber
     references
   }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
 }`) as unknown as TypedDocumentString<
   AddCustomerToOrderMutation,
   AddCustomerToOrderMutationVariables
@@ -971,9 +1177,106 @@ export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
     phoneNumber
     references
   }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
 }`) as unknown as TypedDocumentString<
   AddShippingAddressToOrderMutation,
   AddShippingAddressToOrderMutationVariables
+>;
+export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
+    mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {
+  addShipmentToOrder(orderId: $orderId, input: $input) {
+    ...CommonOrder
+  }
+}
+    fragment CommonOrder on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        product {
+          name
+          slug
+          assets {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    phoneCountryCode
+  }
+  shippingAddress {
+    id
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    phoneCountryCode
+    phoneNumber
+    references
+  }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  AddShipmentToOrderMutationMutation,
+  AddShipmentToOrderMutationMutationVariables
 >;
 export const GetOrderQueryDocument = new TypedDocumentString(`
     query GetOrderQuery($orderId: ID) {
@@ -1028,6 +1331,26 @@ export const GetOrderQueryDocument = new TypedDocumentString(`
     phoneNumber
     references
   }
+  shipment {
+    id
+    amount
+    trackingCode
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+      description
+      enabled
+    }
+  }
 }`) as unknown as TypedDocumentString<GetOrderQueryQuery, GetOrderQueryQueryVariables>;
 export const GetProductsDocument = new TypedDocumentString(`
     query GetProducts($input: ListInput) {
@@ -1059,3 +1382,13 @@ export const GetProductsDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;
+export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
+    query GetAvailableShippingMethods {
+  availableShippingMethods {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<
+  GetAvailableShippingMethodsQuery,
+  GetAvailableShippingMethodsQueryVariables
+>;

@@ -12,7 +12,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  fragment CommonOrder on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          product {\n            name\n            slug\n            assets {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n      phoneCountryCode\n    }\n    shippingAddress {\n      id\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      phoneCountryCode\n      phoneNumber\n      references\n    }\n  }\n':
+  '\n  fragment CommonOrder on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          product {\n            name\n            slug\n            assets {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n      phoneCountryCode\n    }\n    shippingAddress {\n      id\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      phoneCountryCode\n      phoneNumber\n      references\n    }\n    shipment {\n      id\n      amount\n      trackingCode\n      method {\n        id\n        name\n      }\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method {\n        id\n        name\n        description\n        enabled\n      }\n    }\n  }\n':
     types.CommonOrderFragmentDoc,
   '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n    variants(input: { take: 1 }) {\n      items {\n        id\n        stock\n        price\n      }\n    }\n    assets {\n      items {\n        id\n        name\n        source\n      }\n    }\n  }\n':
     types.CommonProductFragmentDoc,
@@ -28,17 +28,21 @@ const documents = {
     types.AddCustomerToOrderDocument,
   '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
     types.AddShippingAddressToOrderDocument,
+  '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+    types.AddShipmentToOrderMutationDocument,
   '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n':
     types.GetOrderQueryDocument,
   '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n      }\n    }\n  }\n':
-    types.GetProductsDocument
+    types.GetProductsDocument,
+  '\n  query GetAvailableShippingMethods {\n    availableShippingMethods {\n      id\n    }\n  }\n':
+    types.GetAvailableShippingMethodsDocument
 };
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment CommonOrder on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          product {\n            name\n            slug\n            assets {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n      phoneCountryCode\n    }\n    shippingAddress {\n      id\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      phoneCountryCode\n      phoneNumber\n      references\n    }\n  }\n'
+  source: '\n  fragment CommonOrder on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          product {\n            name\n            slug\n            assets {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n      phoneCountryCode\n    }\n    shippingAddress {\n      id\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      phoneCountryCode\n      phoneNumber\n      references\n    }\n    shipment {\n      id\n      amount\n      trackingCode\n      method {\n        id\n        name\n      }\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method {\n        id\n        name\n        description\n        enabled\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CommonOrderFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -86,6 +90,12 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+): typeof import('./graphql').AddShipmentToOrderMutationDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: '\n  query GetOrderQuery($orderId: ID) {\n    order(id: $orderId) {\n      ...CommonOrder\n    }\n  }\n'
 ): typeof import('./graphql').GetOrderQueryDocument;
 /**
@@ -94,6 +104,12 @@ export function graphql(
 export function graphql(
   source: '\n  query GetProducts($input: ListInput) {\n    products(input: $input) {\n      count\n      items {\n        ...CommonProduct\n      }\n    }\n  }\n'
 ): typeof import('./graphql').GetProductsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query GetAvailableShippingMethods {\n    availableShippingMethods {\n      id\n    }\n  }\n'
+): typeof import('./graphql').GetAvailableShippingMethodsDocument;
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

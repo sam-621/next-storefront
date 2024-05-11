@@ -48,5 +48,25 @@ export const CommonOrder = graphql(`
       phoneNumber
       references
     }
+    shipment {
+      id
+      amount
+      trackingCode
+      method {
+        id
+        name
+      }
+    }
+    payment {
+      id
+      amount
+      transactionId
+      method {
+        id
+        name
+        description
+        enabled
+      }
+    }
   }
 `);

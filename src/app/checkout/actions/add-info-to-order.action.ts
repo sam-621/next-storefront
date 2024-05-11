@@ -7,7 +7,12 @@ import { z } from 'zod';
 
 import { CacheTags, CheckoutStepsField, CheckoutStepsValues, CookiesNames } from '@/lib/constants';
 import { FormMessages } from '@/lib/forms';
-import { addCustomerToOrder, addShippingAddressToOrder } from '@/lib/vendyx';
+import {
+  addCustomerToOrder,
+  addShipmentToOrder,
+  addShippingAddressToOrder,
+  getAvailableShippingMethods
+} from '@/lib/vendyx';
 
 const schema = z.object({
   email: z.string().email(FormMessages.invalidEmail),
@@ -65,6 +70,12 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
       postalCode,
       references
     });
+
+    // In this store we only have one shipping method
+    const availableShippingMethods = await getAvailableShippingMethods();
+    const defaultShippingMethod = availableShippingMethods[0];
+
+    await addShipmentToOrder(cartId, { shippingMethodId: defaultShippingMethod.id });
 
     revalidateTag(CacheTags.cart[0]);
   } catch (error) {
