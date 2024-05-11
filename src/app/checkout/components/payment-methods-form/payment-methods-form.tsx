@@ -1,8 +1,9 @@
 'use client';
 
 import { type FC, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
 import { type GetAvailablePaymentMethodsQuery } from '@/lib/vendyx';
@@ -43,9 +44,7 @@ export const PaymentMethodsForm: FC<Props> = ({ methods }) => {
           ))}
         </div>
       </CheckoutFormCard>
-      <button className="flex justify-center items-center px-6 py-3 w-full text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md">
-        Pagar
-      </button>
+      <SubmitButton />
     </form>
   );
 };
@@ -53,3 +52,22 @@ export const PaymentMethodsForm: FC<Props> = ({ methods }) => {
 interface Props {
   methods: GetAvailablePaymentMethodsQuery['availablePaymentMethods'];
 }
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      type="submit"
+      className={cn(
+        'flex justify-center items-center gap-2 px-6 py-3 w-full text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-md',
+        {
+          'cursor-not-allowed opacity-50 hover:bg-indigo-600': pending
+        }
+      )}
+    >
+      {pending && <ArrowPathIcon width={16} height={16} className="animate-spin" />}
+      {pending ? 'Procesando...' : 'Pagar'}
+    </button>
+  );
+};
