@@ -5,113 +5,27 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
-import { getFieldError } from '@/lib/forms';
 import { type CommonOrderFragment } from '@/lib/vendyx';
-import { Input, Select } from '@/ui/theme';
 import { cn } from '@/ui/utils';
 
 import { addInfoToOrder } from '../../actions/add-info-to-order.action';
-import { getProvinces } from '../../data';
-import { CheckoutFormCard } from '../checkout-form-card';
+import { ShippingMethods } from '../shipping-methods/shipping-methods';
+import { CheckoutContactForm } from './checkout-contact-form';
+import { CheckoutShippingForm } from './checkout-shipping-form';
 
 export const CheckoutForm: FC<Props> = ({ order }) => {
   const [result, action] = useFormState(addInfoToOrder, { error: false, message: '' });
   const fieldErrors = result?.fieldErrors;
 
   const { customer, shippingAddress } = order;
-  console.log({
-    customer
-  });
 
   return (
     <form action={action} className="flex flex-col gap-10">
-      <CheckoutFormCard title="Información de contacto">
-        <Input
-          name="email"
-          label="Correo electrónico"
-          placeholder="samuel.corrales621@gmail.com"
-          defaultValue={customer?.email ?? ''}
-          error={getFieldError(fieldErrors?.email)}
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            name="firstName"
-            label="Nombre (opcional)"
-            placeholder="Rogelio Samuel"
-            error={getFieldError(fieldErrors?.firstName)}
-            defaultValue={customer?.firstName ?? ''}
-          />
-          <Input
-            name="lastName"
-            label="Apellidos"
-            placeholder="Moreno Corrales"
-            error={getFieldError(fieldErrors?.lastName)}
-            defaultValue={customer?.lastName ?? ''}
-          />
-        </div>
-      </CheckoutFormCard>
+      <CheckoutContactForm fieldErrors={fieldErrors} customer={customer} />
       <hr />
-      <CheckoutFormCard title="Información de envío">
-        <Input
-          name="phoneNumber"
-          label="Telefono"
-          placeholder="667 1624 203"
-          error={getFieldError(fieldErrors?.phoneNumber)}
-          defaultValue={shippingAddress?.phoneNumber ?? ''}
-        />
-        <Input
-          name="streetLine1"
-          label="Dirección"
-          placeholder="Romulo Díaz de la Vega #117 Col. Lazaro cárdenas"
-          error={getFieldError(fieldErrors?.streetLine1)}
-          defaultValue={shippingAddress?.streetLine1 ?? ''}
-        />
-        <Input
-          name="streetLine2"
-          label="Apartamento, suite, etc."
-          placeholder="Apartamento 45"
-          error={getFieldError(fieldErrors?.streetLine2)}
-          defaultValue={shippingAddress?.streetLine2 ?? ''}
-        />
-
-        <div className="grid grid-cols-2 gap-4">
-          <Select
-            name="country"
-            label="País"
-            items={['México']}
-            error={getFieldError(fieldErrors?.country)}
-            defaultValue={shippingAddress?.country ?? ''}
-          />
-          <Select
-            name="province"
-            label="Estado"
-            items={getProvinces()}
-            error={getFieldError(fieldErrors?.province)}
-            defaultValue={shippingAddress?.province ?? ''}
-          />
-          <Input
-            name="city"
-            label="Ciudad"
-            placeholder="Culiacán"
-            error={getFieldError(fieldErrors?.city)}
-            defaultValue={shippingAddress?.city ?? ''}
-          />
-          <Input
-            name="postalCode"
-            label="Código postal"
-            placeholder="80290"
-            error={getFieldError(fieldErrors?.postalCode)}
-            defaultValue={shippingAddress?.postalCode ?? ''}
-          />
-        </div>
-        <Input
-          name="references"
-          label="Referencias"
-          placeholder="Hay dos pinos"
-          error={getFieldError(fieldErrors?.references)}
-          defaultValue={shippingAddress?.references ?? ''}
-        />
-      </CheckoutFormCard>
+      <CheckoutShippingForm fieldErrors={fieldErrors} address={shippingAddress} />
+      <hr />
+      <ShippingMethods />
       <hr />
       <SubmitButton />
     </form>
