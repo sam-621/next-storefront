@@ -21,5 +21,5 @@ This storefront is built to showcase the capability of [Vendyx](https://vendyx.d
 - [x] Products listing
 - [x] Cart
 - [x] Checkout
-- [] Customer account
-- [] Wishlist
+- [ ] Customer account
+- [ ] Wishlist
