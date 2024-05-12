@@ -1,6 +1,6 @@
 # Next 14 storefront
 
-This storefront is built to showcase the capability of [Vendyx](https://vendyx.dev). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
+This storefront is built to showcase the capability of [Vendyx](https://github.com/sam-621/vendyx.dev). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
 
 - [Vendyx server](https://vendyx.up.railway.app/admin/)
 - [Storefront](https://vendyx-storefront.vercel.app/)
