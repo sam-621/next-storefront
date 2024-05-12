@@ -4,6 +4,7 @@ import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { CacheTags, CookiesNames } from '@/lib/constants';
+import { ApiError } from '@/lib/errors';
 import { addLineToOrder, createOrder } from '@/lib/vendyx';
 
 export const addToCart = async (_: any, line: { productVariantId: string; quantity: number }) => {
@@ -16,7 +17,7 @@ export const addToCart = async (_: any, line: { productVariantId: string; quanti
       });
 
       if (!createCartResult) {
-        return 'Failed to add item to cart';
+        return 'Error al agregar al carrito';
       }
 
       cartId = createCartResult.id;
@@ -29,11 +30,14 @@ export const addToCart = async (_: any, line: { productVariantId: string; quanti
     const cart = await addLineToOrder(cartId, line);
 
     if (!cart) {
-      return 'Failed to add item to cart';
+      return 'Error al agregar al carrito';
     }
 
     revalidateTag(CacheTags.cart[0]);
   } catch (error) {
-    return 'Failed to add item to cart';
+    if (error instanceof ApiError && error.message === 'Not enough stock')
+      return 'No hay suficiente stock';
+
+    return 'Error al agregar al carrito';
   }
 };

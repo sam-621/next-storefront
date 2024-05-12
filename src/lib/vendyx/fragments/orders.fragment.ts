@@ -15,6 +15,7 @@ export const CommonOrder = graphql(`
         unitPrice
         productVariant {
           id
+          stock
           product {
             name
             slug

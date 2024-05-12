@@ -13,6 +13,7 @@ export const CartItem: FC<Props> = ({ line }) => {
   const { unitPrice, quantity } = line;
   const { name, assets } = line.productVariant.product;
   const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
+  const availableStock = line.productVariant.stock;
 
   return (
     <li className="flex py-6">
@@ -26,14 +27,16 @@ export const CartItem: FC<Props> = ({ line }) => {
             <h3>{line.productVariant.product.name}</h3>
             <p className="ml-4">{getFormattedPrice(unitPrice)}</p>
           </div>
-          {/* <p className="mt-1 text-sm text-gray-500">Blue</p> */}
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
-          {/* <p className="text-gray-500">Qty {quantity}</p> */}
           <div className="flex border border-border h-8 w-24 rounded-lg">
             <CartQuantityButton line={line} type="minus" />
             <span className="text-center flex items-center justify-center w-full">{quantity}</span>
-            <CartQuantityButton line={line} type="plus" />
+            <CartQuantityButton
+              line={line}
+              type="plus"
+              disabled={availableStock === line.quantity}
+            />
           </div>
 
           <div className="flex">

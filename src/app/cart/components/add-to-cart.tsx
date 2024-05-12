@@ -36,7 +36,7 @@ export const AddToCart: FC<Props> = ({
   text = 'Agregar al carrito',
   className
 }) => {
-  const [, action] = useFormState(addToCart, null);
+  const [error, action] = useFormState(addToCart, null);
 
   const actionWithVariant = action.bind(null, { quantity, productVariantId: variantId });
 
@@ -45,6 +45,7 @@ export const AddToCart: FC<Props> = ({
   return (
     <form action={actionWithVariant}>
       <SubmitButton text={text} className={className} />
+      {error && <p className="text-red-500 text-xs">{error}</p>}
     </form>
   );
 };

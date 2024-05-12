@@ -1,3 +1,4 @@
+import { ApiError } from '../errors';
 import { type TypedDocumentString } from './codegen/graphql';
 
 export const vendyxFetcher = async <R, V>(
@@ -20,8 +21,9 @@ export const vendyxFetcher = async <R, V>(
 
   const { data, errors } = await result.json();
   if (errors?.length) {
-    // throw new ApiError(ApiErrorMessages.UnexpectedError, errors);
-    console.log('Error', errors);
+    // console.log('Error', errors);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    throw new ApiError(errors[0].message ?? '');
   }
 
   return data;

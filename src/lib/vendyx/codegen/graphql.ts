@@ -123,6 +123,41 @@ export type CustomerList = List & {
   items: Array<Customer>;
 };
 
+export enum ErrorCode {
+  /** Returned when there are not enough stock to fulfill the order. */
+  InsufficientStockError = 'INSUFFICIENT_STOCK_ERROR',
+  /** Returned when the provided email is in wrong format */
+  InvalidEmailError = 'INVALID_EMAIL_ERROR',
+  /** Returned when trying to perform an action that can't be performed in the current order state. */
+  OrderInvalidActionError = 'ORDER_INVALID_ACTION_ERROR',
+  /** Returned when payment is declined */
+  OrderPaymentDeclinedError = 'ORDER_PAYMENT_DECLINED_ERROR',
+  /** Returned when trying to add a payment method that does not exists */
+  OrderPaymentMethodError = 'ORDER_PAYMENT_METHOD_ERROR',
+  /** Returned when trying to add a shipment method that does not exists */
+  OrderShipmentMethodError = 'ORDER_SHIPMENT_METHOD_ERROR',
+  /** Returned when an unknown error has occurred. */
+  UnknownError = 'UNKNOWN_ERROR'
+}
+
+export type ErrorResult = {
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+};
+
+export type InsufficientStockError = ErrorResult & {
+  __typename?: 'InsufficientStockError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+  quantityAvailable: Scalars['Int']['output'];
+};
+
+export type InvalidEmailError = ErrorResult & {
+  __typename?: 'InvalidEmailError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+};
+
 /** A list of items with count, each result that expose a array of items should implement this interface */
 export type List = {
   count: Scalars['Int']['output'];
@@ -237,6 +272,12 @@ export type Order = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
+export type OrderInvalidActionError = ErrorResult & {
+  __typename?: 'OrderInvalidActionError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+};
+
 export type OrderLine = Node & {
   __typename?: 'OrderLine';
   createdAt: Scalars['Date']['output'];
@@ -258,6 +299,24 @@ export type OrderList = List & {
   __typename?: 'OrderList';
   count: Scalars['Int']['output'];
   items: Array<Order>;
+};
+
+export type OrderPaymentDeclinedError = ErrorResult & {
+  __typename?: 'OrderPaymentDeclinedError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+};
+
+export type OrderPaymentMethodError = ErrorResult & {
+  __typename?: 'OrderPaymentMethodError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
+};
+
+export type OrderShipmentMethodError = ErrorResult & {
+  __typename?: 'OrderShipmentMethodError';
+  errorCode: ErrorCode;
+  message: Scalars['String']['output'];
 };
 
 export enum OrderState {
@@ -423,6 +482,7 @@ export type CommonOrderFragment = {
       productVariant: {
         __typename?: 'Variant';
         id: string;
+        stock: number;
         product: {
           __typename?: 'Product';
           name: string;
@@ -683,6 +743,7 @@ export const CommonOrderFragmentDoc = new TypedDocumentString(
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -786,6 +847,7 @@ export const CreateOrderMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -863,6 +925,7 @@ export const AddLineToOrderMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -940,6 +1003,7 @@ export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1017,6 +1081,7 @@ export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1094,6 +1159,7 @@ export const AddCustomerToOrderDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1171,6 +1237,7 @@ export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1248,6 +1315,7 @@ export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1325,6 +1393,7 @@ export const AddPaymentToOrderMutationDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug
@@ -1402,6 +1471,7 @@ export const GetOrderQueryDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         product {
           name
           slug

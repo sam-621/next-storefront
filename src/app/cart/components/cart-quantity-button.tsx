@@ -10,16 +10,18 @@ import { cn } from '@/ui/utils';
 
 import { updateCartItem } from '../actions';
 
-const SubmitButton = ({ type }: { type: QuantityCounterType }) => {
+const SubmitButton = ({ type, disabled }: { type: QuantityCounterType; disabled?: boolean }) => {
   const { pending } = useFormStatus();
 
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className={cn('border-gray-200 w-full flex justify-center items-center', {
-        'cursor-not-allowed': pending
+        'cursor-not-allowed': pending,
+        'cursor-not-allowed text-gray-400': disabled
       })}
+      title={disabled ? 'No hay suficiente stock' : ''}
     >
       {pending ? (
         <ArrowPathIcon className="animate-spin" width={16} height={16} />
@@ -32,9 +34,8 @@ const SubmitButton = ({ type }: { type: QuantityCounterType }) => {
   );
 };
 
-export const CartQuantityButton: FC<Props> = ({ line, type }) => {
-  const state = useFormState(updateCartItem, null);
-  const action = state[1];
+export const CartQuantityButton: FC<Props> = ({ line, type, disabled }) => {
+  const [, action] = useFormState(updateCartItem, null);
 
   const actionWithVariant = action.bind(null, {
     id: line.id,
@@ -49,7 +50,7 @@ export const CartQuantityButton: FC<Props> = ({ line, type }) => {
       })}
       action={actionWithVariant}
     >
-      <SubmitButton type={type} />
+      <SubmitButton type={type} disabled={disabled} />
     </form>
   );
 };
@@ -57,6 +58,7 @@ export const CartQuantityButton: FC<Props> = ({ line, type }) => {
 interface Props {
   type: QuantityCounterType;
   line: CommonOrderFragment['lines']['items'][0];
+  disabled?: boolean;
 }
 
 type QuantityCounterType = 'plus' | 'minus';
