@@ -5,12 +5,12 @@ This storefront is built to showcase the capability of [Vendyx](https://vendyx.d
 - [Vendyx server](https://vendyx.up.railway.app/admin/)
 - [Storefront](https://vendyx-storefront.vercel.app/)
 
-### Theme
+## Theme
 
 - Components: [tailwindui](https://tailwindui.com/?ref=top)
 - Icons: [heroicons](https://heroicons.com/)
 
-### Tech stack
+## Tech stack
 
 - [Next 14](https://nextjs.org/) as main framework
 - [zod](https://zod.dev/) for form validations
