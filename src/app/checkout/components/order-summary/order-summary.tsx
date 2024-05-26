@@ -12,7 +12,7 @@ export const OrderSummary: FC<Props> = ({ order }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-lg font-medium text-gray-900">Resumen de la orden</h2>
+      <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
 
       <div className="flex flex-col gap-6">
         {lines.map(l => (
@@ -29,9 +29,9 @@ export const OrderSummary: FC<Props> = ({ order }) => {
             <p className="ml-4 text-sm font-medium">{getFormattedPrice(order.subtotal)}</p>
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
-            <p className="text-gray-600 text-sm font-normal">Envío</p>
+            <p className="text-gray-600 text-sm font-normal">Shipment</p>
             <p className={cn('ml-4 text-sm font-medium', !shipment && 'text-gray-600 font-normal')}>
-              {shipment ? getFormattedPrice(shipment.amount) : 'Por calcular'}
+              {shipment ? getFormattedPrice(shipment.amount) : 'To calculate'}
             </p>
           </div>
         </div>
@@ -47,7 +47,7 @@ export const OrderSummary: FC<Props> = ({ order }) => {
           <div className="flex justify-between">
             <div>
               <div className="flex flex-col gap-2">
-                <p className="text-base font-medium text-gray-900">Dirección</p>
+                <p className="text-base font-medium text-gray-900">Address</p>
                 <div className="text-gray-600 text-sm">
                   <p>{shippingAddress.streetLine1}</p>
                   {shippingAddress.streetLine2 && <p>{shippingAddress.streetLine2}</p>}
@@ -66,7 +66,7 @@ export const OrderSummary: FC<Props> = ({ order }) => {
             </div>
             {payment && (
               <div className="flex flex-col gap-2">
-                <p className="text-base font-medium text-gray-900">Método de pago</p>
+                <p className="text-base font-medium text-gray-900">Payment method</p>
                 <p className="text-gray-600 text-sm">{payment.method.name}</p>
               </div>
             )}

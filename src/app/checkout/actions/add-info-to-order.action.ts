@@ -67,7 +67,7 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
     });
 
     const addCustomerErrorMessage = getOrderErrorMessage(addCustomerErrors[0]);
-    if (addCustomerErrorMessage) return addCustomerErrorMessage;
+    if (addCustomerErrorMessage) return { message: addCustomerErrorMessage, error: true };
 
     const { apiErrors: addShippingAddressErrors } = await addShippingAddressToOrder(cartId, {
       phoneCountryCode: '52',
@@ -82,7 +82,7 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
     });
 
     const addShippingErrorMessage = getOrderErrorMessage(addShippingAddressErrors[0]);
-    if (addShippingErrorMessage) return addShippingErrorMessage;
+    if (addShippingErrorMessage) return { message: addShippingErrorMessage, error: true };
 
     // In this store we only have one shipping method
     const availableShippingMethods = await getAvailableShippingMethods();
@@ -93,7 +93,7 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
     });
 
     const addShipmentErrorMessage = getOrderErrorMessage(addShipmentErrors[0]);
-    if (addShipmentErrorMessage) return addShipmentErrorMessage;
+    if (addShipmentErrorMessage) return { message: addShipmentErrorMessage, error: true };
 
     revalidateTag(CacheTags.cart[0]);
   } catch (error) {

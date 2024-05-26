@@ -38,7 +38,7 @@ const SubmitButton = () => {
 
   return (
     <div className="flex justify-between items-center">
-      <p className="text-gray-500 text-sm">No se le cobrará hasta el siguiente paso</p>
+      <p className="text-gray-500 text-sm">You will not be charged until next step.</p>
       <button
         disabled={pending}
         type="submit"
@@ -50,7 +50,7 @@ const SubmitButton = () => {
         )}
       >
         {pending && <ArrowPathIcon width={16} height={16} className="animate-spin" />}
-        {pending ? 'Guardando...' : 'Continuar'}
+        {pending ? 'Saving...' : 'Continue'}
       </button>
     </div>
   );

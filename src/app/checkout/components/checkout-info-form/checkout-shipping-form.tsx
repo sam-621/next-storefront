@@ -12,22 +12,22 @@ export const CheckoutShippingForm: FC<Props> = ({ fieldErrors, address }) => {
     <CheckoutFormCard title="Información de envío">
       <Input
         name="phoneNumber"
-        label="Telefono"
+        label="Phone number"
         placeholder="667 1624 203"
         error={getFieldError(fieldErrors?.phoneNumber)}
         defaultValue={address?.phoneNumber ?? ''}
       />
       <Input
         name="streetLine1"
-        label="Dirección"
+        label="Address"
         placeholder="Romulo Díaz de la Vega #117 Col. Lazaro cárdenas"
         error={getFieldError(fieldErrors?.streetLine1)}
         defaultValue={address?.streetLine1 ?? ''}
       />
       <Input
         name="streetLine2"
-        label="Apartamento, suite, etc."
-        placeholder="Apartamento 45"
+        label="Apartment, suite, etc."
+        placeholder="Apartment 45"
         error={getFieldError(fieldErrors?.streetLine2)}
         defaultValue={address?.streetLine2 ?? ''}
       />
@@ -35,28 +35,28 @@ export const CheckoutShippingForm: FC<Props> = ({ fieldErrors, address }) => {
       <div className="grid grid-cols-2 gap-4">
         <Select
           name="country"
-          label="País"
+          label="Country"
           items={['México']}
           error={getFieldError(fieldErrors?.country)}
           defaultValue={address?.country ?? ''}
         />
         <Select
           name="province"
-          label="Estado"
+          label="Province"
           items={getProvinces()}
           error={getFieldError(fieldErrors?.province)}
           defaultValue={address?.province ?? ''}
         />
         <Input
           name="city"
-          label="Ciudad"
+          label="City"
           placeholder="Culiacán"
           error={getFieldError(fieldErrors?.city)}
           defaultValue={address?.city ?? ''}
         />
         <Input
           name="postalCode"
-          label="Código postal"
+          label="Postal code"
           placeholder="80290"
           error={getFieldError(fieldErrors?.postalCode)}
           defaultValue={address?.postalCode ?? ''}
@@ -64,7 +64,7 @@ export const CheckoutShippingForm: FC<Props> = ({ fieldErrors, address }) => {
       </div>
       <Input
         name="references"
-        label="Referencias"
+        label="References"
         placeholder="Hay dos pinos"
         error={getFieldError(fieldErrors?.references)}
         defaultValue={address?.references ?? ''}

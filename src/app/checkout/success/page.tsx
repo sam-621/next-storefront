@@ -18,10 +18,10 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
   return (
     <main className="grid grid-cols-2 h-[calc(100vh-85px)] overflow-y-hidden mx-3 md:mx-8 lg:mx-12 xl:mx-auto max-w-7xl">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold">Gracias por tu compra!</h1>
-        <p className="mt-4">Te enviaremos un email con los detalles de tu orden.</p>
+        <h1 className="text-3xl font-bold">Thanks for your purchase!</h1>
+        <p className="mt-4">We will send you an email with the details of your order.</p>
         <Link href="/" className="flex items-center gap-2  mt-8 text-indigo-600 cursor-pointer">
-          Seguir comprando
+          Keep buying
           <ArrowRightIcon className="h-4 w-4" />
         </Link>
       </div>

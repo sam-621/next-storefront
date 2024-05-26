@@ -19,15 +19,15 @@ export const CheckoutSteps = () => {
   return (
     <div className="flex gap-4 items-center justify-center w-full">
       <p className={cn('text-sm', isInInformationStep ? 'text-indigo-600' : 'text-gray-700')}>
-        Información de contácto
+        Contact information
       </p>
       <ChevronRightIcon className="size-3 text-gray-300" />
       <p className={cn('text-sm', isInPaymentStep ? 'text-indigo-600' : 'text-gray-700')}>
-        Método de pago
+        Payment method
       </p>
       <ChevronRightIcon className="size-3 text-gray-300" />
       <p className={cn('text-sm', isInCompleteStep ? 'text-indigo-600' : 'text-gray-700')}>
-        Compra completada
+        Order completed
       </p>
     </div>
   );

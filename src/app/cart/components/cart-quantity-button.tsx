@@ -21,7 +21,7 @@ const SubmitButton = ({ type, disabled }: { type: QuantityCounterType; disabled?
         'cursor-not-allowed': pending,
         'cursor-not-allowed text-gray-400': disabled
       })}
-      title={disabled ? 'No hay suficiente stock' : ''}
+      title={disabled ? 'Not enough stock' : ''}
     >
       {pending ? (
         <ArrowPathIcon className="animate-spin" width={16} height={16} />

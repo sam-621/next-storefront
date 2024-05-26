@@ -14,7 +14,7 @@ const SubmitButton = () => {
       className="font-medium text-indigo-600 hover:text-indigo-500 flex gap-1 items-center"
     >
       {pending && <ArrowPathIcon width={20} height={20} className="animate-spin" />}
-      {pending ? 'Eliminando...' : 'Elimninar'}
+      {pending ? 'Removing...' : 'Remove'}
     </button>
   );
 };

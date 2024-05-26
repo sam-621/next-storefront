@@ -20,7 +20,7 @@ export const PaymentMethodsForm: FC<Props> = ({ methods }) => {
 
   return (
     <form action={actionWithMethodId} className="flex flex-col gap-6">
-      <CheckoutFormCard title="Métodos de pago">
+      <CheckoutFormCard title="Payment methods">
         <div className="flex gap-4">
           {methods.map(m => (
             <div

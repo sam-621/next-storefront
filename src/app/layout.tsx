@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Vendyx | E-Commerce',
-  description: 'E-Commerce enfocado en la venta de productos de calzado. powered by Vendyx'
+  description: 'Next storefront powered by Vendyx.'
 };
 
 export default function RootLayout({

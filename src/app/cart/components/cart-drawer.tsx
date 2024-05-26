@@ -18,7 +18,7 @@ export const CartDrawer: FC<Props> = ({ cart }) => {
     <div>
       <CartButton onClick={() => setIsOpen(true)} quantity={cart?.totalQuantity} />
       <Drawer
-        title="Carrito de compras"
+        title="Cart"
         isOpen={isOpen}
         handleClose={() => setIsOpen(false)}
         footer={<CartFooter cart={cart} />}
@@ -37,7 +37,7 @@ export const CartDrawer: FC<Props> = ({ cart }) => {
           </div>
         ) : (
           <div className="grid items-center mt-8">
-            <p className="text-center text-gray-500">Tu carrito está vacío</p>
+            <p className="text-center text-gray-500">Your cart is empty</p>
           </div>
         )}
       </Drawer>
