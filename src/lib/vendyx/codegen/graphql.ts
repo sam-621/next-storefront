@@ -123,41 +123,6 @@ export type CustomerList = List & {
   items: Array<Customer>;
 };
 
-export enum ErrorCode {
-  /** Returned when there are not enough stock to fulfill the order. */
-  InsufficientStockError = 'INSUFFICIENT_STOCK_ERROR',
-  /** Returned when the provided email is in wrong format */
-  InvalidEmailError = 'INVALID_EMAIL_ERROR',
-  /** Returned when trying to perform an action that can't be performed in the current order state. */
-  OrderInvalidActionError = 'ORDER_INVALID_ACTION_ERROR',
-  /** Returned when payment is declined */
-  OrderPaymentDeclinedError = 'ORDER_PAYMENT_DECLINED_ERROR',
-  /** Returned when trying to add a payment method that does not exists */
-  OrderPaymentMethodError = 'ORDER_PAYMENT_METHOD_ERROR',
-  /** Returned when trying to add a shipment method that does not exists */
-  OrderShipmentMethodError = 'ORDER_SHIPMENT_METHOD_ERROR',
-  /** Returned when an unknown error has occurred. */
-  UnknownError = 'UNKNOWN_ERROR'
-}
-
-export type ErrorResult = {
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
-};
-
-export type InsufficientStockError = ErrorResult & {
-  __typename?: 'InsufficientStockError';
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
-  quantityAvailable: Scalars['Int']['output'];
-};
-
-export type InvalidEmailError = ErrorResult & {
-  __typename?: 'InvalidEmailError';
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
-};
-
 /** A list of items with count, each result that expose a array of items should implement this interface */
 export type List = {
   count: Scalars['Int']['output'];
@@ -173,14 +138,14 @@ export type ListInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addCustomerToOrder?: Maybe<Order>;
-  addLineToOrder: Order;
-  addPaymentToOrder?: Maybe<Order>;
-  addShipmentToOrder?: Maybe<Order>;
-  addShippingAddressToOrder?: Maybe<Order>;
-  createOrder?: Maybe<Order>;
-  removeOrderLine: Order;
-  updateOrderLine: Order;
+  addCustomerToOrder: OrderResult;
+  addLineToOrder: OrderResult;
+  addPaymentToOrder: OrderResult;
+  addShipmentToOrder: OrderResult;
+  addShippingAddressToOrder: OrderResult;
+  createOrder: OrderResult;
+  removeOrderLine: OrderResult;
+  updateOrderLine: OrderResult;
 };
 
 export type MutationAddCustomerToOrderArgs = {
@@ -272,9 +237,21 @@ export type Order = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
-export type OrderInvalidActionError = ErrorResult & {
-  __typename?: 'OrderInvalidActionError';
-  errorCode: ErrorCode;
+/**  Utils  */
+export enum OrderErrorCode {
+  CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
+  LineNotFound = 'LINE_NOT_FOUND',
+  NotEnoughStock = 'NOT_ENOUGH_STOCK',
+  OrderNotFound = 'ORDER_NOT_FOUND',
+  OrderTransitionError = 'ORDER_TRANSITION_ERROR',
+  PaymentDeclined = 'PAYMENT_DECLINED',
+  PaymentMethodNotFound = 'PAYMENT_METHOD_NOT_FOUND',
+  ShippingMethodNotFound = 'SHIPPING_METHOD_NOT_FOUND'
+}
+
+export type OrderErrorResult = {
+  __typename?: 'OrderErrorResult';
+  code: OrderErrorCode;
   message: Scalars['String']['output'];
 };
 
@@ -301,22 +278,11 @@ export type OrderList = List & {
   items: Array<Order>;
 };
 
-export type OrderPaymentDeclinedError = ErrorResult & {
-  __typename?: 'OrderPaymentDeclinedError';
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
-};
-
-export type OrderPaymentMethodError = ErrorResult & {
-  __typename?: 'OrderPaymentMethodError';
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
-};
-
-export type OrderShipmentMethodError = ErrorResult & {
-  __typename?: 'OrderShipmentMethodError';
-  errorCode: ErrorCode;
-  message: Scalars['String']['output'];
+/**  Results  */
+export type OrderResult = {
+  __typename?: 'OrderResult';
+  apiErrors: Array<OrderErrorResult>;
+  order?: Maybe<Order>;
 };
 
 export enum OrderState {
@@ -562,11 +528,15 @@ export type CreateOrderMutationMutationVariables = Exact<{
 
 export type CreateOrderMutationMutation = {
   __typename?: 'Mutation';
-  createOrder?:
-    | ({ __typename?: 'Order' } & {
-        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
-      })
-    | null;
+  createOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
+  };
 };
 
 export type AddLineToOrderMutationMutationVariables = Exact<{
@@ -576,8 +546,14 @@ export type AddLineToOrderMutationMutationVariables = Exact<{
 
 export type AddLineToOrderMutationMutation = {
   __typename?: 'Mutation';
-  addLineToOrder: { __typename?: 'Order' } & {
-    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  addLineToOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
   };
 };
 
@@ -588,8 +564,14 @@ export type UpdateOrderLineMutationMutationVariables = Exact<{
 
 export type UpdateOrderLineMutationMutation = {
   __typename?: 'Mutation';
-  updateOrderLine: { __typename?: 'Order' } & {
-    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  updateOrderLine: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
   };
 };
 
@@ -599,8 +581,14 @@ export type RemoveOrderLineMutationMutationVariables = Exact<{
 
 export type RemoveOrderLineMutationMutation = {
   __typename?: 'Mutation';
-  removeOrderLine: { __typename?: 'Order' } & {
-    ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+  removeOrderLine: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
   };
 };
 
@@ -611,11 +599,15 @@ export type AddCustomerToOrderMutationVariables = Exact<{
 
 export type AddCustomerToOrderMutation = {
   __typename?: 'Mutation';
-  addCustomerToOrder?:
-    | ({ __typename?: 'Order' } & {
-        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
-      })
-    | null;
+  addCustomerToOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
+  };
 };
 
 export type AddShippingAddressToOrderMutationVariables = Exact<{
@@ -625,11 +617,15 @@ export type AddShippingAddressToOrderMutationVariables = Exact<{
 
 export type AddShippingAddressToOrderMutation = {
   __typename?: 'Mutation';
-  addShippingAddressToOrder?:
-    | ({ __typename?: 'Order' } & {
-        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
-      })
-    | null;
+  addShippingAddressToOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
+  };
 };
 
 export type AddShipmentToOrderMutationMutationVariables = Exact<{
@@ -639,11 +635,15 @@ export type AddShipmentToOrderMutationMutationVariables = Exact<{
 
 export type AddShipmentToOrderMutationMutation = {
   __typename?: 'Mutation';
-  addShipmentToOrder?:
-    | ({ __typename?: 'Order' } & {
-        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
-      })
-    | null;
+  addShipmentToOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
+  };
 };
 
 export type AddPaymentToOrderMutationMutationVariables = Exact<{
@@ -653,11 +653,15 @@ export type AddPaymentToOrderMutationMutationVariables = Exact<{
 
 export type AddPaymentToOrderMutationMutation = {
   __typename?: 'Mutation';
-  addPaymentToOrder?:
-    | ({ __typename?: 'Order' } & {
-        ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
-      })
-    | null;
+  addPaymentToOrder: {
+    __typename?: 'OrderResult';
+    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
+    order?:
+      | ({ __typename?: 'Order' } & {
+          ' $fragmentRefs'?: { CommonOrderFragment: CommonOrderFragment };
+        })
+      | null;
+  };
 };
 
 export type GetOrderQueryQueryVariables = Exact<{
@@ -830,7 +834,13 @@ export const CommonProductFragmentDoc = new TypedDocumentString(
 export const CreateOrderMutationDocument = new TypedDocumentString(`
     mutation CreateOrderMutation($input: CreateOrderInput) {
   createOrder(input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -908,7 +918,13 @@ export const CreateOrderMutationDocument = new TypedDocumentString(`
 export const AddLineToOrderMutationDocument = new TypedDocumentString(`
     mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {
   addLineToOrder(orderId: $orderId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -986,7 +1002,13 @@ export const AddLineToOrderMutationDocument = new TypedDocumentString(`
 export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
     mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {
   updateOrderLine(lineId: $lineId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -1064,7 +1086,13 @@ export const UpdateOrderLineMutationDocument = new TypedDocumentString(`
 export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
     mutation RemoveOrderLineMutation($lineId: ID!) {
   removeOrderLine(lineId: $lineId) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -1142,7 +1170,13 @@ export const RemoveOrderLineMutationDocument = new TypedDocumentString(`
 export const AddCustomerToOrderDocument = new TypedDocumentString(`
     mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {
   addCustomerToOrder(orderId: $orderId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -1220,7 +1254,13 @@ export const AddCustomerToOrderDocument = new TypedDocumentString(`
 export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
     mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {
   addShippingAddressToOrder(orderId: $orderId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -1298,7 +1338,13 @@ export const AddShippingAddressToOrderDocument = new TypedDocumentString(`
 export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
     mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {
   addShipmentToOrder(orderId: $orderId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {
@@ -1376,7 +1422,13 @@ export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
 export const AddPaymentToOrderMutationDocument = new TypedDocumentString(`
     mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {
   addPaymentToOrder(orderId: $orderId, input: $input) {
-    ...CommonOrder
+    apiErrors {
+      code
+      message
+    }
+    order {
+      ...CommonOrder
+    }
   }
 }
     fragment CommonOrder on Order {

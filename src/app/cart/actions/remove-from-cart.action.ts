@@ -4,7 +4,7 @@ import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { CacheTags, CookiesNames } from '@/lib/constants';
-import { removeOrderLine } from '@/lib/vendyx';
+import { getOrderErrorMessage, removeOrderLine } from '@/lib/vendyx';
 
 export const removeFromCart = async (_: any, lineId: string) => {
   try {
@@ -14,10 +14,12 @@ export const removeFromCart = async (_: any, lineId: string) => {
       return 'Failed to remove item from cart';
     }
 
-    const cart = await removeOrderLine(lineId);
+    const { apiErrors } = await removeOrderLine(lineId);
 
-    if (!cart) {
-      return 'Failed to remove item from cart';
+    const errorMessage = getOrderErrorMessage(apiErrors[0]);
+
+    if (errorMessage) {
+      return errorMessage;
     }
 
     revalidateTag(CacheTags.cart[0]);

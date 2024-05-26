@@ -5,7 +5,13 @@ import { vendyxFetcher } from '../fetcher.vendyx';
 const AddPaymentToOrderMutation = graphql(`
   mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {
     addPaymentToOrder(orderId: $orderId, input: $input) {
-      ...CommonOrder
+      apiErrors {
+        code
+        message
+      }
+      order {
+        ...CommonOrder
+      }
     }
   }
 `);

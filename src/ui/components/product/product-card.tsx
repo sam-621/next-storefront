@@ -12,6 +12,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
   const defaultAsset = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
   const defaultVariant = variants.items[0];
+  console.log(defaultVariant.stock);
 
   return (
     <article className="group flex flex-col gap-4">
@@ -32,7 +33,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
       <div>
         <AddToCart
           variantId={defaultVariant.id}
-          quantity={1}
+          availableForSale={defaultVariant.stock > 0}
           className="lg:opacity-0 lg:group-hover:opacity-100"
         />
       </div>

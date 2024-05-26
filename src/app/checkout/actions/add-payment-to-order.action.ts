@@ -4,28 +4,21 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { CookiesNames } from '@/lib/constants';
-import { FormMessages } from '@/lib/forms';
-import { addPaymentToOrder } from '@/lib/vendyx';
+import { addPaymentToOrder, getOrderErrorMessage } from '@/lib/vendyx';
 
 export const addPayment = async (_: any, paymentMethodId: string) => {
-  let cartId;
+  const cartId = cookies().get(CookiesNames.cartId)?.value;
 
-  try {
-    cartId = cookies().get(CookiesNames.cartId)?.value;
-
-    if (!cartId) {
-      return 'Error al generar la orden';
-    }
-
-    await addPaymentToOrder(cartId, { methodId: paymentMethodId });
-
-    cookies().delete(CookiesNames.cartId);
-  } catch (error) {
-    return {
-      message: FormMessages.unexpectedError,
-      error: true
-    };
+  if (!cartId) {
+    return 'Error adding payment to order.';
   }
+
+  const { apiErrors } = await addPaymentToOrder(cartId, { methodId: paymentMethodId });
+
+  const errorMessage = getOrderErrorMessage(apiErrors[0]);
+  if (errorMessage) return errorMessage;
+
+  cookies().delete(CookiesNames.cartId);
 
   redirect(`/checkout/success?code=${cartId}`);
 };

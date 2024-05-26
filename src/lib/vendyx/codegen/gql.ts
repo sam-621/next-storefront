@@ -16,21 +16,21 @@ const documents = {
     types.CommonOrderFragmentDoc,
   '\n  fragment CommonProduct on Product {\n    id\n    name\n    slug\n    description\n    onlineOnly\n    variants(input: { take: 1 }) {\n      items {\n        id\n        stock\n        price\n      }\n    }\n    assets {\n      items {\n        id\n        name\n        source\n      }\n    }\n  }\n':
     types.CommonProductFragmentDoc,
-  '\n  mutation CreateOrderMutation($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation CreateOrderMutation($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.CreateOrderMutationDocument,
-  '\n  mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.AddLineToOrderMutationDocument,
-  '\n  mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {\n    updateOrderLine(lineId: $lineId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {\n    updateOrderLine(lineId: $lineId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.UpdateOrderLineMutationDocument,
-  '\n  mutation RemoveOrderLineMutation($lineId: ID!) {\n    removeOrderLine(lineId: $lineId) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation RemoveOrderLineMutation($lineId: ID!) {\n    removeOrderLine(lineId: $lineId) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.RemoveOrderLineMutationDocument,
-  '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.AddCustomerToOrderDocument,
-  '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.AddShippingAddressToOrderDocument,
-  '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.AddShipmentToOrderMutationDocument,
-  '\n  mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n':
+  '\n  mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n':
     types.AddPaymentToOrderMutationDocument,
   '\n  query GetOrderQuery($orderId: ID, $code: String) {\n    order(id: $orderId, code: $code) {\n      ...CommonOrder\n    }\n  }\n':
     types.GetOrderQueryDocument,
@@ -58,49 +58,49 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation CreateOrderMutation($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation CreateOrderMutation($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CreateOrderMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation AddLineToOrderMutation($orderId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddLineToOrderMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {\n    updateOrderLine(lineId: $lineId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation UpdateOrderLineMutation($lineId: ID!, $input: UpdateOrderLineInput!) {\n    updateOrderLine(lineId: $lineId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').UpdateOrderLineMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation RemoveOrderLineMutation($lineId: ID!) {\n    removeOrderLine(lineId: $lineId) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation RemoveOrderLineMutation($lineId: ID!) {\n    removeOrderLine(lineId: $lineId) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').RemoveOrderLineMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation AddCustomerToOrder($orderId: ID!, $input: CreateCustomerInput!) {\n    addCustomerToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddCustomerToOrderDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation addShippingAddressToOrder($orderId: ID!, $input: CreateAddressInput!) {\n    addShippingAddressToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddShippingAddressToOrderDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation AddShipmentToOrderMutation($orderId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddShipmentToOrderMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $orderId, input: $input) {\n      ...CommonOrder\n    }\n  }\n'
+  source: '\n  mutation AddPaymentToOrderMutation($orderId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $orderId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...CommonOrder\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddPaymentToOrderMutationDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

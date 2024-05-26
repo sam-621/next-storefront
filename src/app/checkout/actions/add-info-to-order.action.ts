@@ -11,7 +11,8 @@ import {
   addCustomerToOrder,
   addShipmentToOrder,
   addShippingAddressToOrder,
-  getAvailableShippingMethods
+  getAvailableShippingMethods,
+  getOrderErrorMessage
 } from '@/lib/vendyx';
 
 const schema = z.object({
@@ -58,8 +59,17 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
 
     const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';
 
-    await addCustomerToOrder(cartId, { email, firstName, lastName, enable: true });
-    await addShippingAddressToOrder(cartId, {
+    const { apiErrors: addCustomerErrors } = await addCustomerToOrder(cartId, {
+      email,
+      firstName,
+      lastName,
+      enable: true
+    });
+
+    const addCustomerErrorMessage = getOrderErrorMessage(addCustomerErrors[0]);
+    if (addCustomerErrorMessage) return addCustomerErrorMessage;
+
+    const { apiErrors: addShippingAddressErrors } = await addShippingAddressToOrder(cartId, {
       phoneCountryCode: '52',
       phoneNumber,
       streetLine1,
@@ -71,11 +81,19 @@ export const addInfoToOrder = async (_: any, formData: FormData) => {
       references
     });
 
+    const addShippingErrorMessage = getOrderErrorMessage(addShippingAddressErrors[0]);
+    if (addShippingErrorMessage) return addShippingErrorMessage;
+
     // In this store we only have one shipping method
     const availableShippingMethods = await getAvailableShippingMethods();
     const defaultShippingMethod = availableShippingMethods[0];
 
-    await addShipmentToOrder(cartId, { shippingMethodId: defaultShippingMethod.id });
+    const { apiErrors: addShipmentErrors } = await addShipmentToOrder(cartId, {
+      shippingMethodId: defaultShippingMethod.id
+    });
+
+    const addShipmentErrorMessage = getOrderErrorMessage(addShipmentErrors[0]);
+    if (addShipmentErrorMessage) return addShipmentErrorMessage;
 
     revalidateTag(CacheTags.cart[0]);
   } catch (error) {
