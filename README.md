@@ -1,6 +1,6 @@
 # Next 14 storefront
 
-This storefront is built to showcase the capability of [ebloc](https://github.com/sam-621/ebloc). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
+This storefront is built to showcase the capability of [Ebloc](https://github.com/sam-621/ebloc). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
 
 - [ebloc server](https://ebloc.up.railway.app/admin/)
 - [Storefront](https://ebloc-storefront.vercel.app/)
