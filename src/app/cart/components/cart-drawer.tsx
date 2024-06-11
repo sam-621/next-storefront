@@ -2,7 +2,7 @@
 
 import { type FC, useState } from 'react';
 
-import { type CommonOrderFragment } from '@/lib/vendyx';
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { Drawer } from '@/ui/theme';
 
 import { CartButton } from './cart-button';

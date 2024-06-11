@@ -1,5 +1,5 @@
 import { graphql } from '../codegen';
-import { vendyxFetcher } from '../fetcher.vendyx';
+import { eblocFetcher } from '../fetcher.ebloc';
 
 const GetAvailableShippingMethodsQuery = graphql(`
   query GetAvailableShippingMethods {
@@ -10,7 +10,7 @@ const GetAvailableShippingMethodsQuery = graphql(`
 `);
 
 export const getAvailableShippingMethods = async () => {
-  const { availableShippingMethods } = await vendyxFetcher(GetAvailableShippingMethodsQuery);
+  const { availableShippingMethods } = await eblocFetcher(GetAvailableShippingMethodsQuery);
 
   return availableShippingMethods;
 };

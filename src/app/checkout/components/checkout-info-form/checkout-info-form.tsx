@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
-import { type CommonOrderFragment } from '@/lib/vendyx';
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { cn } from '@/ui/utils';
 
 import { addInfoToOrder } from '../../actions/add-info-to-order.action';

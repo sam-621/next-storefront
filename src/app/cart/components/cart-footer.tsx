@@ -3,8 +3,8 @@ import { type FC } from 'react';
 import Link from 'next/link';
 
 import { CheckoutStepsField, CheckoutStepsValues } from '@/lib/constants';
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { getFormattedPrice } from '@/lib/utils';
-import { type CommonOrderFragment } from '@/lib/vendyx';
 
 export const CartFooter: FC<Props> = ({ cart }) => {
   return (

@@ -1,9 +1,9 @@
 # Next 14 storefront
 
-This storefront is built to showcase the capability of [Vendyx](https://github.com/sam-621/vendyx.dev). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
+This storefront is built to showcase the capability of [ebloc](https://github.com/sam-621/ebloc). By launching this storefront, we aim to provide a real-world example of how our platform streamlines operations, enhances user experience, and drives sales.
 
-- [Vendyx server](https://vendyx.up.railway.app/admin/)
-- [Storefront](https://vendyx-storefront.vercel.app/)
+- [ebloc server](https://ebloc.up.railway.app/admin/)
+- [Storefront](https://ebloc-storefront.vercel.app/)
 
 ## Theme
 
@@ -14,7 +14,7 @@ This storefront is built to showcase the capability of [Vendyx](https://github.c
 
 - [Next 14](https://nextjs.org/) as main framework
 - [zod](https://zod.dev/) for form validations
-- [graphql-codegen](https://the-guild.dev/graphql/codegen) for generating code from vendyx graphql schema
+- [graphql-codegen](https://the-guild.dev/graphql/codegen) for generating code from ebloc graphql schema
 
 ### Roadmap
 

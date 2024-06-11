@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { CookiesNames } from '@/lib/constants';
-import { addPaymentToOrder, getOrderErrorMessage } from '@/lib/vendyx';
+import { addPaymentToOrder, getOrderErrorMessage } from '@/lib/ebloc';
 
 export const addPayment = async (_: any, paymentMethodId: string) => {
   const cartId = cookies().get(CookiesNames.cartId)?.value;

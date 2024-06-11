@@ -6,14 +6,14 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 import { CacheTags, CheckoutStepsField, CheckoutStepsValues, CookiesNames } from '@/lib/constants';
-import { FormMessages } from '@/lib/forms';
 import {
   addCustomerToOrder,
   addShipmentToOrder,
   addShippingAddressToOrder,
   getAvailableShippingMethods,
   getOrderErrorMessage
-} from '@/lib/vendyx';
+} from '@/lib/ebloc';
+import { FormMessages } from '@/lib/forms';
 
 const schema = z.object({
   email: z.string().email(FormMessages.invalidEmail),

@@ -4,7 +4,7 @@ import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { CacheTags, CookiesNames } from '@/lib/constants';
-import { getOrderErrorMessage, removeOrderLine } from '@/lib/vendyx';
+import { getOrderErrorMessage, removeOrderLine } from '@/lib/ebloc';
 
 export const removeFromCart = async (_: any, lineId: string) => {
   try {

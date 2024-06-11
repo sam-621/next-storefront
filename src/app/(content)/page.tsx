@@ -1,4 +1,4 @@
-import { getProducts } from '@/lib/vendyx';
+import { getProducts } from '@/lib/ebloc';
 import { ProductCard } from '@/ui/components/product';
 
 export default async function Home() {

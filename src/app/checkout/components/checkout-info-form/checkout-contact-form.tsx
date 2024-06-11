@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { getFieldError } from '@/lib/forms';
-import { type CommonOrderFragment } from '@/lib/vendyx';
 import { Input } from '@/ui/theme';
 
 import { CheckoutFormCard } from '../checkout-form-card';

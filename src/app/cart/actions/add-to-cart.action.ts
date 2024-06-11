@@ -4,7 +4,7 @@ import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { CacheTags, CookiesNames } from '@/lib/constants';
-import { addLineToOrder, createOrder, getOrderErrorMessage } from '@/lib/vendyx';
+import { addLineToOrder, createOrder, getOrderErrorMessage } from '@/lib/ebloc';
 
 export const addToCart = async (_: any, line: { productVariantId: string; quantity: number }) => {
   let cartId = cookies().get(CookiesNames.cartId)?.value;

@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { getOrder } from '@/lib/vendyx';
+import { getOrder } from '@/lib/ebloc';
 
 import { OrderSummary } from '../components/order-summary/order-summary';
 

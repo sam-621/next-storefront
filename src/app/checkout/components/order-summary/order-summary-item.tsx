@@ -3,8 +3,8 @@ import { type FC } from 'react';
 import Image from 'next/image';
 
 import { DEFAULT_PRODUCT_IMAGE } from '@/lib/constants';
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { getFormattedPrice } from '@/lib/utils';
-import { type CommonOrderFragment } from '@/lib/vendyx';
 
 export const OrderSummaryItem: FC<Props> = ({ line }) => {
   const { assets, name } = line.productVariant.product;

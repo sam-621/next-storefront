@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
-import { type CommonOrderFragment } from '@/lib/vendyx';
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { cn } from '@/ui/utils';
 
 import { updateCartItem } from '../actions';

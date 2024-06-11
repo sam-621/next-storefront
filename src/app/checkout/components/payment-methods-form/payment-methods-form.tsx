@@ -6,7 +6,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
-import { type GetAvailablePaymentMethodsQuery } from '@/lib/vendyx';
+import { type GetAvailablePaymentMethodsQuery } from '@/lib/ebloc';
 import { cn } from '@/ui/utils';
 
 import { addPayment } from '../../actions';

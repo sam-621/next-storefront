@@ -1,4 +1,4 @@
-import { getAvailablePaymentMethods } from '@/lib/vendyx';
+import { getAvailablePaymentMethods } from '@/lib/ebloc';
 
 import { PaymentMethodsForm } from './payment-methods-form';
 

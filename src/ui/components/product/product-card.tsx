@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 import { AddToCart } from '@/app/cart/components';
 import { DEFAULT_PRODUCT_IMAGE } from '@/lib/constants';
+import { type CommonProductFragment } from '@/lib/ebloc';
 import { getFormattedPrice } from '@/lib/utils';
-import { type CommonProductFragment } from '@/lib/vendyx';
 
 export const ProductCard: FC<Props> = ({ product }) => {
   const { name, variants, assets } = product;

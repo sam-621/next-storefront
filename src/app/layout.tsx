@@ -7,8 +7,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Vendyx | E-Commerce',
-  description: 'Next storefront powered by Vendyx.'
+  title: 'ebloc | E-Commerce',
+  description: 'Next storefront powered by ebloc.'
 };
 
 export default function RootLayout({

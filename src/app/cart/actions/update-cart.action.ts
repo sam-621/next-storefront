@@ -3,7 +3,7 @@
 import { revalidateTag } from 'next/cache';
 
 import { CacheTags } from '@/lib/constants';
-import { getOrderErrorMessage, updateOrderLine } from '@/lib/vendyx';
+import { getOrderErrorMessage, updateOrderLine } from '@/lib/ebloc';
 
 export const updateCartItem = async (_: any, line: { id: string; quantity: number }) => {
   const { apiErrors } = await updateOrderLine(line.id, { quantity: line.quantity });

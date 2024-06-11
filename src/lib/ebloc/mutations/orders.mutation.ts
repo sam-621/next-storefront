@@ -7,7 +7,7 @@ import {
   type CreateOrderLineInput,
   type UpdateOrderLineInput
 } from '../codegen/graphql';
-import { vendyxFetcher } from '../fetcher.vendyx';
+import { eblocFetcher } from '../fetcher.ebloc';
 import { CommonOrder } from '../fragments';
 
 const CreateOrderMutation = graphql(`
@@ -27,7 +27,7 @@ const CreateOrderMutation = graphql(`
 export const createOrder = async ({ line }: CreateOrderInput) => {
   const {
     createOrder: { apiErrors, order }
-  } = await vendyxFetcher(CreateOrderMutation, {
+  } = await eblocFetcher(CreateOrderMutation, {
     input: { line }
   });
 
@@ -54,7 +54,7 @@ const AddLineToOrderMutation = graphql(`
 export const addLineToOrder = async (orderId: string, input: CreateOrderLineInput) => {
   const {
     addLineToOrder: { apiErrors, order }
-  } = await vendyxFetcher(AddLineToOrderMutation, {
+  } = await eblocFetcher(AddLineToOrderMutation, {
     orderId,
     input
   });
@@ -82,7 +82,7 @@ const UpdateOrderLineMutation = graphql(`
 export const updateOrderLine = async (lineId: string, input: UpdateOrderLineInput) => {
   const {
     updateOrderLine: { apiErrors, order }
-  } = await vendyxFetcher(UpdateOrderLineMutation, {
+  } = await eblocFetcher(UpdateOrderLineMutation, {
     lineId,
     input
   });
@@ -110,7 +110,7 @@ const RemoveOrderLineMutation = graphql(`
 export const removeOrderLine = async (lineId: string) => {
   const {
     removeOrderLine: { apiErrors, order }
-  } = await vendyxFetcher(RemoveOrderLineMutation, {
+  } = await eblocFetcher(RemoveOrderLineMutation, {
     lineId
   });
 
@@ -137,7 +137,7 @@ const AddCustomerToOrderMutation = graphql(`
 export const addCustomerToOrder = async (orderId: string, input: CreateCustomerInput) => {
   const {
     addCustomerToOrder: { apiErrors, order }
-  } = await vendyxFetcher(AddCustomerToOrderMutation, {
+  } = await eblocFetcher(AddCustomerToOrderMutation, {
     orderId,
     input
   });
@@ -165,7 +165,7 @@ const AddShippingAddressToOrderMutation = graphql(`
 export const addShippingAddressToOrder = async (orderId: string, input: CreateAddressInput) => {
   const {
     addShippingAddressToOrder: { apiErrors, order }
-  } = await vendyxFetcher(AddShippingAddressToOrderMutation, {
+  } = await eblocFetcher(AddShippingAddressToOrderMutation, {
     orderId,
     input
   });
@@ -193,7 +193,7 @@ const AddShipmentToOrderMutation = graphql(`
 export const addShipmentToOrder = async (orderId: string, input: AddShipmentToOrderInput) => {
   const {
     addShipmentToOrder: { apiErrors, order }
-  } = await vendyxFetcher(AddShipmentToOrderMutation, {
+  } = await eblocFetcher(AddShipmentToOrderMutation, {
     orderId,
     input
   });

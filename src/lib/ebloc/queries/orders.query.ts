@@ -2,7 +2,7 @@ import { CacheTags } from '@/lib/constants';
 
 import { getFragmentData, graphql } from '../codegen';
 import { type GetOrderQueryQueryVariables } from '../codegen/graphql';
-import { vendyxFetcher } from '../fetcher.vendyx';
+import { eblocFetcher } from '../fetcher.ebloc';
 import { CommonOrder } from '../fragments';
 
 const GetOrderQuery = graphql(`
@@ -14,7 +14,7 @@ const GetOrderQuery = graphql(`
 `);
 
 export const getOrder = async (input: GetOrderQueryQueryVariables) => {
-  const { order } = await vendyxFetcher(GetOrderQuery, input, CacheTags.cart);
+  const { order } = await eblocFetcher(GetOrderQuery, input, CacheTags.cart);
   const data = getFragmentData(CommonOrder, order);
 
   return data;

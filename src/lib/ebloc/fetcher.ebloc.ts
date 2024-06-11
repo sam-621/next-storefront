@@ -1,12 +1,12 @@
 import { ApiError } from '../errors';
 import { type TypedDocumentString } from './codegen/graphql';
 
-export const vendyxFetcher = async <R, V>(
+export const eblocFetcher = async <R, V>(
   query: TypedDocumentString<R, V>,
   variables?: V,
   tags?: string[]
 ): Promise<R> => {
-  const result = await fetch(process.env.VENDYX_STOREFRONT_API_URL, {
+  const result = await fetch(process.env.EBLOC_STOREFRONT_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

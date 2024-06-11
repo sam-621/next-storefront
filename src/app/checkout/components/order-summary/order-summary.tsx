@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
+import { type CommonOrderFragment } from '@/lib/ebloc';
 import { getFormattedPhoneNumber, getFormattedPrice } from '@/lib/utils';
-import { type CommonOrderFragment } from '@/lib/vendyx';
 import { cn } from '@/ui/utils';
 
 import { OrderSummaryItem } from './order-summary-item';

@@ -1,6 +1,6 @@
 import { getFragmentData, graphql } from '../codegen';
 import { type ListInput } from '../codegen/graphql';
-import { vendyxFetcher } from '../fetcher.vendyx';
+import { eblocFetcher } from '../fetcher.ebloc';
 import { CommonProduct } from '../fragments';
 
 const GetProductQuery = graphql(`
@@ -15,7 +15,7 @@ const GetProductQuery = graphql(`
 `);
 
 export const getProducts = async (input?: ListInput) => {
-  const { products } = await vendyxFetcher(GetProductQuery, { input });
+  const { products } = await eblocFetcher(GetProductQuery, { input });
   const data = getFragmentData(CommonProduct, products.items);
 
   return data;
