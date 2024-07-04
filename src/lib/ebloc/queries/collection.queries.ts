@@ -33,17 +33,15 @@ export const GET_COLLECTIONS_SLUG = graphql(`
   }
 `);
 
-export const GET_COLLECTION_PRODUCTS = graphql(`
-  query GetCollection {
-    collections {
-      items {
-        id
-        name
-        slug
-        products {
-          items {
-            ...CollectionProduct
-          }
+export const GET_COLLECTION_DETAILS = graphql(`
+  query GetCollection($slug: String) {
+    collection(slug: $slug) {
+      id
+      name
+      slug
+      products {
+        items {
+          ...CollectionProduct
         }
       }
     }
