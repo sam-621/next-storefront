@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "graphql": "^16.9.0",
     "next": "14.2.4",
+    "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.5.0",

@@ -15,7 +15,9 @@ export const Header: FC<Props> = ({ collections }) => {
     <header className="section header_height flex justify-between items-center border-b">
       <div className="flex gap-6 w-44">
         <Bars4Icon className="w-6 h-6 text-gray-400 lg:hidden" />
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
       <nav className="hidden lg:flex justify-center gap-8">
         {collections.map(c => (
