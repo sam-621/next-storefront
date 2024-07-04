@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { Dropdown } from '@/lib/components';
+import { Dropdown, ProductCard } from '@/lib/components';
 
 import { getCollection } from '../data';
 
@@ -12,22 +12,28 @@ export default async function Page({ params }: { params: Params }) {
   }
 
   return (
-    <main className="section flex flex-col gap-6">
-      <section className="flex flex-col gap-4 py-24 border-b">
+    <main>
+      <section className="section flex flex-col gap-4 py-24">
         <h1 className="font-bold text-4xl text-center">{collection.name}</h1>
-        <p className="text-gray-500 text-base font-light text-center">{collection.description}</p>
+        <p className="text-gray-500 text-base font-light text-center max-w-4xl mx-auto">
+          {collection.description}
+        </p>
       </section>
-      <section>
-        <header>
-          <div>
+      <section className="relative">
+        <header className="py-4 bg-white sticky top-0 z-10 border-y">
+          <div className="section">
             <Dropdown
-              title="Sort by"
+              title="Sort"
               options={['Newest', 'Oldest', 'Highest price', 'Lowest price']}
             />
           </div>
           <div></div>
         </header>
-        <div></div>
+        <div className="section grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mt-6">
+          {collection.products.items.map(p => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
       </section>
     </main>
   );
