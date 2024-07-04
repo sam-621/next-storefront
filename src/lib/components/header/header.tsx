@@ -1,3 +1,5 @@
+import { type FC } from 'react';
+
 import {
   Bars4Icon,
   MagnifyingGlassIcon,
@@ -8,7 +10,7 @@ import Link from 'next/link';
 
 import { Logo } from '../common';
 
-export const Header = () => {
+export const Header: FC<Props> = ({ collections }) => {
   return (
     <header className="section header_height flex justify-between items-center border-b">
       <div className="flex gap-6 w-44">
@@ -16,15 +18,15 @@ export const Header = () => {
         <Logo />
       </div>
       <nav className="hidden lg:flex justify-center gap-8">
-        <Link href="categories" className="text-gray-700 transition-colors hover:text-gray-900">
-          Tees
-        </Link>
-        <Link href="categories" className="text-gray-700 transition-colors hover:text-gray-900">
-          Workspace
-        </Link>
-        <Link href="categories" className="text-gray-700 transition-colors hover:text-gray-900">
-          Bags
-        </Link>
+        {collections.map(c => (
+          <Link
+            key={c.slug}
+            href={`/collections/${c.slug}`}
+            className="text-gray-700 transition-colors hover:text-gray-900"
+          >
+            {c.name}
+          </Link>
+        ))}
       </nav>
       <div className="flex gap-6 w-44">
         <MagnifyingGlassIcon className="w-6 h-6 text-gray-400" />
@@ -38,3 +40,10 @@ export const Header = () => {
     </header>
   );
 };
+
+interface Props {
+  collections: {
+    slug: string;
+    name: string;
+  }[];
+}

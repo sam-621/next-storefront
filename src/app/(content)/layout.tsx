@@ -1,13 +1,17 @@
 import { Header } from '@/lib/components';
 
-export default function RootLayout({
+import { getCollectionsSlugs } from './collections/data';
+
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const collections = await getCollectionsSlugs();
+
   return (
     <>
-      <Header />
+      <Header collections={collections} />
       {children}
     </>
   );
