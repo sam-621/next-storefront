@@ -77,7 +77,7 @@ export const notification = {
   }
 };
 
-interface NotificationOptions {
+type NotificationOptions = {
   id?: string | number;
   description?: string;
-}
+};
