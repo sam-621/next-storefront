@@ -1,4 +1,6 @@
-import { type FC } from 'react';
+'use client';
+
+import { type FC, useState } from 'react';
 
 import {
   Bars4Icon,
@@ -8,13 +10,17 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import { Logo } from '../common';
+import { Drawer, Logo } from '../common';
 
 export const Header: FC<Props> = ({ collections }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="section header_height flex justify-between items-center border-b">
       <div className="flex gap-6 w-44">
-        <Bars4Icon className="w-6 h-6 text-gray-400 lg:hidden" />
+        <Bars4Icon onClick={() => setIsOpen(true)} className="w-6 h-6 text-gray-400 lg:hidden" />
+        <Drawer footer={null} handleClose={() => setIsOpen(false)} isOpen={isOpen} title="Some">
+          <h1>HOLA</h1>
+        </Drawer>
         <Link href="/">
           <Logo />
         </Link>
