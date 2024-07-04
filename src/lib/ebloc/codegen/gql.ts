@@ -28,14 +28,14 @@ const documents = {
     types.GetAvailableShippingMethodsDocument,
   '\n  mutation AddShipmentToOrderMutation($cartId: ID!, $input: AddShipmentToOrderInput!) {\n    addShipmentToOrder(orderId: $cartId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...Cart\n      }\n    }\n  }\n':
     types.AddShipmentToOrderMutationDocument,
-  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n':
-    types.GetAvailablePaymentMethodsDocument,
   '\n  mutation AddPaymentToCartMutation($cartId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $cartId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...Cart\n      }\n    }\n  }\n':
     types.AddPaymentToCartMutationDocument,
   '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          optionValues {\n            id\n            value\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n      phoneCountryCode\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      phoneCountryCode\n      phoneNumber\n    }\n    shipment {\n      id\n      amount\n      method {\n        id\n        name\n      }\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method {\n        id\n        name\n      }\n    }\n  }\n':
     types.CartFragmentDoc,
   '\n  query GetCart($id: ID) {\n    order(id: $id) {\n      ...Cart\n    }\n  }\n':
     types.GetCartDocument,
+  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n':
+    types.GetAvailablePaymentMethodsDocument,
   '\n  fragment CollectionProduct on Product {\n    id\n    name\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n':
     types.CollectionProductFragmentDoc,
   '\n  query GetCollectionsSlug {\n    collections(input: { take: 3 }) {\n      items {\n        id\n        name\n        slug\n      }\n    }\n  }\n':
@@ -100,12 +100,6 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n'
-): typeof import('./graphql').GetAvailablePaymentMethodsDocument;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
   source: '\n  mutation AddPaymentToCartMutation($cartId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $cartId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        ...Cart\n      }\n    }\n  }\n'
 ): typeof import('./graphql').AddPaymentToCartMutationDocument;
 /**
@@ -120,6 +114,12 @@ export function graphql(
 export function graphql(
   source: '\n  query GetCart($id: ID) {\n    order(id: $id) {\n      ...Cart\n    }\n  }\n'
 ): typeof import('./graphql').GetCartDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n'
+): typeof import('./graphql').GetAvailablePaymentMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
