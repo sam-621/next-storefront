@@ -1,21 +1,29 @@
 import { graphql } from '../codegen';
 
-export const COLLECTION_PRODUCT = graphql(`
-  fragment CollectionProduct on Product {
+export const COLLECTION_DETAILS_FRAGMENT = graphql(`
+  fragment CollectionDetails on Collection {
     id
     name
-    variants(input: { take: 1 }) {
+    slug
+    description
+    products {
       items {
         id
-        price
-        stock
-      }
-    }
-    assets(input: { take: 1 }) {
-      items {
-        id
-        source
-        order
+        name
+        variants(input: { take: 1 }) {
+          items {
+            id
+            price
+            stock
+          }
+        }
+        assets(input: { take: 1 }) {
+          items {
+            id
+            source
+            order
+          }
+        }
       }
     }
   }
@@ -36,14 +44,7 @@ export const GET_COLLECTIONS_SLUG = graphql(`
 export const GET_COLLECTION_DETAILS = graphql(`
   query GetCollection($slug: String) {
     collection(slug: $slug) {
-      id
-      name
-      slug
-      products {
-        items {
-          ...CollectionProduct
-        }
-      }
+      ...CollectionDetails
     }
   }
 `);

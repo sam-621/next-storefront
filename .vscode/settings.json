@@ -16,11 +16,12 @@
   "cSpell.words": [
     "clsx",
     "codegen",
+    "ebloc",
     "gacp",
+    "headlessui",
     "heroicons",
     "sonner",
     "tailwindcss",
-    "tailwindui",
-    "ebloc"
+    "tailwindui"
   ]
 }

@@ -830,19 +830,29 @@ export type GetAvailablePaymentMethodsQuery = {
   }>;
 };
 
-export type CollectionProductFragment = {
-  __typename?: 'Product';
+export type CollectionDetailsFragment = {
+  __typename?: 'Collection';
   id: string;
   name: string;
-  variants: {
-    __typename?: 'VariantList';
-    items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
+  slug: string;
+  description?: string | null;
+  products: {
+    __typename?: 'ProductList';
+    items: Array<{
+      __typename?: 'Product';
+      id: string;
+      name: string;
+      variants: {
+        __typename?: 'VariantList';
+        items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
+      };
+      assets: {
+        __typename?: 'AssetList';
+        items: Array<{ __typename?: 'Asset'; id: string; source: string; order: number }>;
+      };
+    }>;
   };
-  assets: {
-    __typename?: 'AssetList';
-    items: Array<{ __typename?: 'Asset'; id: string; source: string; order: number }>;
-  };
-} & { ' $fragmentName'?: 'CollectionProductFragment' };
+} & { ' $fragmentName'?: 'CollectionDetailsFragment' };
 
 export type GetCollectionsSlugQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -860,20 +870,11 @@ export type GetCollectionQueryVariables = Exact<{
 
 export type GetCollectionQuery = {
   __typename?: 'Query';
-  collection?: {
-    __typename?: 'Collection';
-    id: string;
-    name: string;
-    slug: string;
-    products: {
-      __typename?: 'ProductList';
-      items: Array<
-        { __typename?: 'Product' } & {
-          ' $fragmentRefs'?: { CollectionProductFragment: CollectionProductFragment };
-        }
-      >;
-    };
-  } | null;
+  collection?:
+    | ({ __typename?: 'Collection' } & {
+        ' $fragmentRefs'?: { CollectionDetailsFragment: CollectionDetailsFragment };
+      })
+    | null;
 };
 
 export type ProductDetailsFragment = {
@@ -1003,29 +1004,37 @@ export const CartFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'Cart' }
 ) as unknown as TypedDocumentString<CartFragment, unknown>;
-export const CollectionProductFragmentDoc = new TypedDocumentString(
+export const CollectionDetailsFragmentDoc = new TypedDocumentString(
   `
-    fragment CollectionProduct on Product {
+    fragment CollectionDetails on Collection {
   id
   name
-  variants(input: {take: 1}) {
+  slug
+  description
+  products {
     items {
       id
-      price
-      stock
-    }
-  }
-  assets(input: {take: 1}) {
-    items {
-      id
-      source
-      order
+      name
+      variants(input: {take: 1}) {
+        items {
+          id
+          price
+          stock
+        }
+      }
+      assets(input: {take: 1}) {
+        items {
+          id
+          source
+          order
+        }
+      }
     }
   }
 }
     `,
-  { fragmentName: 'CollectionProduct' }
-) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
+  { fragmentName: 'CollectionDetails' }
+) as unknown as TypedDocumentString<CollectionDetailsFragment, unknown>;
 export const ProductDetailsFragmentDoc = new TypedDocumentString(
   `
     fragment ProductDetails on Product {
@@ -1812,31 +1821,32 @@ export const GetCollectionsSlugDocument = new TypedDocumentString(`
 export const GetCollectionDocument = new TypedDocumentString(`
     query GetCollection($slug: String) {
   collection(slug: $slug) {
-    id
-    name
-    slug
-    products {
-      items {
-        ...CollectionProduct
-      }
-    }
+    ...CollectionDetails
   }
 }
-    fragment CollectionProduct on Product {
+    fragment CollectionDetails on Collection {
   id
   name
-  variants(input: {take: 1}) {
+  slug
+  description
+  products {
     items {
       id
-      price
-      stock
-    }
-  }
-  assets(input: {take: 1}) {
-    items {
-      id
-      source
-      order
+      name
+      variants(input: {take: 1}) {
+        items {
+          id
+          price
+          stock
+        }
+      }
+      assets(input: {take: 1}) {
+        items {
+          id
+          source
+          order
+        }
+      }
     }
   }
 }`) as unknown as TypedDocumentString<GetCollectionQuery, GetCollectionQueryVariables>;

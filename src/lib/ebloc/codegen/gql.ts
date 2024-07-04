@@ -36,11 +36,11 @@ const documents = {
     types.GetCartDocument,
   '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n':
     types.GetAvailablePaymentMethodsDocument,
-  '\n  fragment CollectionProduct on Product {\n    id\n    name\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n':
-    types.CollectionProductFragmentDoc,
+  '\n  fragment CollectionDetails on Collection {\n    id\n    name\n    slug\n    description\n    products {\n      items {\n        id\n        name\n        variants(input: { take: 1 }) {\n          items {\n            id\n            price\n            stock\n          }\n        }\n        assets(input: { take: 1 }) {\n          items {\n            id\n            source\n            order\n          }\n        }\n      }\n    }\n  }\n':
+    types.CollectionDetailsFragmentDoc,
   '\n  query GetCollectionsSlug {\n    collections(input: { take: 3 }) {\n      items {\n        id\n        name\n        slug\n      }\n    }\n  }\n':
     types.GetCollectionsSlugDocument,
-  '\n  query GetCollection($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      products {\n        items {\n          ...CollectionProduct\n        }\n      }\n    }\n  }\n':
+  '\n  query GetCollection($slug: String) {\n    collection(slug: $slug) {\n      ...CollectionDetails\n    }\n  }\n':
     types.GetCollectionDocument,
   '\n  fragment ProductDetails on Product {\n    id\n    name\n    slug\n    description\n    assets {\n      items {\n        id\n        name\n        order\n        source\n      }\n    }\n    options {\n      id\n      name\n      values {\n        id\n        value\n      }\n    }\n    variants {\n      items {\n        id\n        price\n        stock\n        optionValues {\n          id\n          value\n        }\n      }\n    }\n  }\n':
     types.ProductDetailsFragmentDoc,
@@ -124,8 +124,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment CollectionProduct on Product {\n    id\n    name\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n'
-): typeof import('./graphql').CollectionProductFragmentDoc;
+  source: '\n  fragment CollectionDetails on Collection {\n    id\n    name\n    slug\n    description\n    products {\n      items {\n        id\n        name\n        variants(input: { take: 1 }) {\n          items {\n            id\n            price\n            stock\n          }\n        }\n        assets(input: { take: 1 }) {\n          items {\n            id\n            source\n            order\n          }\n        }\n      }\n    }\n  }\n'
+): typeof import('./graphql').CollectionDetailsFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -136,7 +136,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetCollection($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      products {\n        items {\n          ...CollectionProduct\n        }\n      }\n    }\n  }\n'
+  source: '\n  query GetCollection($slug: String) {\n    collection(slug: $slug) {\n      ...CollectionDetails\n    }\n  }\n'
 ): typeof import('./graphql').GetCollectionDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

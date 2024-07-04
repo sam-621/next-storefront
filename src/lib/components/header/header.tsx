@@ -41,9 +41,9 @@ export const Header: FC<Props> = ({ collections }) => {
   );
 };
 
-interface Props {
+type Props = {
   collections: {
     slug: string;
     name: string;
   }[];
-}
+};
