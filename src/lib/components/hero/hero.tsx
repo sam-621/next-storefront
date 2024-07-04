@@ -1,4 +1,11 @@
-export const Hero = () => {
+import Link from 'next/link';
+
+import { getCollectionsSlugs } from '@/app/(content)/collections/data';
+
+export const Hero = async () => {
+  const collection = await getCollectionsSlugs();
+  const defaultCollection = collection[0];
+
   return (
     <div className="relative hero_height">
       <div className="w-full h-full absolute z-20 flex items-center">
@@ -12,9 +19,12 @@ export const Hero = () => {
               experience, and drives sales.
             </p>
           </div>
-          <button className="bg-white px-8 py-3 rounded-md w-fit transition-colors hover:bg-gray-200">
-            Shop New Tees
-          </button>
+          <Link
+            href={`/collections/${defaultCollection.slug}`}
+            className="bg-white px-8 py-3 rounded-md w-fit transition-colors hover:bg-gray-200"
+          >
+            Shop News in {defaultCollection.name}
+          </Link>
         </div>
       </div>
       <div className="w-full h-full bg-slate-800/50 relative z-10"></div>
