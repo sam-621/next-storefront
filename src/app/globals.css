@@ -2,12 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-height: 64px;
+}
+
 body {
   @apply text-gray-900 bg-white
 }
 
+p {
+  @apply leading-7
+}
+
 .section {
   @apply mx-4 lg:mx-6 xl:mx-8 border-gray-200
+}
+
+.header_height {
+  height: var(--header-height);
+}
+
+.hero_height {
+  height: calc(100vh - var(--header-height));
 }
 
 @layer utilities {
