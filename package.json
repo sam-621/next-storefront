@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.local && prettier --write ./src/lib/ebloc/codegen"
+    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.local && prettier --write ./src/lib/common/ebloc/codegen"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.1",

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { TopLoader } from '@/lib/top-loader';
+import { TopLoader } from '@/lib/common';
 
 import './globals.css';
 

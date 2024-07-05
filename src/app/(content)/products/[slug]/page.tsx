@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { ProductGallery } from '../components/product-gallery';
-import { ProductInfo } from '../components/products-info/product-info';
-import { getProductDetails } from '../data';
+import { getProductDetails, ProductGallery, ProductInfo } from '@/lib/products';
 
 export default async function ProductDetailsPage({ params }: { params: Params }) {
   const product = await getProductDetails(params.slug);

@@ -2,9 +2,8 @@ import { Suspense } from 'react';
 
 import { notFound } from 'next/navigation';
 
-import { ProductCard } from '@/lib/components';
-
-import { getCollection, getCollectionProducts } from '../data';
+import { getCollection, getCollectionProducts } from '@/lib/collections';
+import { ProductCard } from '@/lib/products';
 
 export default async function Page({ params }: { params: Params }) {
   const collection = await getCollection(params.slug);

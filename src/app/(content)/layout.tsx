@@ -1,5 +1,5 @@
-import { Header } from '../components/header';
-import { getCollectionsSlugs } from './collections/data';
+import { getCollectionsSlugs } from '@/lib/collections';
+import { Header } from '@/lib/common/components/header';
 
 export default async function RootLayout({
   children
