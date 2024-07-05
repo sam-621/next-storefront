@@ -5,7 +5,7 @@ import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outli
 import { type ProductDetailsFragment } from '@/lib/ebloc';
 import { formatPrice } from '@/lib/utils';
 
-import { VariantSelector } from './variant-selector';
+import { VariantSelector } from './variants-selector/variant-selector';
 
 export const ProductInfo: FC<Props> = ({ product }) => {
   const { options, variants } = product;
