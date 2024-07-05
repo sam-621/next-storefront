@@ -613,9 +613,7 @@ export type CreateCartMutation = {
   createOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -629,9 +627,7 @@ export type AddToCartMutation = {
   addLineToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -645,9 +641,7 @@ export type UpdateCartLineMutation = {
   updateOrderLine: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -660,9 +654,7 @@ export type RemoveCartLineMutation = {
   removeOrderLine: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -676,9 +668,7 @@ export type SetCustomerToCartMutation = {
   addCustomerToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -692,9 +682,7 @@ export type AddShippingAddressToCartMutation = {
   addShippingAddressToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -721,9 +709,7 @@ export type AddShipmentToOrderMutationMutation = {
   addShipmentToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -737,9 +723,7 @@ export type AddPaymentToCartMutationMutation = {
   addPaymentToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?:
-      | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } })
-      | null;
+    order?: { __typename?: 'Order'; id: string } | null;
   };
 };
 
@@ -1088,76 +1072,11 @@ export const CreateCartDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<CreateCartMutation, CreateCartMutationVariables>;
+    `) as unknown as TypedDocumentString<CreateCartMutation, CreateCartMutationVariables>;
 export const AddToCartDocument = new TypedDocumentString(`
     mutation AddToCart($cartId: ID!, $input: CreateOrderLineInput!) {
   addLineToOrder(orderId: $cartId, input: $input) {
@@ -1166,76 +1085,11 @@ export const AddToCartDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<AddToCartMutation, AddToCartMutationVariables>;
+    `) as unknown as TypedDocumentString<AddToCartMutation, AddToCartMutationVariables>;
 export const UpdateCartLineDocument = new TypedDocumentString(`
     mutation UpdateCartLine($lineId: ID!, $input: UpdateOrderLineInput!) {
   updateOrderLine(lineId: $lineId, input: $input) {
@@ -1244,76 +1098,11 @@ export const UpdateCartLineDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<UpdateCartLineMutation, UpdateCartLineMutationVariables>;
+    `) as unknown as TypedDocumentString<UpdateCartLineMutation, UpdateCartLineMutationVariables>;
 export const RemoveCartLineDocument = new TypedDocumentString(`
     mutation RemoveCartLine($lineId: ID!) {
   removeOrderLine(lineId: $lineId) {
@@ -1322,76 +1111,11 @@ export const RemoveCartLineDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<RemoveCartLineMutation, RemoveCartLineMutationVariables>;
+    `) as unknown as TypedDocumentString<RemoveCartLineMutation, RemoveCartLineMutationVariables>;
 export const SetCustomerToCartDocument = new TypedDocumentString(`
     mutation SetCustomerToCart($cartId: ID!, $input: AddCustomerToOrderInput!) {
   addCustomerToOrder(orderId: $cartId, input: $input) {
@@ -1400,76 +1124,11 @@ export const SetCustomerToCartDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<
+    `) as unknown as TypedDocumentString<
   SetCustomerToCartMutation,
   SetCustomerToCartMutationVariables
 >;
@@ -1481,76 +1140,11 @@ export const AddShippingAddressToCartDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<
+    `) as unknown as TypedDocumentString<
   AddShippingAddressToCartMutation,
   AddShippingAddressToCartMutationVariables
 >;
@@ -1575,76 +1169,11 @@ export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<
+    `) as unknown as TypedDocumentString<
   AddShipmentToOrderMutationMutation,
   AddShipmentToOrderMutationMutationVariables
 >;
@@ -1656,76 +1185,11 @@ export const AddPaymentToCartMutationDocument = new TypedDocumentString(`
       message
     }
     order {
-      ...Cart
+      id
     }
   }
 }
-    fragment Cart on Order {
-  id
-  code
-  subtotal
-  total
-  lines {
-    items {
-      id
-      linePrice
-      quantity
-      unitPrice
-      productVariant {
-        id
-        optionValues {
-          id
-          value
-        }
-        product {
-          name
-          slug
-          assets(input: {take: 1}) {
-            items {
-              id
-              source
-            }
-          }
-        }
-      }
-    }
-  }
-  customer {
-    id
-    firstName
-    lastName
-    email
-    phoneNumber
-    phoneCountryCode
-  }
-  shippingAddress {
-    streetLine1
-    streetLine2
-    postalCode
-    city
-    province
-    country
-    phoneCountryCode
-    phoneNumber
-  }
-  shipment {
-    id
-    amount
-    method {
-      id
-      name
-    }
-  }
-  payment {
-    id
-    amount
-    transactionId
-    method {
-      id
-      name
-    }
-  }
-}`) as unknown as TypedDocumentString<
+    `) as unknown as TypedDocumentString<
   AddPaymentToCartMutationMutation,
   AddPaymentToCartMutationMutationVariables
 >;

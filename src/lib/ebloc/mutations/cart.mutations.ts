@@ -8,7 +8,7 @@ export const CREATE_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -22,7 +22,7 @@ export const ADD_TO_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -36,7 +36,7 @@ export const UPDATE_CART_LINE = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -50,7 +50,7 @@ export const REMOVE_CART_LINE = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -64,7 +64,7 @@ export const SET_CUSTOMER_TO_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -78,7 +78,7 @@ export const SET_SHIPPING_ADDRESS_TO_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -103,7 +103,7 @@ export const ADD_SHIPMENT_TO_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }
@@ -117,7 +117,7 @@ export const ADD_PAYMENT_TO_CART = graphql(`
         message
       }
       order {
-        ...Cart
+        id
       }
     }
   }

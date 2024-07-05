@@ -1,6 +1,6 @@
 import { graphql } from '../codegen';
 
-export const CART = graphql(`
+export const CART_FRAGMENT = graphql(`
   fragment Cart on Order {
     id
     code
