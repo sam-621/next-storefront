@@ -11,7 +11,7 @@ import { MobileHeaderDrawer } from './mobile-header-drawer';
 export const Header: FC<Props> = ({ collections }) => {
   return (
     <header className="section header_height flex justify-between items-center border-b">
-      <div className="flex gap-6 w-44">
+      <div className="flex gap-6 w-[90px]">
         <Link href="/">
           <Logo />
         </Link>
