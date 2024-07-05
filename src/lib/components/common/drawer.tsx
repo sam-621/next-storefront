@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 export const Drawer: FC<Props> = ({ isOpen, title, handleClose, footer, children }) => {
   return (
     <div
-      className={cn('relative z-50 transition-opacity', !isOpen && 'opacity-0 pointer-events-none')}
+      className={cn('relative z-30 transition-opacity', !isOpen && 'opacity-0 pointer-events-none')}
       aria-labelledby="slide-over-title"
       role="dialog"
       aria-modal="true"
