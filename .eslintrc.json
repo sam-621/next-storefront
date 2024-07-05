@@ -23,7 +23,8 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "@typescript-eslint/unbound-method": "off"
   },
   "overrides": [
     {
