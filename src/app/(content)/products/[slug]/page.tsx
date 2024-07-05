@@ -1,9 +1,9 @@
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
 import { notFound } from 'next/navigation';
 
-import { ProductImage } from '@/lib/components';
 import { formatPrice } from '@/lib/utils';
 
+import { ProductGallery } from '../components/product-gallery';
 import { getProductDetails } from '../data';
 
 export default async function ProductDetailsPage({ params }: { params: Params }) {
@@ -16,14 +16,10 @@ export default async function ProductDetailsPage({ params }: { params: Params })
   const { assets, options, variants } = product;
 
   return (
-    <main className="flex flex-col gap-16 max-w-2xl mx-auto md:mt-16 xl:max-w-full">
-      <section className="flex flex-col gap-8 xl:grid grid-cols-2">
-        <ProductImage
-          src={assets.items[0].source}
-          alt={product.name}
-          className="rounded-lg h-fit"
-        />
-        <div className="section flex flex-col gap-6">
+    <main className="flex flex-col gap-16 mt-6 max-w-2xl mx-auto md:mt-16 xl:max-w-full">
+      <section className="section relative flex flex-col gap-8 xl:grid grid-cols-2">
+        <ProductGallery assets={assets.items} />
+        <div className="flex flex-col gap-6 sticky top-6 h-fit">
           <div className="flex flex-col gap-3">
             <h1 className="text-3xl font-bold leading-9">{product.name}</h1>
             <span className="leading-9 text-3xl font-normal">
