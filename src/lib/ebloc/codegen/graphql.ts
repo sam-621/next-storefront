@@ -733,6 +733,7 @@ export type CartFragment = {
   code: string;
   subtotal: number;
   total: number;
+  totalQuantity: number;
   lines: {
     __typename?: 'OrderLineList';
     items: Array<{
@@ -744,6 +745,7 @@ export type CartFragment = {
       productVariant: {
         __typename?: 'Variant';
         id: string;
+        stock: number;
         optionValues?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
         product: {
           __typename?: 'Product';
@@ -938,6 +940,7 @@ export const CartFragmentDoc = new TypedDocumentString(
   code
   subtotal
   total
+  totalQuantity
   lines {
     items {
       id
@@ -946,6 +949,7 @@ export const CartFragmentDoc = new TypedDocumentString(
       unitPrice
       productVariant {
         id
+        stock
         optionValues {
           id
           value
@@ -1204,6 +1208,7 @@ export const GetCartDocument = new TypedDocumentString(`
   code
   subtotal
   total
+  totalQuantity
   lines {
     items {
       id
@@ -1212,6 +1217,7 @@ export const GetCartDocument = new TypedDocumentString(`
       unitPrice
       productVariant {
         id
+        stock
         optionValues {
           id
           value

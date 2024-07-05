@@ -1,19 +1,22 @@
 'use client';
 
-import { type FC, useEffect } from 'react';
+import { type FC } from 'react';
 
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { cn } from '@/lib/utils';
 
 export const Drawer: FC<Props> = ({ isOpen, trigger, title, handleClose, footer, children }) => {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [isOpen]);
+  // removes the scrollbar and causes the page to jump,
+  // but it prevents the page from scrolling when a drawer is open
+  // so we need a better solution
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     document.body.style.overflow = 'hidden';
+  //   } else {
+  //     document.body.style.overflow = 'auto';
+  //   }
+  // }, [isOpen]);
 
   return (
     <div>

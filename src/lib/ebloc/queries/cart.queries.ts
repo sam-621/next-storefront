@@ -6,6 +6,7 @@ export const CART_FRAGMENT = graphql(`
     code
     subtotal
     total
+    totalQuantity
     lines {
       items {
         id
@@ -14,6 +15,7 @@ export const CART_FRAGMENT = graphql(`
         unitPrice
         productVariant {
           id
+          stock
           optionValues {
             id
             value

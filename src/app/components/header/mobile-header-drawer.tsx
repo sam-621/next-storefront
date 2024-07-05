@@ -1,9 +1,11 @@
+'use client';
+
 import { type FC, useState } from 'react';
 
 import { Bars4Icon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import { Drawer } from '../common';
+import { Drawer } from '@/lib/components';
 
 export const MobileHeaderDrawer: FC<Props> = ({ collections }) => {
   const [isOpen, setIsOpen] = useState(false);
