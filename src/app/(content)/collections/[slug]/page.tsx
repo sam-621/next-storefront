@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: Params }) {
         </p>
       </section>
       <section className="relative">
-        <header className="py-4 bg-white sticky top-0 z-10 border-y">
+        <header className="py-4 bg-white sticky top-0 z-10 border-t">
           <div className="section">
             <Dropdown
               title="Sort"

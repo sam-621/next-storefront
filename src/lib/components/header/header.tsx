@@ -1,26 +1,17 @@
 'use client';
 
-import { type FC, useState } from 'react';
+import { type FC } from 'react';
 
-import {
-  Bars4Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  UserIcon
-} from '@heroicons/react/24/outline';
+import { ShoppingBagIcon, UserIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import { Drawer, Logo } from '../common';
+import { Logo } from '../common';
+import { MobileHeaderDrawer } from './mobile-header-drawer';
 
 export const Header: FC<Props> = ({ collections }) => {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <header className="section header_height flex justify-between items-center border-b">
       <div className="flex gap-6 w-44">
-        <Bars4Icon onClick={() => setIsOpen(true)} className="w-6 h-6 text-gray-400 lg:hidden" />
-        <Drawer footer={null} handleClose={() => setIsOpen(false)} isOpen={isOpen} title="Some">
-          <h1>HOLA</h1>
-        </Drawer>
         <Link href="/">
           <Logo />
         </Link>
@@ -36,14 +27,13 @@ export const Header: FC<Props> = ({ collections }) => {
           </Link>
         ))}
       </nav>
-      <div className="flex gap-6 w-44">
-        <MagnifyingGlassIcon className="w-6 h-6 text-gray-400" />
+      <div className="flex gap-6 lg:w-[90px]">
         <UserIcon className="w-6 h-6 text-gray-400" />
-        <hr className="w-[1px] h-6 bg-gray-200" />
         <div className="flex gap-2">
           <ShoppingBagIcon className="w-6 h-6 text-gray-400" />
           <span className="text-gray-700">0</span>
         </div>
+        <MobileHeaderDrawer collections={collections} />
       </div>
     </header>
   );
