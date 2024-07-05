@@ -1,6 +1,6 @@
 import { graphql } from '../codegen';
 
-export const PRODUCT_DETAILS = graphql(`
+export const PRODUCT_DETAILS_FRAGMENT = graphql(`
   fragment ProductDetails on Product {
     id
     name
@@ -37,8 +37,8 @@ export const PRODUCT_DETAILS = graphql(`
 `);
 
 export const GET_PRODUCT_DETAILS = graphql(`
-  query GetProductDetails {
-    product {
+  query GetProductDetails($slug: String!) {
+    product(slug: $slug) {
       ...ProductDetails
     }
   }

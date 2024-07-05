@@ -10,6 +10,7 @@ export const COLLECTION_DETAILS_FRAGMENT = graphql(`
       items {
         id
         name
+        slug
         variants(input: { take: 1 }) {
           items {
             id

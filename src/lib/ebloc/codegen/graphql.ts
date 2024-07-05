@@ -842,6 +842,7 @@ export type CollectionDetailsFragment = {
       __typename?: 'Product';
       id: string;
       name: string;
+      slug: string;
       variants: {
         __typename?: 'VariantList';
         items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
@@ -905,7 +906,9 @@ export type ProductDetailsFragment = {
   };
 } & { ' $fragmentName'?: 'ProductDetailsFragment' };
 
-export type GetProductDetailsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetProductDetailsQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
 
 export type GetProductDetailsQuery = {
   __typename?: 'Query';
@@ -1015,6 +1018,7 @@ export const CollectionDetailsFragmentDoc = new TypedDocumentString(
     items {
       id
       name
+      slug
       variants(input: {take: 1}) {
         items {
           id
@@ -1833,6 +1837,7 @@ export const GetCollectionDocument = new TypedDocumentString(`
     items {
       id
       name
+      slug
       variants(input: {take: 1}) {
         items {
           id
@@ -1851,8 +1856,8 @@ export const GetCollectionDocument = new TypedDocumentString(`
   }
 }`) as unknown as TypedDocumentString<GetCollectionQuery, GetCollectionQueryVariables>;
 export const GetProductDetailsDocument = new TypedDocumentString(`
-    query GetProductDetails {
-  product {
+    query GetProductDetails($slug: String!) {
+  product(slug: $slug) {
     ...ProductDetails
   }
 }
