@@ -4,7 +4,7 @@ import { type FC } from 'react';
 
 import Link from 'next/link';
 
-import { type CollectionDetailsFragment } from '@/lib/ebloc';
+import { type CollectionProductFragment } from '@/lib/ebloc';
 import { formatPrice } from '@/lib/utils';
 
 import { ProductImage } from './product-image';
@@ -16,7 +16,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
   const defaultVariant = variants.items[0];
 
   return (
-    <Link href={`/products/${product.slug}`}>
+    <Link href={`/products/${product.slug}`} className="fade-in">
       <article className="group flex flex-col gap-4 border rounded-md">
         <ProductImage src={defaultAsset} alt={name} className="rounded-t-md lg:h-80 group" />
         <div className="flex justify-between px-4">
@@ -45,5 +45,5 @@ export const ProductCard: FC<Props> = ({ product }) => {
 };
 
 type Props = {
-  product: CollectionDetailsFragment['products']['items'][0];
+  product: CollectionProductFragment;
 };

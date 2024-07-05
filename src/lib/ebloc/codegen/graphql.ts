@@ -830,30 +830,20 @@ export type GetAvailablePaymentMethodsQuery = {
   }>;
 };
 
-export type CollectionDetailsFragment = {
-  __typename?: 'Collection';
+export type CollectionProductFragment = {
+  __typename?: 'Product';
   id: string;
   name: string;
   slug: string;
-  description?: string | null;
-  products: {
-    __typename?: 'ProductList';
-    items: Array<{
-      __typename?: 'Product';
-      id: string;
-      name: string;
-      slug: string;
-      variants: {
-        __typename?: 'VariantList';
-        items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
-      };
-      assets: {
-        __typename?: 'AssetList';
-        items: Array<{ __typename?: 'Asset'; id: string; source: string; order: number }>;
-      };
-    }>;
+  variants: {
+    __typename?: 'VariantList';
+    items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
   };
-} & { ' $fragmentName'?: 'CollectionDetailsFragment' };
+  assets: {
+    __typename?: 'AssetList';
+    items: Array<{ __typename?: 'Asset'; id: string; source: string; order: number }>;
+  };
+} & { ' $fragmentName'?: 'CollectionProductFragment' };
 
 export type GetCollectionsSlugQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -865,17 +855,38 @@ export type GetCollectionsSlugQuery = {
   };
 };
 
-export type GetCollectionQueryVariables = Exact<{
+export type GetCollectionProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type GetCollectionQuery = {
+export type GetCollectionProductsQuery = {
   __typename?: 'Query';
-  collection?:
-    | ({ __typename?: 'Collection' } & {
-        ' $fragmentRefs'?: { CollectionDetailsFragment: CollectionDetailsFragment };
-      })
-    | null;
+  collection?: {
+    __typename?: 'Collection';
+    products: {
+      __typename?: 'ProductList';
+      items: Array<
+        { __typename?: 'Product' } & {
+          ' $fragmentRefs'?: { CollectionProductFragment: CollectionProductFragment };
+        }
+      >;
+    };
+  } | null;
+};
+
+export type GetCollectionDetailsQueryVariables = Exact<{
+  slug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetCollectionDetailsQuery = {
+  __typename?: 'Query';
+  collection?: {
+    __typename?: 'Collection';
+    id: string;
+    name: string;
+    slug: string;
+    description?: string | null;
+  } | null;
 };
 
 export type ProductDetailsFragment = {
@@ -1007,38 +1018,30 @@ export const CartFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'Cart' }
 ) as unknown as TypedDocumentString<CartFragment, unknown>;
-export const CollectionDetailsFragmentDoc = new TypedDocumentString(
+export const CollectionProductFragmentDoc = new TypedDocumentString(
   `
-    fragment CollectionDetails on Collection {
+    fragment CollectionProduct on Product {
   id
   name
   slug
-  description
-  products {
+  variants(input: {take: 1}) {
     items {
       id
-      name
-      slug
-      variants(input: {take: 1}) {
-        items {
-          id
-          price
-          stock
-        }
-      }
-      assets(input: {take: 1}) {
-        items {
-          id
-          source
-          order
-        }
-      }
+      price
+      stock
+    }
+  }
+  assets(input: {take: 1}) {
+    items {
+      id
+      source
+      order
     }
   }
 }
     `,
-  { fragmentName: 'CollectionDetails' }
-) as unknown as TypedDocumentString<CollectionDetailsFragment, unknown>;
+  { fragmentName: 'CollectionProduct' }
+) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
 export const ProductDetailsFragmentDoc = new TypedDocumentString(
   `
     fragment ProductDetails on Product {
@@ -1822,39 +1825,51 @@ export const GetCollectionsSlugDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCollectionsSlugQuery, GetCollectionsSlugQueryVariables>;
-export const GetCollectionDocument = new TypedDocumentString(`
-    query GetCollection($slug: String) {
+export const GetCollectionProductsDocument = new TypedDocumentString(`
+    query GetCollectionProducts($slug: String) {
   collection(slug: $slug) {
-    ...CollectionDetails
-  }
-}
-    fragment CollectionDetails on Collection {
-  id
-  name
-  slug
-  description
-  products {
-    items {
-      id
-      name
-      slug
-      variants(input: {take: 1}) {
-        items {
-          id
-          price
-          stock
-        }
-      }
-      assets(input: {take: 1}) {
-        items {
-          id
-          source
-          order
-        }
+    products {
+      items {
+        ...CollectionProduct
       }
     }
   }
-}`) as unknown as TypedDocumentString<GetCollectionQuery, GetCollectionQueryVariables>;
+}
+    fragment CollectionProduct on Product {
+  id
+  name
+  slug
+  variants(input: {take: 1}) {
+    items {
+      id
+      price
+      stock
+    }
+  }
+  assets(input: {take: 1}) {
+    items {
+      id
+      source
+      order
+    }
+  }
+}`) as unknown as TypedDocumentString<
+  GetCollectionProductsQuery,
+  GetCollectionProductsQueryVariables
+>;
+export const GetCollectionDetailsDocument = new TypedDocumentString(`
+    query GetCollectionDetails($slug: String) {
+  collection(slug: $slug) {
+    id
+    name
+    slug
+    description
+  }
+}
+    `) as unknown as TypedDocumentString<
+  GetCollectionDetailsQuery,
+  GetCollectionDetailsQueryVariables
+>;
 export const GetProductDetailsDocument = new TypedDocumentString(`
     query GetProductDetails($slug: String!) {
   product(slug: $slug) {

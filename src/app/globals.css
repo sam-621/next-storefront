@@ -26,6 +26,20 @@ p {
   height: calc(100vh - var(--header-height));
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: 0.3s fadeIn;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
