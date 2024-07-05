@@ -2,6 +2,7 @@
 
 import { type FC } from 'react';
 
+import { Button } from '@/lib/components';
 import { type ProductDetailsFragment } from '@/lib/ebloc';
 import { cn } from '@/lib/utils';
 
@@ -67,15 +68,15 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
         </div>
       ))}
       <div>
-        <button
-          type="button"
-          className="flex justify-center items-center px-6 py-3 w-full text-white font-normal bg-indigo-600 hover:bg-indigo-700 rounded-md"
+        <Button
+          size="lg"
+          className="w-full"
           onClick={() => {
             console.log(selectedVariant);
           }}
         >
           Add to cart
-        </button>
+        </Button>
       </div>
     </div>
   );

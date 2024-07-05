@@ -2,6 +2,8 @@ import Link from 'next/link';
 
 import { getCollectionsSlugs } from '@/app/(content)/collections/data';
 
+import { Button } from '../common';
+
 export const Hero = async () => {
   const collection = await getCollectionsSlugs();
   const defaultCollection = collection[0];
@@ -21,9 +23,11 @@ export const Hero = async () => {
           </div>
           <Link
             href={`/collections/${defaultCollection.slug}`}
-            className="bg-white px-8 py-3 rounded-md w-fit transition-colors hover:bg-gray-200"
+            // className="bg-white px-8 py-3 rounded-md w-fit transition-colors hover:bg-gray-200"
           >
-            Shop News in {defaultCollection.name}
+            <Button size="lg" className="bg-white hover:bg-gray-200 text-gray-900">
+              Shop News in {defaultCollection.name}
+            </Button>
           </Link>
         </div>
       </div>

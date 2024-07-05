@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { type CollectionProductFragment } from '@/lib/ebloc';
 import { formatPrice } from '@/lib/utils';
 
+import { Button } from '../common';
 import { ProductImage } from './product-image';
 
 export const ProductCard: FC<Props> = ({ product }) => {
@@ -29,15 +30,16 @@ export const ProductCard: FC<Props> = ({ product }) => {
           quantity={1}
           className="lg:opacity-0 lg:group-hover:opacity-100"
         /> */}
-          <button
+          <Button
             type="submit"
+            variant="secondary"
+            className="w-full font-medium"
             onClick={(e: React.FormEvent<HTMLButtonElement>) => {
               e.stopPropagation();
             }}
-            className="flex gap-2 justify-center items-center bg-gray-100 px-8 py-2 w-full rounded text-gray-900 text-sm font-medium hover:bg-gray-200"
           >
             Add to cart
-          </button>
+          </Button>
         </div>
       </article>
     </Link>
