@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 
 import { type CartFragment } from '@/lib/common';
 import { Drawer } from '@/lib/common/components';
@@ -12,7 +12,20 @@ import { CartItem } from './cart-item';
 export const CartDrawer: FC<Props> = ({ cart }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const totalQuantityRef = useRef(cart?.totalQuantity);
   const lines = cart?.lines.items ?? [];
+
+  useEffect(() => {
+    // If the total quantity has changed, open the drawer
+    if (totalQuantityRef.current !== cart?.totalQuantity) {
+      // Only open the drawer if it's not already open (quantity can change while the drawer is open)
+      if (!isOpen) {
+        setIsOpen(true);
+      }
+
+      totalQuantityRef.current = cart?.totalQuantity;
+    }
+  }, [totalQuantityRef, cart?.totalQuantity, isOpen]);
 
   return (
     <>

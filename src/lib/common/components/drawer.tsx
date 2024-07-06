@@ -76,6 +76,7 @@ export const Drawer: FC<Props> = ({ isOpen, trigger, title, handleClose, footer,
 };
 
 type Props = {
+  ref?: React.RefObject<HTMLDivElement>;
   trigger: React.ReactNode;
   title: string;
   isOpen: boolean;
