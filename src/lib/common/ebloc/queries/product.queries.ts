@@ -36,7 +36,7 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql(`
   }
 `);
 
-export const GET_PRODUCT_DETAILS = graphql(`
+export const GET_PRODUCT_DETAILS_QUERY = graphql(`
   query GetProductDetails($slug: String!) {
     product(slug: $slug) {
       ...ProductDetails

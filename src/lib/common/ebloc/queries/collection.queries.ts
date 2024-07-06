@@ -22,7 +22,7 @@ export const COLLECTION_PRODUCT_FRAGMENT = graphql(`
   }
 `);
 
-export const GET_COLLECTIONS_SLUG = graphql(`
+export const GET_COLLECTIONS_SLUG_QUERY = graphql(`
   query GetCollectionsSlug {
     collections(input: { take: 3 }) {
       items {
@@ -34,7 +34,7 @@ export const GET_COLLECTIONS_SLUG = graphql(`
   }
 `);
 
-export const GET_COLLECTION_PRODUCTS = graphql(`
+export const GET_COLLECTION_PRODUCTS_QUERY = graphql(`
   query GetCollectionProducts($slug: String) {
     collection(slug: $slug) {
       products {
@@ -46,7 +46,7 @@ export const GET_COLLECTION_PRODUCTS = graphql(`
   }
 `);
 
-export const GET_COLLECTION_DETAILS = graphql(`
+export const GET_COLLECTION_DETAILS_QUERY = graphql(`
   query GetCollectionDetails($slug: String) {
     collection(slug: $slug) {
       id

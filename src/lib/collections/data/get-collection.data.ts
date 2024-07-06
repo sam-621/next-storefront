@@ -1,7 +1,7 @@
-import { eblocFetcher, GET_COLLECTION_DETAILS } from '@/lib/common';
+import { eblocFetcher, GET_COLLECTION_DETAILS_QUERY } from '@/lib/common';
 
 export const getCollection = async (slug: string) => {
-  const { collection } = await eblocFetcher(GET_COLLECTION_DETAILS, { slug });
+  const { collection } = await eblocFetcher(GET_COLLECTION_DETAILS_QUERY, { slug });
 
   return collection;
 };

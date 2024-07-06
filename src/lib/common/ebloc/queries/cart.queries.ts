@@ -71,7 +71,7 @@ export const CART_FRAGMENT = graphql(`
   }
 `);
 
-export const GET_CART = graphql(`
+export const GET_CART_QUERY = graphql(`
   query GetCart($id: ID) {
     order(id: $id) {
       ...Cart
@@ -79,7 +79,7 @@ export const GET_CART = graphql(`
   }
 `);
 
-export const GET_AVAILABLE_PAYMENT_METHODS = graphql(`
+export const GET_AVAILABLE_PAYMENT_METHODS_QUERY = graphql(`
   query GetAvailablePaymentMethods {
     availablePaymentMethods {
       id
@@ -90,7 +90,7 @@ export const GET_AVAILABLE_PAYMENT_METHODS = graphql(`
   }
 `);
 
-export const GET_AVAILABLE_SHIPPING_METHODS = graphql(`
+export const GET_AVAILABLE_SHIPPING_METHODS_QUERY = graphql(`
   query GetAvailableShippingMethods {
     availableShippingMethods {
       id
