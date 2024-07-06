@@ -6,11 +6,12 @@ import { type CartFragment, Drawer } from '@/lib/common';
 
 import { CartButton } from './cart-button';
 import { CartFooter } from './cart-footer';
+import { CartItem } from './cart-item';
 
 export const CartDrawer: FC<Props> = ({ cart }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // const lines = cart.lines.items ?? [];
+  const lines = cart?.lines.items ?? [];
 
   return (
     <>
@@ -22,9 +23,9 @@ export const CartDrawer: FC<Props> = ({ cart }) => {
         footer={<CartFooter cart={cart} />}
       >
         <div className="mt-8"></div>
-        {/* {lines.map(line => (
+        {lines.map(line => (
           <CartItem key={line.id} line={line} />
-        ))} */}
+        ))}
       </Drawer>
     </>
   );
