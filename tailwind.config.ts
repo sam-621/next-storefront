@@ -11,10 +11,8 @@ const config: Config = {
       animation: {
         fade: 'fadeOut 5s ease-in-out'
       }
-
-      // that is actual animation
     }
   },
-  plugins: [require('@tailwindcss/aspect-ratio')]
+  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms')]
 };
 export default config;
