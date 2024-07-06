@@ -10,6 +10,9 @@ import { useVariantSelector } from './use-variant-selector';
 export const VariantSelector: FC<Props> = ({ options, variants }) => {
   const { onVariantChange, selectedVariant, selectedOptions } = useVariantSelector(variants);
 
+  const allOptionsSelected = options.length === Object.keys(selectedOptions).length;
+  const variantIsInStock = Boolean(selectedVariant?.stock);
+
   return (
     <div className="flex flex-col gap-8">
       {options.map(option => (
@@ -69,7 +72,7 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
       <div>
         <AddToCart
           soldOutText="Add to cart"
-          availableForSale={Boolean(selectedVariant?.stock)}
+          availableForSale={allOptionsSelected && variantIsInStock}
           variantId={selectedVariant?.id ?? ''}
           className={buttonVariants({ size: 'lg', className: 'w-full' })}
         />
