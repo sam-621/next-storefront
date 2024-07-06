@@ -1,3 +1,3 @@
-export * from './get-collection.data';
-export * from './get-collection-products.data';
-export * from './get-collections-slugs.data';
+export * from './get-collection';
+export * from './get-collection-products';
+export * from './get-collections-slugs';

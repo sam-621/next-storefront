@@ -1,1 +1,1 @@
-export * from './get-product-details.data';
+export * from './get-product-details';
