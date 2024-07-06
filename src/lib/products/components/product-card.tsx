@@ -16,7 +16,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
   const defaultVariant = variants.items[0];
 
   return (
-    <article className="group flex flex-col gap-4 border rounded-md fade-in">
+    <article className="group flex flex-col gap-4 border rounded-md fade-in h-fit">
       <Link href={`/products/${product.slug}`}>
         <ProductImage src={defaultAsset} alt={name} className="rounded-t-md lg:h-80 group" />
       </Link>

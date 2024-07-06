@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { TopLoader } from '@/lib/common';
+import { Toaster, TopLoader } from '@/lib/common';
 
 import './globals.css';
 
@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="en" suppressContentEditableWarning>
       <body className={inter.className}>
         <TopLoader />
+        <Toaster />
         {children}
       </body>
     </html>

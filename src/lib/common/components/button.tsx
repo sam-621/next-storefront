@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/common/utils';
 
 const buttonVariants = cva(
-  'flex justify-center items-center transition-colors px-8 disabled:opacity-60 disabled:cursor-not-allowed',
+  'flex justify-center items-center gap-2 transition-colors px-8 disabled:opacity-60 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {

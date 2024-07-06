@@ -28,7 +28,7 @@ export const Header: FC<Props> = ({ collections }) => {
         ))}
       </nav>
       <div className="flex gap-6 lg:w-[90px]">
-        <UserIcon className="w-6 h-6 text-gray-400" />
+        <UserIcon className="w-6 h-6 text-gray-400 flex-shrink-0" />
         <Cart />
         <MobileHeaderDrawer collections={collections} />
       </div>

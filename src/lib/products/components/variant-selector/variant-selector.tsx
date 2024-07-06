@@ -2,7 +2,8 @@
 
 import { type FC } from 'react';
 
-import { Button, cn, type ProductDetailsFragment } from '@/lib/common/';
+import { AddToCart } from '@/lib/cart';
+import { buttonVariants, cn, type ProductDetailsFragment } from '@/lib/common/';
 
 import { useVariantSelector } from './use-variant-selector';
 
@@ -66,15 +67,12 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
         </div>
       ))}
       <div>
-        <Button
-          size="lg"
-          className="w-full"
-          onClick={() => {
-            console.log(selectedVariant);
-          }}
-        >
-          Add to cart
-        </Button>
+        <AddToCart
+          soldOutText="Add to cart"
+          availableForSale={Boolean(selectedVariant?.stock)}
+          variantId={selectedVariant?.id ?? ''}
+          className={buttonVariants({ size: 'lg', className: 'w-full' })}
+        />
       </div>
     </div>
   );
