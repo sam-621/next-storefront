@@ -686,19 +686,6 @@ export type AddShippingAddressToCartMutation = {
   };
 };
 
-export type GetAvailableShippingMethodsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAvailableShippingMethodsQuery = {
-  __typename?: 'Query';
-  availableShippingMethods: Array<{
-    __typename?: 'ShippingMethod';
-    id: string;
-    name: string;
-    enabled: boolean;
-    description?: string | null;
-  }>;
-};
-
 export type AddShipmentToOrderMutationMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: AddShipmentToOrderInput;
@@ -809,6 +796,19 @@ export type GetAvailablePaymentMethodsQuery = {
   __typename?: 'Query';
   availablePaymentMethods: Array<{
     __typename?: 'PaymentMethod';
+    id: string;
+    name: string;
+    enabled: boolean;
+    description?: string | null;
+  }>;
+};
+
+export type GetAvailableShippingMethodsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAvailableShippingMethodsQuery = {
+  __typename?: 'Query';
+  availableShippingMethods: Array<{
+    __typename?: 'ShippingMethod';
     id: string;
     name: string;
     enabled: boolean;
@@ -1152,19 +1152,6 @@ export const AddShippingAddressToCartDocument = new TypedDocumentString(`
   AddShippingAddressToCartMutation,
   AddShippingAddressToCartMutationVariables
 >;
-export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
-    query GetAvailableShippingMethods {
-  availableShippingMethods {
-    id
-    name
-    enabled
-    description
-  }
-}
-    `) as unknown as TypedDocumentString<
-  GetAvailableShippingMethodsQuery,
-  GetAvailableShippingMethodsQueryVariables
->;
 export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
     mutation AddShipmentToOrderMutation($cartId: ID!, $input: AddShipmentToOrderInput!) {
   addShipmentToOrder(orderId: $cartId, input: $input) {
@@ -1283,6 +1270,19 @@ export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   GetAvailablePaymentMethodsQuery,
   GetAvailablePaymentMethodsQueryVariables
+>;
+export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
+    query GetAvailableShippingMethods {
+  availableShippingMethods {
+    id
+    name
+    enabled
+    description
+  }
+}
+    `) as unknown as TypedDocumentString<
+  GetAvailableShippingMethodsQuery,
+  GetAvailableShippingMethodsQueryVariables
 >;
 export const GetCollectionsSlugDocument = new TypedDocumentString(`
     query GetCollectionsSlug {
