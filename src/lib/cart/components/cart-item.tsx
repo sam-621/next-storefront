@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import { type CartFragment, formatPrice } from '@/lib/common';
 
+import { CartQuantityButton } from './cart-quantity-button';
+
 export const CartItem: FC<Props> = ({ line }) => {
   const { unitPrice, quantity } = line;
   const { name, assets } = line.productVariant.product;
@@ -24,7 +26,7 @@ export const CartItem: FC<Props> = ({ line }) => {
           </div>
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
-          {/* <div className="flex border border-border h-8 w-24 rounded-lg">
+          <div className="flex border border-border h-8 w-24 rounded-lg">
             <CartQuantityButton line={line} type="minus" />
             <span className="text-center flex items-center justify-center w-full">{quantity}</span>
             <CartQuantityButton
@@ -32,7 +34,7 @@ export const CartItem: FC<Props> = ({ line }) => {
               type="plus"
               disabled={availableStock === line.quantity}
             />
-          </div> */}
+          </div>
 
           <div className="flex">{/* <CartRemoveButton lineId={line.id} /> */}</div>
         </div>

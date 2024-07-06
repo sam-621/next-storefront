@@ -28,7 +28,7 @@ export const ADD_TO_CART_MUTATION = graphql(`
   }
 `);
 
-export const UPDATE_CART_MUTATION_LINE = graphql(`
+export const UPDATE_CART_LINE_MUTATION = graphql(`
   mutation UpdateCartLine($lineId: ID!, $input: UpdateOrderLineInput!) {
     updateOrderLine(lineId: $lineId, input: $input) {
       apiErrors {
@@ -42,7 +42,7 @@ export const UPDATE_CART_MUTATION_LINE = graphql(`
   }
 `);
 
-export const REMOVE_CART_MUTATION_LINE = graphql(`
+export const REMOVE_CART_LINE_MUTATION = graphql(`
   mutation RemoveCartLine($lineId: ID!) {
     removeOrderLine(lineId: $lineId) {
       apiErrors {
