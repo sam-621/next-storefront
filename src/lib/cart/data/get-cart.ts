@@ -1,9 +1,13 @@
-'use server';
-
 import { cookies } from 'next/headers';
 
-import { CacheTags, CookiesNames } from '@/lib/common/constants';
-import { CART_FRAGMENT, eblocFetcher, GET_CART_QUERY, getFragmentData } from '@/lib/common/ebloc';
+import {
+  CacheTags,
+  CART_FRAGMENT,
+  CookiesNames,
+  eblocFetcher,
+  GET_CART_QUERY,
+  getFragmentData
+} from '@/lib/common';
 
 export const getCart = async () => {
   const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';

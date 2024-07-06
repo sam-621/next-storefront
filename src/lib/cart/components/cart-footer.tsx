@@ -4,7 +4,8 @@ import { type FC } from 'react';
 
 import Link from 'next/link';
 
-import { Button, type CartFragment, formatPrice } from '@/lib/common';
+import { type CartFragment, formatPrice } from '@/lib/common';
+import { Button } from '@/lib/common/components';
 
 export const CartFooter: FC<Props> = ({ cart }) => {
   return (

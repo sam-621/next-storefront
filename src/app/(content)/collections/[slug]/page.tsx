@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 
 import { getCollection, getCollectionProducts } from '@/lib/collections';
-import { ProductCard } from '@/lib/products';
+import { ProductCard } from '@/lib/products/components';
 
 export default async function Page({ params }: { params: Params }) {
   const collection = await getCollection(params.slug);

@@ -3,7 +3,7 @@ import { type FC } from 'react';
 import { UserIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import { Cart } from '@/lib/cart/components/cart';
+import { Cart } from '@/lib/cart/components';
 
 import { Logo } from './logo';
 import { MobileHeaderDrawer } from './mobile-header';

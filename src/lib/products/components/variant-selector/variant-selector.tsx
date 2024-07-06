@@ -2,8 +2,9 @@
 
 import { type FC } from 'react';
 
-import { AddToCart } from '@/lib/cart';
-import { buttonVariants, cn, type ProductDetailsFragment } from '@/lib/common/';
+import { AddToCart } from '@/lib/cart/components';
+import { cn, type ProductDetailsFragment } from '@/lib/common';
+import { buttonVariants } from '@/lib/common/components';
 
 import { useVariantSelector } from './use-variant-selector';
 

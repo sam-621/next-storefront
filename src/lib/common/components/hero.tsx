@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
 import { getCollectionsSlugs } from '@/lib/collections';
-import { Button } from '@/lib/common';
+
+import { Button } from './button';
 
 export const Hero = async () => {
   const collection = await getCollectionsSlugs();

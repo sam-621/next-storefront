@@ -1,4 +1,3 @@
-export * from './components';
 export * from './constants';
 export * from './ebloc';
 export * from './hooks';
