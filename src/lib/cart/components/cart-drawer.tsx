@@ -36,7 +36,6 @@ export const CartDrawer: FC<Props> = ({ cart }) => {
         handleClose={() => setIsOpen(false)}
         footer={<CartFooter cart={cart} />}
       >
-        <div className="mt-8"></div>
         {lines.map(line => (
           <CartItem key={line.id} line={line} />
         ))}

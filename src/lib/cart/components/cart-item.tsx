@@ -33,19 +33,23 @@ export const CartItem: FC<Props> = ({ line }) => {
             <p className="ml-4">{formatPrice(unitPrice)}</p>
           </div>
         </div>
-        <div className="flex flex-1 items-center justify-between text-sm">
-          <div className="flex border border-border h-8 w-24 rounded-lg">
-            <CartQuantityButton line={line} type="minus" />
-            <span className="text-center flex items-center justify-center w-full">{quantity}</span>
-            <CartQuantityButton
-              line={line}
-              type="plus"
-              disabled={availableStock === line.quantity}
-            />
-          </div>
+        <div className="flex flex-1 items-end justify-between text-sm">
+          <div className="flex w-full items-center justify-between">
+            <div className="flex border border-border h-8 w-24 rounded-lg">
+              <CartQuantityButton line={line} type="minus" />
+              <span className="text-center flex items-center justify-center w-full">
+                {quantity}
+              </span>
+              <CartQuantityButton
+                line={line}
+                type="plus"
+                disabled={availableStock === line.quantity}
+              />
+            </div>
 
-          <div className="flex">
-            <CartRemoveButton lineId={line.id} />
+            <div className="flex">
+              <CartRemoveButton lineId={line.id} />
+            </div>
           </div>
         </div>
       </div>
