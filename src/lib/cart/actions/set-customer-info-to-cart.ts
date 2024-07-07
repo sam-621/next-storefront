@@ -16,7 +16,7 @@ import {
 } from '@/lib/common';
 
 /**
- * Set contact and shipping info to the cart
+ * Set contact and shipping info to the cart and redirect to the shipping page.
  *
  * @warning this actions should be used in a form managed by react-hook-form, it does not validate the input
  */

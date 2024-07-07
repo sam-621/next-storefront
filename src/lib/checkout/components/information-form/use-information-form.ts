@@ -1,10 +1,12 @@
+'use client';
+
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { setCustomerInfoToCart } from '@/lib/cart/actions/set-customer-info-to-cart';
+import { setCustomerInfoToCart } from '@/lib/cart';
 import { type CartFragment, FormMessages, type MakeAny } from '@/lib/common';
 
 export const useInformationForm = (cart: CartFragment) => {

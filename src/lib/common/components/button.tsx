@@ -30,12 +30,20 @@ type Props = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants>;
 
-const Button: FC<Props> = ({ className, variant, size, isLoading, children, ...props }) => {
+const Button: FC<Props> = ({
+  className,
+  variant,
+  size,
+  isLoading,
+  disabled,
+  children,
+  ...props
+}) => {
   return (
     <button
       className={cn(buttonVariants({ variant, size, className }))}
-      aria-disabled={isLoading}
-      disabled={isLoading}
+      aria-disabled={isLoading ?? disabled}
+      disabled={isLoading ?? disabled}
       {...props}
     >
       {isLoading && <ArrowPathIcon className="w-5 h-5 animate-spin" />}

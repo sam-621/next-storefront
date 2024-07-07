@@ -16,7 +16,7 @@ export default async function ShippingPage() {
   return (
     <CheckoutContentLayout>
       <CheckoutContentLayout.Section>
-        <ShippingForm methods={methods} />
+        <ShippingForm methods={methods} defaultSelected={cart.shipment?.method.id} />
       </CheckoutContentLayout.Section>
       <CheckoutContentLayout.Section className="bg-gray-50">
         <CartSummary cart={cart} />

@@ -1,24 +1,28 @@
 'use client';
 
 import { type FC, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
+import { addShipmentToCart } from '@/lib/cart';
 import { cn, formatPrice, type GetAvailableShippingMethodsQuery } from '@/lib/common';
 import { Button } from '@/lib/common/components';
 
 import { CheckoutFormCard } from '../checkout-card';
 import { MethodsEmptyState } from '../methods-empty-state';
 
-export const ShippingForm: FC<Props> = ({ methods }) => {
-  const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
+export const ShippingForm: FC<Props> = ({ methods, defaultSelected }) => {
+  const [, action] = useFormState(addShipmentToCart, null);
+  const [selected, setSelected] = useState<string>(defaultSelected ?? methods[0]?.id ?? '');
 
+  const actionWithMethod = action.bind(null, selected);
   const hasMethods = methods.length > 0;
 
   return (
-    <form className="flex flex-col gap-6">
+    <form action={actionWithMethod} className="flex flex-col gap-6">
       <CheckoutFormCard title="Shipping methods">
         {hasMethods ? (
           <div className="flex flex-col gap-4">
@@ -67,19 +71,32 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
             Return to information
           </Link>
         </div>
-        <Button
-          disabled={!hasMethods}
-          size="lg"
-          type="submit"
-          className="w-full font-light md:w-fit"
-        >
-          Continue to payment
-        </Button>
+        <SubmitButton disabled={!hasMethods} />
       </div>
     </form>
   );
 };
 
+const SubmitButton = ({ disabled }: { disabled: boolean }) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      isLoading={pending}
+      disabled={disabled || pending}
+      size="lg"
+      type="submit"
+      className="w-full font-light md:w-fit"
+    >
+      Continue to payment
+    </Button>
+  );
+};
+
 type Props = {
   methods: GetAvailableShippingMethodsQuery['availableShippingMethods'];
+  /**
+   * The default selected shipping method id. Defaults to the first method id.
+   */
+  defaultSelected?: string;
 };
