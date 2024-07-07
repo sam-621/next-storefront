@@ -1,11 +1,13 @@
 'use client';
 
 import { type FC, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
+import { addPaymentToCart } from '@/lib/cart';
 import { cn, type GetAvailablePaymentMethodsQuery } from '@/lib/common';
 import { Button } from '@/lib/common/components';
 
@@ -13,12 +15,14 @@ import { CheckoutFormCard } from '../checkout-card';
 import { MethodsEmptyState } from '../methods-empty-state';
 
 export const PaymentForm: FC<Props> = ({ methods }) => {
+  const [, action] = useFormState(addPaymentToCart, null);
   const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
 
+  const actionWithMethod = action.bind(null, selected);
   const hasMethods = methods.length > 0;
 
   return (
-    <form className="flex flex-col gap-6">
+    <form action={actionWithMethod} className="flex flex-col gap-6">
       <CheckoutFormCard title="Payment methods">
         {hasMethods ? (
           <div className="flex flex-col gap-4">
@@ -58,16 +62,25 @@ export const PaymentForm: FC<Props> = ({ methods }) => {
             Return to shipping
           </Link>
         </div>
-        <Button
-          disabled={!hasMethods}
-          size="lg"
-          type="submit"
-          className="w-full font-light md:w-fit"
-        >
-          Pay now
-        </Button>
+        <SubmitButton disabled={!hasMethods} />
       </div>
     </form>
+  );
+};
+
+const SubmitButton = ({ disabled }: { disabled: boolean }) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      isLoading={pending}
+      disabled={disabled || pending}
+      size="lg"
+      type="submit"
+      className="w-full font-light md:w-fit"
+    >
+      Continue to payment
+    </Button>
   );
 };
 

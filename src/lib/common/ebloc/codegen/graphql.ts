@@ -33,7 +33,7 @@ export type AddPaymentToOrderInput = {
 };
 
 export type AddShipmentToOrderInput = {
-  shippingMethodId: Scalars['ID']['input'];
+  methodId: Scalars['ID']['input'];
 };
 
 export type Address = Node & {
