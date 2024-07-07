@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { CheckoutSteps } from '@/lib/checkout/components';
+import { CheckoutSteps, CheckoutStepsMobile } from '@/lib/checkout/components';
 import { Logo } from '@/lib/common/components';
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
             </Link>
           </div>
           <div className="xl:hidden">
-            <span className="text-gray-700 font-medium">Step 1 of 3</span>
+            <CheckoutStepsMobile />
           </div>
           <div className="hidden xl:block relative -left-1/2">
             <CheckoutSteps />

@@ -3,6 +3,7 @@ export * from './cart-summary/cart-summary-item';
 export * from './checkout-card';
 export * from './checkout-content-layout';
 export * from './checkout-steps';
+export * from './checkout-steps-mobile';
 export * from './information-form/information-form';
 export * from './methods-empty-state';
 export * from './payment-form/payment-form';
