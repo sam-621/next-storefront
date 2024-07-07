@@ -10,10 +10,16 @@ const Root: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-const Section: FC<PropsWithChildren & { className?: string }> = ({ children, className }) => {
+const Section: FC<PropsWithChildren & { className?: string; sticky?: boolean }> = ({
+  children,
+  className,
+  sticky
+}) => {
   return (
     <section className={cn('py-16 px-4', className)}>
-      <div className="mx-auto max-w-lg">{children}</div>
+      <div className={cn('mx-auto max-w-lg', sticky && 'sticky top-[calc(85px+64px)]')}>
+        {children}
+      </div>
     </section>
   );
 };

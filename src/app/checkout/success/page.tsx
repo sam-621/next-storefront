@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { CartSummary, CheckoutContentLayout } from '@/lib/checkout/components';
 import { type CartFragment } from '@/lib/common';
+import { Scroll } from '@/lib/common/components';
 import { getOrder } from '@/lib/orders';
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
@@ -15,24 +16,27 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
   }
 
   return (
-    <CheckoutContentLayout>
-      <CheckoutContentLayout.Section className="flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-center">Thanks for your purchase!</h1>
-        <p className="mt-4 text-center">
-          We will send you an email with the details of your order.
-        </p>
-        <Link
-          href="/"
-          className="flex items-center justify-center gap-2  mt-8 text-indigo-600 cursor-pointer text-center"
-        >
-          Keep buying
-          <ArrowRightIcon className="h-4 w-4" />
-        </Link>
-      </CheckoutContentLayout.Section>
-      <CheckoutContentLayout.Section className="bg-gray-50">
-        <CartSummary cart={order as CartFragment} />
-      </CheckoutContentLayout.Section>
-    </CheckoutContentLayout>
+    <>
+      <CheckoutContentLayout>
+        <CheckoutContentLayout.Section className="flex flex-col items-center relative">
+          <h1 className="text-3xl font-bold text-center">Thanks for your purchase!</h1>
+          <p className="mt-4 text-center">
+            We will send you an email with the details of your order.
+          </p>
+          <Link
+            href="/"
+            className="flex items-center justify-center gap-2  mt-8 text-indigo-600 cursor-pointer text-center"
+          >
+            Keep buying
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+        </CheckoutContentLayout.Section>
+        <CheckoutContentLayout.Section className="bg-gray-50">
+          <CartSummary cart={order as CartFragment} />
+        </CheckoutContentLayout.Section>
+      </CheckoutContentLayout>
+      <Scroll />
+    </>
   );
 }
 

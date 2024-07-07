@@ -5,4 +5,5 @@ export * from './header';
 export * from './hero';
 export * from './input';
 export * from './logo';
+export * from './scroll';
 export * from './select';
