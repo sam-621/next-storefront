@@ -25,7 +25,6 @@ export type AddCustomerToOrderInput = {
   email: Scalars['String']['input'];
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
-  phoneCountryCode?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -42,9 +41,8 @@ export type Address = Node & {
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
+  fullName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  phoneCountryCode?: Maybe<Scalars['String']['output']>;
-  phoneNumber?: Maybe<Scalars['String']['output']>;
   postalCode: Scalars['String']['output'];
   /** State or region */
   province: Scalars['String']['output'];
@@ -116,8 +114,6 @@ export type CollectionList = List & {
 export type CreateAddressInput = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
-  phoneCountryCode?: InputMaybe<Scalars['String']['input']>;
-  phoneNumber?: InputMaybe<Scalars['String']['input']>;
   postalCode: Scalars['String']['input'];
   province: Scalars['String']['input'];
   references?: InputMaybe<Scalars['String']['input']>;
@@ -130,7 +126,6 @@ export type CreateCustomerInput = {
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phoneCountryCode?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -154,7 +149,6 @@ export type Customer = Node & {
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
   orders: OrderList;
-  phoneCountryCode?: Maybe<Scalars['String']['output']>;
   phoneNumber?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
 };
@@ -413,8 +407,7 @@ export type OrderShippingAddressJson = {
   __typename?: 'OrderShippingAddressJson';
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
-  phoneCountryCode?: Maybe<Scalars['String']['output']>;
-  phoneNumber?: Maybe<Scalars['String']['output']>;
+  fullName?: Maybe<Scalars['String']['output']>;
   postalCode: Scalars['String']['output'];
   /** State or region */
   province: Scalars['String']['output'];
@@ -573,7 +566,6 @@ export type UpdateCustomerInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
-  phoneCountryCode?: InputMaybe<Scalars['String']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -758,7 +750,6 @@ export type CartFragment = {
     lastName: string;
     email: string;
     phoneNumber?: string | null;
-    phoneCountryCode?: string | null;
   } | null;
   shippingAddress?: {
     __typename?: 'OrderShippingAddressJson';
@@ -768,8 +759,7 @@ export type CartFragment = {
     city: string;
     province: string;
     country: string;
-    phoneCountryCode?: string | null;
-    phoneNumber?: string | null;
+    references?: string | null;
   } | null;
   shipment?: {
     __typename?: 'Shipment';
@@ -980,7 +970,6 @@ export const CartFragmentDoc = new TypedDocumentString(
     lastName
     email
     phoneNumber
-    phoneCountryCode
   }
   shippingAddress {
     streetLine1
@@ -989,8 +978,7 @@ export const CartFragmentDoc = new TypedDocumentString(
     city
     province
     country
-    phoneCountryCode
-    phoneNumber
+    references
   }
   shipment {
     id
@@ -1235,7 +1223,6 @@ export const GetCartDocument = new TypedDocumentString(`
     lastName
     email
     phoneNumber
-    phoneCountryCode
   }
   shippingAddress {
     streetLine1
@@ -1244,8 +1231,7 @@ export const GetCartDocument = new TypedDocumentString(`
     city
     province
     country
-    phoneCountryCode
-    phoneNumber
+    references
   }
   shipment {
     id

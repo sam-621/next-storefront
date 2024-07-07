@@ -13,7 +13,7 @@ export default async function CheckoutPage() {
   return (
     <CheckoutContentLayout>
       <CheckoutContentLayout.Section>
-        <InformationForm />
+        <InformationForm cart={cart} />
       </CheckoutContentLayout.Section>
 
       <CheckoutContentLayout.Section className="bg-gray-50">

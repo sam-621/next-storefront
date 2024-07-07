@@ -9,6 +9,10 @@ export const getOrderError = (code?: OrderErrorCode | null) => {
     return `You can't add more of this product to the cart.`;
   }
 
+  if (code === OrderErrorCode.CustomerInvalidEmail) {
+    return 'Invalid email.';
+  }
+
   return GenericError;
 };
 
