@@ -17,7 +17,7 @@ export default async function PaymentPage() {
       <CheckoutContentLayout.Section>
         <PaymentForm methods={methods} />
       </CheckoutContentLayout.Section>
-      <CheckoutContentLayout.Section>
+      <CheckoutContentLayout.Section className="bg-gray-50">
         <CartSummary cart={cart} />
       </CheckoutContentLayout.Section>
     </CheckoutContentLayout>
