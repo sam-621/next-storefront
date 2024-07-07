@@ -38,11 +38,8 @@ export default async function CheckoutPage() {
 
           <hr />
 
-          <div className="flex flex-col-reverse items-center gap-4">
-            <p className="text-gray-500 text-sm">
-              You won&apos;t be charged until the payment step.
-            </p>
-            <Button type="submit" className="w-full font-light">
+          <div className="flex justify-end">
+            <Button size="lg" type="submit" className="w-full font-light lg:w-fit">
               Continue to shipping
             </Button>
           </div>
