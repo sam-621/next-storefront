@@ -91,11 +91,11 @@ export const GET_AVAILABLE_PAYMENT_METHODS_QUERY = graphql(`
 `);
 
 export const GET_AVAILABLE_SHIPPING_METHODS_QUERY = graphql(`
-  query GetAvailableShippingMethods {
-    availableShippingMethods {
+  query GetAvailableShippingMethods($cartId: ID!) {
+    availableShippingMethods(orderId: $cartId) {
       id
       name
-      enabled
+      price
       description
     }
   }

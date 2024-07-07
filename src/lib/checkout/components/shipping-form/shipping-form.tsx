@@ -6,7 +6,7 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-import { cn, type GetAvailableShippingMethodsQuery } from '@/lib/common';
+import { cn, formatPrice, type GetAvailableShippingMethodsQuery } from '@/lib/common';
 import { Button } from '@/lib/common/components';
 
 import { CheckoutFormCard } from '../checkout-card';
@@ -34,12 +34,21 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
                 )}
               >
                 <div className="flex justify-between">
-                  <div className="font-medium text-slate-900">{m.name}</div>
-                  {selected === m.id && (
-                    <CheckCircleIcon className="h-5 w-5 flex-none text-indigo-600" />
-                  )}
+                  <div className="flex flex-col gap-6">
+                    <div>
+                      <div className="font-medium text-slate-900">{m.name}</div>
+                      <div className="mt-1 text-slate-700">{m.description}</div>
+                    </div>
+                    <div>
+                      <span className="font-medium text-sm">{formatPrice(m.price)}</span>
+                    </div>
+                  </div>
+                  <div>
+                    {selected === m.id && (
+                      <CheckCircleIcon className="h-5 w-5 flex-none text-indigo-600" />
+                    )}
+                  </div>
                 </div>
-                <div className="mt-1 text-slate-700">{m.description}</div>
               </div>
             ))}
           </div>

@@ -6,11 +6,12 @@ import { getAvailableShippingMethods } from '@/lib/checkout/data';
 
 export default async function ShippingPage() {
   const cart = await getCart();
-  const methods = await getAvailableShippingMethods();
 
   if (!cart) {
     redirect('/');
   }
+
+  const methods = await getAvailableShippingMethods(cart.id);
 
   return (
     <CheckoutContentLayout>

@@ -501,6 +501,10 @@ export type Query = {
   variants: VariantList;
 };
 
+export type QueryAvailableShippingMethodsArgs = {
+  orderId: Scalars['ID']['input'];
+};
+
 export type QueryCollectionArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -561,6 +565,7 @@ export type ShippingMethod = Node & {
   enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  price: Scalars['Int']['output'];
   updatedAt: Scalars['Date']['output'];
 };
 
@@ -803,7 +808,9 @@ export type GetAvailablePaymentMethodsQuery = {
   }>;
 };
 
-export type GetAvailableShippingMethodsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAvailableShippingMethodsQueryVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+}>;
 
 export type GetAvailableShippingMethodsQuery = {
   __typename?: 'Query';
@@ -811,7 +818,7 @@ export type GetAvailableShippingMethodsQuery = {
     __typename?: 'ShippingMethod';
     id: string;
     name: string;
-    enabled: boolean;
+    price: number;
     description?: string | null;
   }>;
 };
@@ -1272,11 +1279,11 @@ export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
   GetAvailablePaymentMethodsQueryVariables
 >;
 export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
-    query GetAvailableShippingMethods {
-  availableShippingMethods {
+    query GetAvailableShippingMethods($cartId: ID!) {
+  availableShippingMethods(orderId: $cartId) {
     id
     name
-    enabled
+    price
     description
   }
 }
