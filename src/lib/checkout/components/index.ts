@@ -3,5 +3,6 @@ export * from './cart-summary/cart-summary-item';
 export * from './checkout-card';
 export * from './checkout-content-layout';
 export * from './checkout-steps';
+export * from './methods-empty-state';
 export * from './payment-form/payment-form';
 export * from './shipping-form/shipping-form';
