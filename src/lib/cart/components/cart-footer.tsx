@@ -17,7 +17,7 @@ export const CartFooter: FC<Props> = ({ cart }) => {
       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       <div className="mt-6">
         {cart?.lines?.items?.length ? (
-          <Link href="/checkout">
+          <Link href="/checkout/information">
             <Button size="lg" className="w-full">
               Proceed to checkout
             </Button>
