@@ -6,12 +6,12 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-import { cn, type GetAvailableShippingMethodsQuery } from '@/lib/common';
+import { cn, type GetAvailablePaymentMethodsQuery } from '@/lib/common';
 import { Button } from '@/lib/common/components';
 
 import { CheckoutFormCard } from '../checkout-card';
 
-export const ShippingForm: FC<Props> = ({ methods }) => {
+export const PaymentForm: FC<Props> = ({ methods }) => {
   const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
 
   if (!methods.length) {
@@ -20,7 +20,7 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
 
   return (
     <form className="flex flex-col gap-6">
-      <CheckoutFormCard title="Shipping methods">
+      <CheckoutFormCard title="Payment methods">
         <div className="flex flex-col gap-4">
           {methods.map(m => (
             <div
@@ -48,15 +48,15 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
       <div className="flex flex-col-reverse gap-4 md:flex-row justify-between">
         <div className="flex justify-center">
           <Link
-            href="/checkout/information"
+            href="/checkout/shipping"
             className="text-indigo-600 flex gap-2 items-center text-sm"
           >
             <ChevronLeftIcon className="h-4 w-4 flex-none" />
-            Return to information
+            Return to shipping
           </Link>
         </div>
         <Button size="lg" type="submit" className="w-full font-light md:w-fit">
-          Continue to payment
+          Pay now
         </Button>
       </div>
     </form>
@@ -64,5 +64,5 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
 };
 
 type Props = {
-  methods: GetAvailableShippingMethodsQuery['availableShippingMethods'];
+  methods: GetAvailablePaymentMethodsQuery['availablePaymentMethods'];
 };
