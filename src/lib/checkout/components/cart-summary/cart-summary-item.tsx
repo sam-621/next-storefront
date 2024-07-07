@@ -17,7 +17,12 @@ export const CartSummaryItem: FC<Props> = ({ line }) => {
       <div className="ml-4 flex flex-1 flex-col">
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900">
-            <h3>{name}</h3>
+            <div>
+              <h3>{name}</h3>
+              <span className="text-gray-500 text-sm font-normal">
+                {line.productVariant.optionValues?.map(v => v.value).join(' / ')}
+              </span>
+            </div>
             <p className="ml-4">{formatPrice(line.linePrice)}</p>
           </div>
         </div>

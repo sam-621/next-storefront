@@ -20,14 +20,14 @@ export const addPaymentToCart = async (_: any, methodId: string) => {
   const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';
 
   const {
-    addPaymentToOrder: { apiErrors }
+    addPaymentToOrder: { apiErrors, order }
   } = await eblocFetcher(ADD_PAYMENT_TO_CART_MUTATION, { cartId, input: { methodId } });
 
-  if (apiErrors.length) {
+  if (apiErrors.length || !order) {
     return getOrderError(apiErrors[0]?.code);
   }
 
   cookies().delete(CookiesNames.cartId);
   revalidateTag(CacheTags.cart[0]);
-  redirect('/checkout/success');
+  redirect(`/checkout/success?code=${order.code}`);
 };

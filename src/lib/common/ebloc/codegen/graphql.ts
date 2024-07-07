@@ -707,7 +707,7 @@ export type AddPaymentToCartMutationMutation = {
   addPaymentToOrder: {
     __typename?: 'OrderResult';
     apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
+    order?: { __typename?: 'Order'; id: string; code: string } | null;
   };
 };
 
@@ -872,6 +872,82 @@ export type GetCollectionDetailsQuery = {
   } | null;
 };
 
+export type OrderFragment = {
+  __typename?: 'Order';
+  id: string;
+  code: string;
+  subtotal: number;
+  total: number;
+  totalQuantity: number;
+  lines: {
+    __typename?: 'OrderLineList';
+    items: Array<{
+      __typename?: 'OrderLine';
+      id: string;
+      linePrice: number;
+      quantity: number;
+      unitPrice: number;
+      productVariant: {
+        __typename?: 'Variant';
+        id: string;
+        stock: number;
+        optionValues?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
+        product: {
+          __typename?: 'Product';
+          name: string;
+          slug: string;
+          assets: {
+            __typename?: 'AssetList';
+            items: Array<{ __typename?: 'Asset'; id: string; source: string }>;
+          };
+        };
+      };
+    }>;
+  };
+  customer?: {
+    __typename?: 'Customer';
+    id: string;
+    firstName?: string | null;
+    lastName: string;
+    email: string;
+    phoneNumber?: string | null;
+  } | null;
+  shippingAddress?: {
+    __typename?: 'OrderShippingAddressJson';
+    streetLine1: string;
+    streetLine2?: string | null;
+    postalCode: string;
+    city: string;
+    province: string;
+    country: string;
+    references?: string | null;
+  } | null;
+  shipment?: {
+    __typename?: 'Shipment';
+    id: string;
+    amount: number;
+    method: { __typename?: 'ShippingMethod'; id: string; name: string };
+  } | null;
+  payment?: {
+    __typename?: 'Payment';
+    id: string;
+    amount: number;
+    transactionId?: string | null;
+    method: { __typename?: 'PaymentMethod'; id: string; name: string };
+  } | null;
+} & { ' $fragmentName'?: 'OrderFragment' };
+
+export type GetOrderQueryVariables = Exact<{
+  code: Scalars['String']['input'];
+}>;
+
+export type GetOrderQuery = {
+  __typename?: 'Query';
+  order?:
+    | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { OrderFragment: OrderFragment } })
+    | null;
+};
+
 export type ProductDetailsFragment = {
   __typename?: 'Product';
   id: string;
@@ -1025,6 +1101,77 @@ export const CollectionProductFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'CollectionProduct' }
 ) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(
+  `
+    fragment Order on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        stock
+        optionValues {
+          id
+          value
+        }
+        product {
+          name
+          slug
+          assets(input: {take: 1}) {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+  }
+  shippingAddress {
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    references
+  }
+  shipment {
+    id
+    amount
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+    }
+  }
+}
+    `,
+  { fragmentName: 'Order' }
+) as unknown as TypedDocumentString<OrderFragment, unknown>;
 export const ProductDetailsFragmentDoc = new TypedDocumentString(
   `
     fragment ProductDetails on Product {
@@ -1172,6 +1319,7 @@ export const AddPaymentToCartMutationDocument = new TypedDocumentString(`
     }
     order {
       id
+      code
     }
   }
 }
@@ -1333,6 +1481,78 @@ export const GetCollectionDetailsDocument = new TypedDocumentString(`
   GetCollectionDetailsQuery,
   GetCollectionDetailsQueryVariables
 >;
+export const GetOrderDocument = new TypedDocumentString(`
+    query GetOrder($code: String!) {
+  order(code: $code) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  code
+  subtotal
+  total
+  totalQuantity
+  lines {
+    items {
+      id
+      linePrice
+      quantity
+      unitPrice
+      productVariant {
+        id
+        stock
+        optionValues {
+          id
+          value
+        }
+        product {
+          name
+          slug
+          assets(input: {take: 1}) {
+            items {
+              id
+              source
+            }
+          }
+        }
+      }
+    }
+  }
+  customer {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+  }
+  shippingAddress {
+    streetLine1
+    streetLine2
+    postalCode
+    city
+    province
+    country
+    references
+  }
+  shipment {
+    id
+    amount
+    method {
+      id
+      name
+    }
+  }
+  payment {
+    id
+    amount
+    transactionId
+    method {
+      id
+      name
+    }
+  }
+}`) as unknown as TypedDocumentString<GetOrderQuery, GetOrderQueryVariables>;
 export const GetProductDetailsDocument = new TypedDocumentString(`
     query GetProductDetails($slug: String!) {
   product(slug: $slug) {

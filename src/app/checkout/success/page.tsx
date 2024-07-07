@@ -2,13 +2,15 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { getCart } from '@/lib/cart';
 import { CartSummary, CheckoutContentLayout } from '@/lib/checkout/components';
+import { type CartFragment } from '@/lib/common';
+import { getOrder } from '@/lib/orders';
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
-  const cart = await getCart();
+  const code = searchParams.code ?? '';
+  const order = await getOrder(code);
 
-  if (!cart) {
+  if (!order) {
     redirect('/');
   }
 
@@ -28,7 +30,7 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
         </Link>
       </CheckoutContentLayout.Section>
       <CheckoutContentLayout.Section className="bg-gray-50">
-        <CartSummary cart={cart} />
+        <CartSummary cart={order as CartFragment} />
       </CheckoutContentLayout.Section>
     </CheckoutContentLayout>
   );

@@ -107,6 +107,7 @@ export const ADD_PAYMENT_TO_CART_MUTATION = graphql(`
       }
       order {
         id
+        code
       }
     }
   }
