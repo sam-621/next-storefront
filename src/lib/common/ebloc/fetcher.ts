@@ -22,7 +22,7 @@ export const eblocFetcher = async <R, V>(
       query: query.toString(),
       variables
     }),
-    cache: 'no-cache',
+    cache: 'no-store',
     next: { tags }
   });
 
