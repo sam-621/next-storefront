@@ -2,8 +2,7 @@
 
 import { type FC, useEffect, useRef, useState } from 'react';
 
-import { type CartFragment } from '@/lib/common';
-import { Drawer } from '@/lib/common/components';
+import { type CartFragment, Drawer } from '@/lib/common';
 
 import { CartButton } from './cart-button';
 import { CartFooter } from './cart-footer';

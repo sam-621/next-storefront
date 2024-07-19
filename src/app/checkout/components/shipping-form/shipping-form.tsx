@@ -8,11 +8,8 @@ import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 import { addShipmentToCart } from '@/lib/cart';
-import { cn, formatPrice, type GetAvailableShippingMethodsQuery } from '@/lib/common';
-import { Button } from '@/lib/common/components';
-
-import { CheckoutFormCard } from '../checkout-card';
-import { MethodsEmptyState } from '../methods-empty-state';
+import { CheckoutFormCard, MethodsEmptyState } from '@/lib/checkout';
+import { Button, cn, formatPrice, type GetAvailableShippingMethodsQuery } from '@/lib/common';
 
 export const ShippingForm: FC<Props> = ({ methods, defaultSelected }) => {
   const [, action] = useFormState(addShipmentToCart, null);

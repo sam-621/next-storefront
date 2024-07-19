@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import { type ProductDetailsFragment } from '@/lib/common/ebloc';
-import { useUrlState } from '@/lib/common/hooks';
-import { getVariantByOptions } from '@/lib/common/utils';
+import { getVariantByOptions, type ProductDetailsFragment, useUrlState } from '@/lib/common';
 
 /**
  * Handle variant selector state and URL state

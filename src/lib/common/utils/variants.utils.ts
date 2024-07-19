@@ -1,4 +1,4 @@
-import { type ProductDetailsFragment } from '@/lib/common/ebloc';
+import { type ProductDetailsFragment } from '@/lib/common';
 
 /**
  * Get the current variant based on the selected options

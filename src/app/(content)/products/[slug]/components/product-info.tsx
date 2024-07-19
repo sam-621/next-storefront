@@ -3,8 +3,7 @@ import { type FC } from 'react';
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
 
 import { formatPrice, type ProductDetailsFragment } from '@/lib/common';
-
-import { VariantSelector } from './variant-selector/variant-selector';
+import { VariantSelector } from '@/lib/products';
 
 export const ProductInfo: FC<Props> = ({ product }) => {
   const { options, variants } = product;

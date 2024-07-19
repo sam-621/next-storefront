@@ -1,11 +1,8 @@
-'use client';
-
 import { type FC } from 'react';
 
 import Link from 'next/link';
 
-import { type CartFragment, formatPrice } from '@/lib/common';
-import { Button } from '@/lib/common/components';
+import { Button, type CartFragment, formatPrice } from '@/lib/common';
 
 export const CartFooter: FC<Props> = ({ cart }) => {
   return (

@@ -3,7 +3,7 @@ import { type FC } from 'react';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/lib/common/utils';
+import { cn } from '@/lib/common';
 
 const buttonVariants = cva(
   'flex justify-center items-center gap-2 transition-colors px-8 disabled:opacity-60 disabled:cursor-not-allowed',

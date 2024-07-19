@@ -1,10 +1,9 @@
-'use client';
-
 import { type FC } from 'react';
 
 import Image from 'next/image';
 
-import { type CartFragment, formatPrice } from '@/lib/common';
+import { type CartFragment } from '@/lib/common/ebloc';
+import { formatPrice } from '@/lib/common/utils';
 
 import { CartQuantityButton } from './cart-quantity-button';
 import { CartRemoveButton } from './cart-remove-button';

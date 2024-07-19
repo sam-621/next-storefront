@@ -2,8 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { CacheTags, eblocFetcher } from '@/lib/common';
-import { REMOVE_CART_LINE_MUTATION } from '@/lib/common/ebloc/mutations';
+import { CacheTags, eblocFetcher, REMOVE_CART_LINE_MUTATION } from '@/lib/common';
 
 export const removeFromCart = async (_: any, lineId: string) => {
   const {

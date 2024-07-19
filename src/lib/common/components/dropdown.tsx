@@ -5,7 +5,7 @@ import { type FC } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 
-import { cn } from '@/lib/common/utils';
+import { cn } from '@/lib/common';
 
 export const Dropdown: FC<Props> = ({ title, options, direction = 'left' }) => {
   return (

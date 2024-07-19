@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
 
 import { getCart } from '@/lib/cart';
-import { CartSummary, CheckoutContentLayout, PaymentForm } from '@/lib/checkout/components';
-import { getAvailablePaymentMethods } from '@/lib/checkout/data';
-import { Scroll } from '@/lib/common/components';
+import { CheckoutContentLayout, getAvailablePaymentMethods } from '@/lib/checkout';
+import { Scroll } from '@/lib/common';
+
+import { CartSummary } from '../components/cart-summary/cart-summary';
+import { PaymentForm } from '../components/payment-form/payment-form';
 
 export default async function PaymentPage() {
   const cart = await getCart();

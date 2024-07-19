@@ -2,10 +2,11 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { CartSummary, CheckoutContentLayout } from '@/lib/checkout/components';
-import { type CartFragment } from '@/lib/common';
-import { Scroll } from '@/lib/common/components';
+import { CheckoutContentLayout } from '@/lib/checkout';
+import { type CartFragment, Scroll } from '@/lib/common';
 import { getOrder } from '@/lib/orders';
+
+import { CartSummary } from '../components/cart-summary/cart-summary';
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
   const code = searchParams.code ?? '';

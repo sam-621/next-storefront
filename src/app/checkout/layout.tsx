@@ -1,7 +1,9 @@
 import Link from 'next/link';
 
-import { CheckoutSteps, CheckoutStepsMobile } from '@/lib/checkout/components';
-import { Logo } from '@/lib/common/components';
+import { Logo } from '@/lib/common';
+
+import { CheckoutSteps } from './components/checkout-steps';
+import { CheckoutStepsMobile } from './components/checkout-steps-mobile';
 
 export default function RootLayout({
   children

@@ -1,12 +1,9 @@
-'use client';
-
 import { type FC } from 'react';
 
 import Link from 'next/link';
 
-import { AddToCart } from '@/lib/cart/components/add-to-cart';
-import { type CollectionProductFragment, formatPrice } from '@/lib/common';
-import { buttonVariants } from '@/lib/common/components';
+import { AddToCart } from '@/lib/cart';
+import { buttonVariants, type CollectionProductFragment, formatPrice } from '@/lib/common';
 
 import { ProductImage } from './product-image';
 

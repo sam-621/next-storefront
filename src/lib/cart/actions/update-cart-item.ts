@@ -2,8 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { CacheTags, eblocFetcher } from '@/lib/common';
-import { UPDATE_CART_LINE_MUTATION } from '@/lib/common/ebloc/mutations';
+import { CacheTags, eblocFetcher, UPDATE_CART_LINE_MUTATION } from '@/lib/common';
 
 export const updateCartItem = async (_: any, input: { id: string; quantity: number }) => {
   const { id, quantity } = input;

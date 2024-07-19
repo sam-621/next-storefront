@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
 
 import { getCart } from '@/lib/cart';
-import { CartSummary, CheckoutContentLayout, ShippingForm } from '@/lib/checkout/components';
-import { getAvailableShippingMethods } from '@/lib/checkout/data';
-import { Scroll } from '@/lib/common/components';
+import { CheckoutContentLayout, getAvailableShippingMethods } from '@/lib/checkout';
+import { Scroll } from '@/lib/common';
+
+import { CartSummary } from '../components/cart-summary/cart-summary';
+import { ShippingForm } from '../components/shipping-form/shipping-form';
 
 export default async function ShippingPage() {
   const cart = await getCart();
@@ -18,7 +20,7 @@ export default async function ShippingPage() {
     <>
       <CheckoutContentLayout>
         <CheckoutContentLayout.Section sticky>
-          <ShippingForm methods={methods} defaultSelected={cart.shipment?.method.id} />
+          <ShippingForm methods={methods} defaultSelected={cart.shipment?.method} />
         </CheckoutContentLayout.Section>
         <CheckoutContentLayout.Section className="bg-gray-50">
           <CartSummary cart={cart} />

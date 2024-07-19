@@ -58,7 +58,7 @@ export const CartSummary: FC<Props> = ({ cart }) => {
             {payment && (
               <div className="flex flex-col gap-2">
                 <p className="text-base font-medium text-gray-900">Payment method</p>
-                <p className="text-gray-600 text-sm">{payment.method.name}</p>
+                <p className="text-gray-600 text-sm">{payment.method}</p>
               </div>
             )}
           </div>

@@ -1,5 +1,3 @@
-'use server';
-
 import { getCart } from '../data';
 import { CartDrawer } from './cart-drawer';
 

@@ -1,13 +1,10 @@
-import Link from 'next/link';
+import { type FC } from 'react';
 
-import { getCollectionsSlugs } from '@/lib/collections';
+import Link from 'next/link';
 
 import { Button } from './button';
 
-export const Hero = async () => {
-  const collection = await getCollectionsSlugs();
-  const defaultCollection = collection[0];
-
+export const Hero: FC<Props> = async ({ action }) => {
   return (
     <div className="relative hero_height">
       <div className="w-full h-full absolute z-20 flex items-center">
@@ -21,9 +18,9 @@ export const Hero = async () => {
               experience, and drives sales.
             </p>
           </div>
-          <Link href={`/collections/${defaultCollection.slug}`}>
+          <Link href={action.href}>
             <Button size="lg" className="bg-white hover:bg-gray-200 text-gray-900">
-              Shop News in {defaultCollection.name}
+              {action.title}
             </Button>
           </Link>
         </div>
@@ -36,4 +33,8 @@ export const Hero = async () => {
       />
     </div>
   );
+};
+
+type Props = {
+  action: { title: string; href: string };
 };

@@ -2,10 +2,9 @@
 
 import { type FC } from 'react';
 
-import { type CartFragment } from '@/lib/common';
-import { Button, Input, Select } from '@/lib/common/components';
+import { CheckoutFormCard } from '@/lib/checkout';
+import { Button, type CartFragment, Input, Select } from '@/lib/common';
 
-import { CheckoutFormCard } from '../checkout-card';
 import { useInformationForm } from './use-information-form';
 
 export const InformationForm: FC<Props> = ({ cart }) => {

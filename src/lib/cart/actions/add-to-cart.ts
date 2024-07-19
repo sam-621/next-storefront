@@ -3,8 +3,13 @@
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { CacheTags, CookiesNames, eblocFetcher } from '@/lib/common';
-import { ADD_TO_CART_MUTATION, CREATE_CART_MUTATION } from '@/lib/common/ebloc/mutations';
+import {
+  ADD_TO_CART_MUTATION,
+  CacheTags,
+  CookiesNames,
+  CREATE_CART_MUTATION,
+  eblocFetcher
+} from '@/lib/common';
 
 export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
   const cartId = cookies().get(CookiesNames.cartId)?.value;
