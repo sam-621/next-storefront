@@ -9,11 +9,13 @@ import Link from 'next/link';
 
 import { addPaymentToCart } from '@/lib/cart';
 import { CheckoutFormCard, MethodsEmptyState } from '@/lib/checkout';
-import { Button, cn, type GetAvailablePaymentMethodsQuery } from '@/lib/common';
+import { Button, cn, type GetAvailablePaymentMethodsQuery, useNotification } from '@/lib/common';
 
 export const PaymentForm: FC<Props> = ({ methods }) => {
-  const [, action] = useFormState(addPaymentToCart, null);
+  const [error, action] = useFormState(addPaymentToCart, null);
   const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
+
+  useNotification(error ?? '', 'error');
 
   const actionWithMethod = action.bind(null, selected);
   const hasMethods = methods.length > 0;

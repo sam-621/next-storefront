@@ -3,13 +3,17 @@
 import { type FC } from 'react';
 
 import { CheckoutFormCard } from '@/lib/checkout';
-import { Button, type CartFragment, Input, Select } from '@/lib/common';
+import { Button, type CartFragment, type GetCountriesQuery, Input, Select } from '@/lib/common';
 
 import { useInformationForm } from './use-information-form';
 
-export const InformationForm: FC<Props> = ({ cart }) => {
+export const InformationForm: FC<Props> = ({ cart, countries }) => {
   const { onSubmit, formState, register, isLoading } = useInformationForm(cart);
   const { errors } = formState;
+
+  console.log({
+    countries
+  });
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -42,7 +46,7 @@ export const InformationForm: FC<Props> = ({ cart }) => {
           {...register('country')}
           error={errors.country?.message}
           label="Country"
-          items={['México']}
+          items={countries.map(c => c.name)}
         />
         <Input
           {...register('streetLine1')}
@@ -63,11 +67,11 @@ export const InformationForm: FC<Props> = ({ cart }) => {
             label="City"
             placeholder="Culiacán"
           />
-          <Select
+          <Input
             {...register('province')}
             error={errors.province?.message}
             label="Province"
-            items={['Sinaloa']}
+            placeholder="Sinaloa"
           />
           <Input
             {...register('postalCode')}
@@ -102,4 +106,5 @@ export const InformationForm: FC<Props> = ({ cart }) => {
 
 type Props = {
   cart: CartFragment;
+  countries: GetCountriesQuery['countries']['items'];
 };

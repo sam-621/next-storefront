@@ -94,7 +94,7 @@ export const GET_AVAILABLE_SHIPPING_METHODS_QUERY = graphql(`
 `);
 
 export const GET_COUNTRIES_QUERY = graphql(`
-  query GetCountriesQuery {
+  query GetCountries {
     countries {
       items {
         id

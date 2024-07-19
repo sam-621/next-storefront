@@ -1,13 +1,14 @@
 import { redirect } from 'next/navigation';
 
 import { getCart } from '@/lib/cart';
-import { CheckoutContentLayout } from '@/lib/checkout';
+import { CheckoutContentLayout, getCountries } from '@/lib/checkout';
 
 import { CartSummary } from '../components/cart-summary/cart-summary';
 import { InformationForm } from '../components/information-form/information-form';
 
 export default async function CheckoutPage() {
   const cart = await getCart();
+  const countries = await getCountries();
 
   if (!cart) {
     redirect('/');
@@ -16,7 +17,7 @@ export default async function CheckoutPage() {
   return (
     <CheckoutContentLayout>
       <CheckoutContentLayout.Section>
-        <InformationForm cart={cart} />
+        <InformationForm cart={cart} countries={countries} />
       </CheckoutContentLayout.Section>
 
       <CheckoutContentLayout.Section className="bg-gray-50">

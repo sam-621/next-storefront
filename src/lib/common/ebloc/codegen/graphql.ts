@@ -833,9 +833,9 @@ export type GetAvailableShippingMethodsQuery = {
   }>;
 };
 
-export type GetCountriesQueryQueryVariables = Exact<{ [key: string]: never }>;
+export type GetCountriesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCountriesQueryQuery = {
+export type GetCountriesQuery = {
   __typename?: 'Query';
   countries: {
     __typename?: 'CountryList';
@@ -1432,8 +1432,8 @@ export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
   GetAvailableShippingMethodsQuery,
   GetAvailableShippingMethodsQueryVariables
 >;
-export const GetCountriesQueryDocument = new TypedDocumentString(`
-    query GetCountriesQuery {
+export const GetCountriesDocument = new TypedDocumentString(`
+    query GetCountries {
   countries {
     items {
       id
@@ -1441,7 +1441,7 @@ export const GetCountriesQueryDocument = new TypedDocumentString(`
     }
   }
 }
-    `) as unknown as TypedDocumentString<GetCountriesQueryQuery, GetCountriesQueryQueryVariables>;
+    `) as unknown as TypedDocumentString<GetCountriesQuery, GetCountriesQueryVariables>;
 export const GetCollectionsSlugDocument = new TypedDocumentString(`
     query GetCollectionsSlug {
   collections(input: {take: 3}) {

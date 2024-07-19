@@ -9,11 +9,19 @@ import Link from 'next/link';
 
 import { addShipmentToCart } from '@/lib/cart';
 import { CheckoutFormCard, MethodsEmptyState } from '@/lib/checkout';
-import { Button, cn, formatPrice, type GetAvailableShippingMethodsQuery } from '@/lib/common';
+import {
+  Button,
+  cn,
+  formatPrice,
+  type GetAvailableShippingMethodsQuery,
+  useNotification
+} from '@/lib/common';
 
-export const ShippingForm: FC<Props> = ({ methods, defaultSelected }) => {
-  const [, action] = useFormState(addShipmentToCart, null);
-  const [selected, setSelected] = useState<string>(defaultSelected ?? methods[0]?.id ?? '');
+export const ShippingForm: FC<Props> = ({ methods }) => {
+  const [error, action] = useFormState(addShipmentToCart, null);
+  const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
+
+  useNotification(error ?? '', 'error');
 
   const actionWithMethod = action.bind(null, selected);
   const hasMethods = methods.length > 0;
@@ -92,8 +100,4 @@ const SubmitButton = ({ disabled }: { disabled: boolean }) => {
 
 type Props = {
   methods: GetAvailableShippingMethodsQuery['availableShippingMethods'];
-  /**
-   * The default selected shipping method id. Defaults to the first method id.
-   */
-  defaultSelected?: string;
 };
