@@ -367,6 +367,7 @@ export type Order = Node & {
 
 /**  Utils  */
 export enum OrderErrorCode {
+  CountryNotFound = 'COUNTRY_NOT_FOUND',
   CustomerDisabled = 'CUSTOMER_DISABLED',
   CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
   LineNotFound = 'LINE_NOT_FOUND',

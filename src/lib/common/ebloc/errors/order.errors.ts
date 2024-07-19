@@ -23,6 +23,10 @@ export const getOrderError = (code?: OrderErrorCode | null) => {
     return 'A problem occurred with the payment method. try another one or contact support.';
   }
 
+  if (code === OrderErrorCode.CountryNotFound) {
+    return 'Country not found. Please refresh the page and try again.';
+  }
+
   if (code === OrderErrorCode.MissingShippingPriceCalculator) {
     return 'A problem occurred with the shipping method. try another one or contact support.';
   }
