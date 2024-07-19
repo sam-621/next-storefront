@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import {
   ADD_TO_CART_MUTATION,
   CacheTags,
+  CookiesDurations,
   CookiesNames,
   CREATE_CART_MUTATION,
   eblocFetcher
@@ -27,7 +28,7 @@ export const addToCart = async (_: any, input: { variantId: string; quantity: nu
       return apiErrors[0]?.code;
     }
 
-    cookies().set(CookiesNames.cartId, order?.id ?? '');
+    cookies().set(CookiesNames.cartId, order?.id ?? '', { maxAge: CookiesDurations.month });
     revalidateTag(CacheTags.cart[0]);
 
     return;
