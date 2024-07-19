@@ -111,6 +111,21 @@ export type CollectionList = List & {
   items: Array<Collection>;
 };
 
+export type Country = Node & {
+  __typename?: 'Country';
+  createdAt: Scalars['Date']['output'];
+  enabled: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+export type CountryList = {
+  __typename?: 'CountryList';
+  count: Scalars['Int']['output'];
+  items: Array<Country>;
+};
+
 export type CreateAddressInput = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
@@ -429,7 +444,7 @@ export type Payment = Node & {
   amount: Scalars['Int']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
-  method: PaymentMethod;
+  method: Scalars['String']['output'];
   transactionId?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
 };
@@ -485,6 +500,8 @@ export type Query = {
   availableShippingMethods: Array<ShippingMethod>;
   collection?: Maybe<Collection>;
   collections: CollectionList;
+  countries: CountryList;
+  country?: Maybe<Country>;
   /** Get the customer by the access token. */
   customer?: Maybe<Customer>;
   order?: Maybe<Order>;
@@ -505,6 +522,14 @@ export type QueryCollectionArgs = {
 
 export type QueryCollectionsArgs = {
   input?: InputMaybe<ListInput>;
+};
+
+export type QueryCountriesArgs = {
+  input?: InputMaybe<ListInput>;
+};
+
+export type QueryCountryArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type QueryCustomerArgs = {
@@ -539,7 +564,7 @@ export type Shipment = Node & {
   carrier?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
-  method: ShippingMethod;
+  method: Scalars['String']['output'];
   order: Order;
   trackingCode?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
@@ -761,18 +786,13 @@ export type CartFragment = {
     country: string;
     references?: string | null;
   } | null;
-  shipment?: {
-    __typename?: 'Shipment';
-    id: string;
-    amount: number;
-    method: { __typename?: 'ShippingMethod'; id: string; name: string };
-  } | null;
+  shipment?: { __typename?: 'Shipment'; id: string; amount: number; method: string } | null;
   payment?: {
     __typename?: 'Payment';
     id: string;
     amount: number;
     transactionId?: string | null;
-    method: { __typename?: 'PaymentMethod'; id: string; name: string };
+    method: string;
   } | null;
 } & { ' $fragmentName'?: 'CartFragment' };
 
@@ -922,18 +942,13 @@ export type OrderFragment = {
     country: string;
     references?: string | null;
   } | null;
-  shipment?: {
-    __typename?: 'Shipment';
-    id: string;
-    amount: number;
-    method: { __typename?: 'ShippingMethod'; id: string; name: string };
-  } | null;
+  shipment?: { __typename?: 'Shipment'; id: string; amount: number; method: string } | null;
   payment?: {
     __typename?: 'Payment';
     id: string;
     amount: number;
     transactionId?: string | null;
-    method: { __typename?: 'PaymentMethod'; id: string; name: string };
+    method: string;
   } | null;
 } & { ' $fragmentName'?: 'OrderFragment' };
 
@@ -1059,19 +1074,13 @@ export const CartFragmentDoc = new TypedDocumentString(
   shipment {
     id
     amount
-    method {
-      id
-      name
-    }
+    method
   }
   payment {
     id
     amount
     transactionId
-    method {
-      id
-      name
-    }
+    method
   }
 }
     `,
@@ -1154,19 +1163,13 @@ export const OrderFragmentDoc = new TypedDocumentString(
   shipment {
     id
     amount
-    method {
-      id
-      name
-    }
+    method
   }
   payment {
     id
     amount
     transactionId
-    method {
-      id
-      name
-    }
+    method
   }
 }
     `,
@@ -1384,19 +1387,13 @@ export const GetCartDocument = new TypedDocumentString(`
   shipment {
     id
     amount
-    method {
-      id
-      name
-    }
+    method
   }
   payment {
     id
     amount
     transactionId
-    method {
-      id
-      name
-    }
+    method
   }
 }`) as unknown as TypedDocumentString<GetCartQuery, GetCartQueryVariables>;
 export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
@@ -1538,19 +1535,13 @@ export const GetOrderDocument = new TypedDocumentString(`
   shipment {
     id
     amount
-    method {
-      id
-      name
-    }
+    method
   }
   payment {
     id
     amount
     transactionId
-    method {
-      id
-      name
-    }
+    method
   }
 }`) as unknown as TypedDocumentString<GetOrderQuery, GetOrderQueryVariables>;
 export const GetProductDetailsDocument = new TypedDocumentString(`

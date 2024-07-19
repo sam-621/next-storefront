@@ -52,19 +52,13 @@ export const CART_FRAGMENT = graphql(`
     shipment {
       id
       amount
-      method {
-        id
-        name
-      }
+      method
     }
     payment {
       id
       amount
       transactionId
-      method {
-        id
-        name
-      }
+      method
     }
   }
 `);
