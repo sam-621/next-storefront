@@ -36,6 +36,8 @@ const documents = {
     types.GetAvailablePaymentMethodsDocument,
   '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      price\n      description\n    }\n  }\n':
     types.GetAvailableShippingMethodsDocument,
+  '\n  query GetCountriesQuery {\n    countries {\n      items {\n        id\n        name\n      }\n    }\n  }\n':
+    types.GetCountriesQueryDocument,
   '\n  fragment CollectionProduct on Product {\n    id\n    name\n    slug\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n':
     types.CollectionProductFragmentDoc,
   '\n  query GetCollectionsSlug {\n    collections(input: { take: 3 }) {\n      items {\n        id\n        name\n        slug\n      }\n    }\n  }\n':
@@ -126,6 +128,12 @@ export function graphql(
 export function graphql(
   source: '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      price\n      description\n    }\n  }\n'
 ): typeof import('./graphql').GetAvailableShippingMethodsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query GetCountriesQuery {\n    countries {\n      items {\n        id\n        name\n      }\n    }\n  }\n'
+): typeof import('./graphql').GetCountriesQueryDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
