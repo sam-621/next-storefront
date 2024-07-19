@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { setCustomerInfoToCart } from '@/lib/cart';
-import { type CartFragment, FormMessages, type MakeAny } from '@/lib/common';
+import { type CartFragment, FormMessages, type MakeAny, notification } from '@/lib/common';
 
 export const useInformationForm = (cart: CartFragment) => {
   const [isLoading, startTransition] = useTransition();
@@ -35,7 +35,11 @@ export const useInformationForm = (cart: CartFragment) => {
 
   const onSubmit = async (input: FormInput) => {
     startTransition(async () => {
-      await setCustomerInfoToCart(input);
+      const error = await setCustomerInfoToCart(input);
+
+      if (error) {
+        notification.error(error);
+      }
     });
   };
 

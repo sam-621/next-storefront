@@ -11,10 +11,6 @@ export const InformationForm: FC<Props> = ({ cart, countries }) => {
   const { onSubmit, formState, register, isLoading } = useInformationForm(cart);
   const { errors } = formState;
 
-  console.log({
-    countries
-  });
-
   return (
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={onSubmit} className="flex flex-col gap-10">
