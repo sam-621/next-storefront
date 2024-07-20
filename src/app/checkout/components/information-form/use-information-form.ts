@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import { setCustomerInfoToCart } from '@/lib/cart';
+import { setCustomerInfoToCart } from '@/lib/checkout';
 import { type CartFragment, FormMessages, type MakeAny, notification } from '@/lib/common';
 
 export const useInformationForm = (cart: CartFragment) => {

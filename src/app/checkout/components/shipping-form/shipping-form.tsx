@@ -7,8 +7,7 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-import { addShipmentToCart } from '@/lib/cart';
-import { CheckoutFormCard, MethodsEmptyState } from '@/lib/checkout';
+import { addShipmentToCart, CheckoutFormCard, MethodsEmptyState } from '@/lib/checkout';
 import {
   Button,
   cn,

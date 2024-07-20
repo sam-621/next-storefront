@@ -1261,6 +1261,28 @@
     "@parcel/watcher-win32-ia32" "2.4.1"
     "@parcel/watcher-win32-x64" "2.4.1"
 
+"@paypal/paypal-js@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@paypal/paypal-js/-/paypal-js-8.1.0.tgz#4e7d10e0a0b4164985029cfdac748e5694d117e9"
+  integrity sha512-f64bom5xYwmxyeKPJUFS/XpM0tXojQEgjRIADPqe1R9WmK+PFqL4SEkT85cGU0ZXLVx4EGbjwREHhqEOR+OstA==
+  dependencies:
+    promise-polyfill "^8.3.0"
+
+"@paypal/react-paypal-js@^8.5.0":
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/@paypal/react-paypal-js/-/react-paypal-js-8.5.0.tgz#cf17483202c8fa7a33dae86798d50a102705f182"
+  integrity sha512-YIAyLw4OiUoHHoUgXvibrBDdluzqnqVMGsJXyBcoOzlWHQIe5zhh8dgYezNNRXjXwy6t22YmPljjw7lr+eD9cw==
+  dependencies:
+    "@paypal/paypal-js" "^8.1.0"
+    "@paypal/sdk-constants" "^1.0.122"
+
+"@paypal/sdk-constants@^1.0.122":
+  version "1.0.149"
+  resolved "https://registry.yarnpkg.com/@paypal/sdk-constants/-/sdk-constants-1.0.149.tgz#7060213be1c892fb3e9656ba0108a5584cafeac8"
+  integrity sha512-oHdaRg2fP9LINMDJ8fMTtRvvW2QJVifoEoq7YPOP5Sk50edWX6tyATZTfgSnJmLHHq3OE6OF1aKa7hz09frVxw==
+  dependencies:
+    hi-base32 "^0.5.0"
+
 "@peculiar/asn1-schema@^2.3.8":
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-2.3.8.tgz#04b38832a814e25731232dd5be883460a156da3b"
@@ -3407,6 +3429,11 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
+hi-base32@^0.5.0:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/hi-base32/-/hi-base32-0.5.1.tgz#1279f2ddae2673219ea5870c2121d2a33132857e"
+  integrity sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==
+
 http-proxy-agent@^7.0.0:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/http-proxy-agent/-/http-proxy-agent-7.0.2.tgz#9a8b1f246866c028509486585f62b8f2c18c270e"
@@ -4582,6 +4609,11 @@ prettier@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.2.tgz#03ff86dc7c835f2d2559ee76876a3914cec4a90a"
   integrity sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==
+
+promise-polyfill@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-8.3.0.tgz#9284810268138d103807b11f4e23d5e945a4db63"
+  integrity sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==
 
 promise@^7.1.1:
   version "7.3.1"
