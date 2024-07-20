@@ -3,14 +3,19 @@ import { type FC } from 'react';
 import Link from 'next/link';
 
 import { AddToCart } from '@/lib/cart';
-import { buttonVariants, type CollectionProductFragment, formatPrice } from '@/lib/common';
+import {
+  buttonVariants,
+  type CollectionProductFragment,
+  DEFAULT_PRODUCT_IMAGE,
+  formatPrice
+} from '@/lib/common';
 
 import { ProductImage } from './product-image';
 
 export const ProductCard: FC<Props> = ({ product }) => {
   const { name, variants, assets } = product;
 
-  const defaultAsset = assets.items[0]?.source ?? 'DEFAULT_PRODUCT_IMAGE';
+  const defaultAsset = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
   const defaultVariant = variants.items[0];
 
   return (

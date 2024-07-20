@@ -19,6 +19,8 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   Date: { input: any; output: any };
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: { input: any; output: any };
 };
 
 export type AddCustomerToOrderInput = {
@@ -29,6 +31,7 @@ export type AddCustomerToOrderInput = {
 };
 
 export type AddPaymentToOrderInput = {
+  metadata?: InputMaybe<Scalars['JSON']['input']>;
   methodId: Scalars['ID']['input'];
 };
 
@@ -371,13 +374,15 @@ export enum OrderErrorCode {
   CustomerDisabled = 'CUSTOMER_DISABLED',
   CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
   LineNotFound = 'LINE_NOT_FOUND',
-  MissingPaymentIntegration = 'MISSING_PAYMENT_INTEGRATION',
+  MissingPaymentHandler = 'MISSING_PAYMENT_HANDLER',
   MissingShippingAddress = 'MISSING_SHIPPING_ADDRESS',
   MissingShippingPriceCalculator = 'MISSING_SHIPPING_PRICE_CALCULATOR',
   NotEnoughStock = 'NOT_ENOUGH_STOCK',
   OrderNotFound = 'ORDER_NOT_FOUND',
   OrderTransitionError = 'ORDER_TRANSITION_ERROR',
   PaymentDeclined = 'PAYMENT_DECLINED',
+  /** Payment failed due to an unexpected error in the payment handler */
+  PaymentFailed = 'PAYMENT_FAILED',
   PaymentMethodNotFound = 'PAYMENT_METHOD_NOT_FOUND',
   ShippingMethodNotFound = 'SHIPPING_METHOD_NOT_FOUND',
   VariantNotFound = 'VARIANT_NOT_FOUND'

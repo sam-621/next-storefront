@@ -18,11 +18,13 @@ export const Hero: FC<Props> = async ({ action }) => {
               experience, and drives sales.
             </p>
           </div>
-          <Link href={action.href}>
-            <Button size="lg" className="bg-white hover:bg-gray-200 text-gray-900">
-              {action.title}
-            </Button>
-          </Link>
+          {action && (
+            <Link href={action.href}>
+              <Button size="lg" className="bg-white hover:bg-gray-200 text-gray-900">
+                {action.title}
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
       <div className="w-full h-full bg-slate-800/50 relative z-10"></div>
@@ -36,5 +38,5 @@ export const Hero: FC<Props> = async ({ action }) => {
 };
 
 type Props = {
-  action: { title: string; href: string };
+  action?: { title: string; href: string };
 };

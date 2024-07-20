@@ -8,10 +8,12 @@ export default async function Home() {
   return (
     <>
       <Hero
-        action={{
-          title: `Shop news in ${defaultCollection.name}`,
-          href: `/collections/${defaultCollection.slug}`
-        }}
+        action={
+          defaultCollection && {
+            title: `Shop news in ${defaultCollection.name}`,
+            href: `/collections/${defaultCollection.slug}`
+          }
+        }
       />
     </>
   );
