@@ -9,7 +9,8 @@ import {
   CookiesDurations,
   CookiesNames,
   CREATE_CART_MUTATION,
-  eblocFetcher
+  eblocFetcher,
+  OrderErrorCode
 } from '@/lib/common';
 
 export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
@@ -42,6 +43,13 @@ export const addToCart = async (_: any, input: { variantId: string; quantity: nu
   });
 
   if (apiErrors.length) {
+    // cart id cookie has a non-existing cart id
+    if (apiErrors[0].code === OrderErrorCode.OrderNotFound) {
+      cookies().delete(CookiesNames.cartId);
+      await addToCart(_, input);
+      return;
+    }
+
     return apiErrors[0]?.code;
   }
 

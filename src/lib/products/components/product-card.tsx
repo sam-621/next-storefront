@@ -15,7 +15,7 @@ import { ProductImage } from './product-image';
 export const ProductCard: FC<Props> = ({ product }) => {
   const { name, variants, assets } = product;
 
-  const defaultAsset = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE;
+  const defaultAsset = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.lg;
   const defaultVariant = variants.items[0];
 
   return (

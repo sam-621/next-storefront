@@ -2,11 +2,11 @@ import { type FC } from 'react';
 
 import Image from 'next/image';
 
-import { type CartFragment, formatPrice } from '@/lib/common';
+import { type CartFragment, DEFAULT_PRODUCT_IMAGE, formatPrice } from '@/lib/common';
 
 export const CartSummaryItem: FC<Props> = ({ line }) => {
   const { assets, name } = line.productVariant.product;
-  const image = assets.items[0]?.source ?? 'DEFAULT_PRODUCT_IMAGE';
+  const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
 
   return (
     <article className="flex">

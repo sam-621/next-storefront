@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import Image from 'next/image';
 
+import { DEFAULT_PRODUCT_IMAGE } from '@/lib/common';
 import { type CartFragment } from '@/lib/common/ebloc';
 import { formatPrice } from '@/lib/common/utils';
 
@@ -11,7 +12,7 @@ import { CartRemoveButton } from './cart-remove-button';
 export const CartItem: FC<Props> = ({ line }) => {
   const { unitPrice, quantity } = line;
   const { name, assets } = line.productVariant.product;
-  const image = assets.items[0]?.source ?? 'DEFAULT_PRODUCT_IMAGE';
+  const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
   const availableStock = line.productVariant.stock;
 
   return (
