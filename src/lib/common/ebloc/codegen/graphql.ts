@@ -466,6 +466,7 @@ export type PaymentMethod = Node & {
   createdAt: Scalars['Date']['output'];
   description?: Maybe<Scalars['String']['output']>;
   enabled: Scalars['Boolean']['output'];
+  handlerCode: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];

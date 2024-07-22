@@ -2,12 +2,18 @@
 
 import { type FC, useState } from 'react';
 
-import { cn, type ProductDetailsFragment } from '@/lib/common';
+import { cn, DEFAULT_PRODUCT_IMAGE, type ProductDetailsFragment } from '@/lib/common';
 
 import { ProductImage } from './product-image';
 
 export const ProductGallery: FC<Props> = ({ assets }) => {
   const [selectedImage, setSelectedImage] = useState(assets[0]);
+
+  if (!assets.length) {
+    return (
+      <ProductImage src={DEFAULT_PRODUCT_IMAGE.lg} alt="default" className="rounded-lg h-fit" />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
