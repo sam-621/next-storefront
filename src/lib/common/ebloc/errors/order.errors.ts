@@ -19,7 +19,7 @@ export const getOrderError = (code?: OrderErrorCode | null) => {
     return 'Customer not found.';
   }
 
-  if (code === OrderErrorCode.MissingPaymentIntegration) {
+  if (code === OrderErrorCode.MissingPaymentHandler) {
     return 'A problem occurred with the payment method. try another one or contact support.';
   }
 
