@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
-import { getOrderError, type OrderErrorCode, useNotification } from '@/lib/common';
+import { getOrderError, type OrderErrorCode, useNotification } from '@/lib/shared';
 
 import { addToCart } from '../actions';
 

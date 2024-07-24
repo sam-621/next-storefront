@@ -4,9 +4,9 @@ const GQL_SCHEMA_URL = process.env.EBLOC_STOREFRONT_API_URL;
 
 const config: CodegenConfig = {
   schema: GQL_SCHEMA_URL,
-  documents: ['./src/lib/common/ebloc/**/*.ts'],
+  documents: ['./src/lib/shared/ebloc/**/*.ts'],
   generates: {
-    './src/lib/common/ebloc/codegen/': {
+    './src/lib/shared/ebloc/codegen/': {
       preset: 'client',
       presetConfig: {
         fragmentMasking: { unmaskFunctionName: 'getFragmentData' }

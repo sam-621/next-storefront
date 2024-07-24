@@ -10,7 +10,7 @@ import {
   CookiesNames,
   eblocFetcher,
   getOrderError
-} from '@/lib/common';
+} from '@/lib/shared';
 
 /**
  * Add payment to cart by methodId, remove cart id from cookies (order has been places and cant be modified)

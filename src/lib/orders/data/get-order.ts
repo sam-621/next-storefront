@@ -1,4 +1,4 @@
-import { eblocFetcher, GET_ORDER_QUERY, getFragmentData, ORDER_FRAGMENT } from '@/lib/common';
+import { eblocFetcher, GET_ORDER_QUERY, getFragmentData, ORDER_FRAGMENT } from '@/lib/shared';
 
 export const getOrder = async (code: string) => {
   const result = await eblocFetcher(GET_ORDER_QUERY, { code });

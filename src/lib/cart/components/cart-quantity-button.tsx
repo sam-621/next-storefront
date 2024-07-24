@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { ArrowPathIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
-import { type CartFragment, cn } from '@/lib/common';
+import { type CartFragment, cn } from '@/lib/shared';
 
 import { updateCartItem } from '../actions';
 

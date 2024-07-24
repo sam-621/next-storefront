@@ -3,7 +3,7 @@ import {
   eblocFetcher,
   GET_COLLECTION_PRODUCTS_QUERY,
   getFragmentData
-} from '@/lib/common';
+} from '@/lib/shared';
 
 export const getCollectionProducts = async (slug: string) => {
   const { collection } = await eblocFetcher(GET_COLLECTION_PRODUCTS_QUERY, { slug });

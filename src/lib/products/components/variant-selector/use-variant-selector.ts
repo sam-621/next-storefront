@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { getVariantByOptions, type ProductDetailsFragment, useUrlState } from '@/lib/common';
+import { getVariantByOptions, type ProductDetailsFragment, useUrlState } from '@/lib/shared';
 
 /**
  * Handle variant selector state and URL state

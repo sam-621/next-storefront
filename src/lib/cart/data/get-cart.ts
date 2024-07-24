@@ -9,7 +9,7 @@ import {
   eblocFetcher,
   GET_CART_QUERY,
   getFragmentData
-} from '@/lib/common';
+} from '@/lib/shared';
 
 export const getCart = async () => {
   const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';

@@ -13,7 +13,7 @@ import {
   getOrderError,
   SET_CUSTOMER_TO_CART_MUTATION,
   SET_SHIPPING_ADDRESS_TO_CART_MUTATION
-} from '@/lib/common';
+} from '@/lib/shared';
 
 /**
  * Set contact and shipping info to the cart and redirect to the shipping page.

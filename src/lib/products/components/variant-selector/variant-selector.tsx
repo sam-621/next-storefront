@@ -3,7 +3,7 @@
 import { type FC } from 'react';
 
 import { AddToCart } from '@/lib/cart/components';
-import { buttonVariants, cn, type ProductDetailsFragment } from '@/lib/common';
+import { buttonVariants, cn, type ProductDetailsFragment } from '@/lib/shared';
 
 import { useVariantSelector } from './use-variant-selector';
 

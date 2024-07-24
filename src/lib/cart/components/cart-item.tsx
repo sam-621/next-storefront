@@ -2,9 +2,7 @@ import { type FC } from 'react';
 
 import Image from 'next/image';
 
-import { DEFAULT_PRODUCT_IMAGE } from '@/lib/common';
-import { type CartFragment } from '@/lib/common/ebloc';
-import { formatPrice } from '@/lib/common/utils';
+import { type CartFragment, DEFAULT_PRODUCT_IMAGE, formatPrice } from '@/lib/shared';
 
 import { CartQuantityButton } from './cart-quantity-button';
 import { CartRemoveButton } from './cart-remove-button';

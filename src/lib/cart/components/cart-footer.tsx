@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import Link from 'next/link';
 
-import { Button, type CartFragment, formatPrice } from '@/lib/common';
+import { Button, type CartFragment, formatPrice } from '@/lib/shared';
 
 export const CartFooter: FC<Props> = ({ cart }) => {
   return (

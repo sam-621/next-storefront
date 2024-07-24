@@ -1,10 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { getCart } from '@/lib/cart';
-import { CheckoutContentLayout, getCountries } from '@/lib/checkout';
-
-import { CartSummary } from '../components/cart-summary/cart-summary';
-import { InformationForm } from '../components/information-form/information-form';
+import { CartSummary, CheckoutContentLayout, getCountries, InformationForm } from '@/lib/checkout';
 
 export default async function CheckoutPage() {
   const cart = await getCart();

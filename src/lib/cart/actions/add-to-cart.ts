@@ -11,7 +11,7 @@ import {
   CREATE_CART_MUTATION,
   eblocFetcher,
   OrderErrorCode
-} from '@/lib/common';
+} from '@/lib/shared';
 
 export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
   const cartId = cookies().get(CookiesNames.cartId)?.value;

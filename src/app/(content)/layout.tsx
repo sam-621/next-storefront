@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Cart } from '@/lib/cart';
 import { getCollectionsSlugs } from '@/lib/collections';
-import { Logo, MobileHeaderDrawer } from '@/lib/common';
+import { Logo, MobileHeaderDrawer } from '@/lib/shared';
 
 export default async function RootLayout({
   children

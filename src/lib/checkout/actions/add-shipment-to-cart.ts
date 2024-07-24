@@ -10,7 +10,7 @@ import {
   CookiesNames,
   eblocFetcher,
   getOrderError
-} from '@/lib/common';
+} from '@/lib/shared';
 
 /**
  * Add shipment to cart by the provided shipping method id and redirect to the payment page.
