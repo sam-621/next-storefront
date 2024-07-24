@@ -10,8 +10,8 @@ import Link from 'next/link';
 import { Button, cn, type GetAvailablePaymentMethodsQuery, useNotification } from '@/lib/shared';
 
 import { addPaymentToCart } from '../../actions';
-import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 import { MethodsEmptyState } from '../checkout-empty-states/methods-empty-state';
+import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 
 export const PaymentForm: FC<Props> = ({ methods }) => {
   const [error, action] = useFormState(addPaymentToCart, null);

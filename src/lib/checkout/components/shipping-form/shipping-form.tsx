@@ -16,8 +16,8 @@ import {
 } from '@/lib/shared';
 
 import { addShipmentToCart } from '../../actions';
-import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 import { MethodsEmptyState } from '../checkout-empty-states/methods-empty-state';
+import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 
 export const ShippingForm: FC<Props> = ({ methods }) => {
   const [error, action] = useFormState(addShipmentToCart, null);
