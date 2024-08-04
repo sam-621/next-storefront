@@ -19,8 +19,6 @@
         "checksVoidReturn": false
       }
     ],
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -30,6 +28,7 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@next/next/no-img-element": "off",
     "@typescript-eslint/unbound-method": "off"
   },
   "overrides": [
