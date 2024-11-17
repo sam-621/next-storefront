@@ -8,7 +8,7 @@ export const COLLECTION_PRODUCT_FRAGMENT = graphql(`
     variants(input: { take: 1 }) {
       items {
         id
-        price
+        salePrice
         stock
       }
     }

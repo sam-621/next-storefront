@@ -1,6 +1,8 @@
 declare namespace NodeJS {
-  export interface ProcessEnv {
+  export type ProcessEnv = {
     NODE_ENV: 'development' | 'production';
-    EBLOC_STOREFRONT_API_URL: string;
-  }
+    VENDYX_SHOP_API_URL: string;
+    VENDYX_SHOP_API_KEY: string;
+    VENDYX_SHOP_ID: string;
+  };
 }

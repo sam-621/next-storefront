@@ -16,5 +16,5 @@ export const useScroll = (options?: ScrollToOptions) => {
       behavior: options?.behavior ?? 'smooth',
       left: options?.left ?? 0
     });
-  }, []);
+  }, [options]);
 };

@@ -18,7 +18,7 @@ export const CART_FRAGMENT = graphql(`
           stock
           optionValues {
             id
-            value
+            name
           }
           product {
             name
@@ -77,7 +77,6 @@ export const GET_AVAILABLE_PAYMENT_METHODS_QUERY = graphql(`
       id
       name
       enabled
-      description
     }
   }
 `);
@@ -87,7 +86,7 @@ export const GET_AVAILABLE_SHIPPING_METHODS_QUERY = graphql(`
     availableShippingMethods(orderId: $cartId) {
       id
       name
-      price
+      pricePreview
       description
     }
   }
@@ -96,10 +95,8 @@ export const GET_AVAILABLE_SHIPPING_METHODS_QUERY = graphql(`
 export const GET_COUNTRIES_QUERY = graphql(`
   query GetCountries {
     countries {
-      items {
-        id
-        name
-      }
+      id
+      name
     }
   }
 `);

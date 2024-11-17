@@ -20,7 +20,7 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
           <h3 className="text-sm font-medium">{option.name}</h3>
           <div className="flex flex-wrap gap-3">
             {option.values?.map(value => {
-              const isSelected = selectedOptions[option.name] === value.value;
+              const isSelected = selectedOptions[option.name] === value.name;
 
               // Get the selected option values that are not present the current option
               const filtered = Array.from(Object.entries(selectedOptions))
@@ -35,13 +35,13 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
                 // 1. has the selected variants (without the current one)
                 // 2. has the current value
                 const currentVariant = variants.find(v =>
-                  [...filtered, value.value].every(value =>
-                    v.optionValues?.find(ov => ov.value === value)
+                  [...filtered, value.name].every(value =>
+                    v.optionValues?.find(ov => ov.name === value)
                   )
                 );
 
                 // After the current variant is found, check if it is sold out
-                isSoldOut = currentVariant?.stock === 0 ?? false;
+                isSoldOut = currentVariant?.stock === 0;
               }
 
               return (
@@ -59,9 +59,9 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
                       isSelected && 'border-indigo-600',
                       isSoldOut && 'opacity-25 cursor-not-allowed'
                     )}
-                    onClick={() => onVariantChange(option.name, value.value)}
+                    onClick={() => onVariantChange(option.name, value.name)}
                   >
-                    {value.value}
+                    {value.name}
                   </button>
                 </div>
               );

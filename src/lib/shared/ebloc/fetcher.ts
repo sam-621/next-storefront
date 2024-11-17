@@ -13,10 +13,12 @@ export const eblocFetcher = async <R, V>(
   variables?: V,
   tags?: string[]
 ): Promise<R> => {
-  const result = await fetch(process.env.EBLOC_STOREFRONT_API_URL, {
+  const result = await fetch(process.env.VENDYX_SHOP_API_URL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      x_vendyx_shop_api_key: process.env.VENDYX_SHOP_API_KEY,
+      shop_id: process.env.VENDYX_SHOP_ID
     },
     body: JSON.stringify({
       query: query.toString(),
@@ -33,7 +35,19 @@ export const eblocFetcher = async <R, V>(
     console.log({
       errors
     });
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    throw new ApiError(errors?.[0]?.message, errors?.[0]?.code);
   }
 
   return data;
 };
+
+export class ApiError extends Error {
+  constructor(
+    public message: string,
+    public code: number
+  ) {
+    super(message);
+  }
+}

@@ -101,5 +101,5 @@ export const InformationForm: FC<Props> = ({ cart, countries }) => {
 
 type Props = {
   cart: CartFragment;
-  countries: GetCountriesQuery['countries']['items'];
+  countries: GetCountriesQuery['countries'];
 };

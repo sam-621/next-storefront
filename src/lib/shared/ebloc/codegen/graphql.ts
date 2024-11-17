@@ -31,7 +31,6 @@ export type AddCustomerToOrderInput = {
 };
 
 export type AddPaymentToOrderInput = {
-  metadata?: InputMaybe<Scalars['JSON']['input']>;
   methodId: Scalars['ID']['input'];
 };
 
@@ -59,6 +58,7 @@ export type AddressList = List & {
   __typename?: 'AddressList';
   count: Scalars['Int']['output'];
   items: Array<Address>;
+  pageInfo: PageInfo;
 };
 
 export type Asset = Node & {
@@ -72,61 +72,63 @@ export type Asset = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
-export type AssetInEntityInput = {
-  id: Scalars['ID']['input'];
-  order: Scalars['Int']['input'];
-};
-
 export type AssetList = List & {
   __typename?: 'AssetList';
   count: Scalars['Int']['output'];
   items: Array<Asset>;
+  pageInfo: PageInfo;
 };
 
 export enum AssetType {
   Image = 'IMAGE'
 }
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** A collection is a group of products that are displayed together in the storefront. */
 export type Collection = Node & {
   __typename?: 'Collection';
   assets: AssetList;
   createdAt: Scalars['Date']['output'];
-  description?: Maybe<Scalars['String']['output']>;
+  /** The collection's description */
+  description: Scalars['String']['output'];
+  /** The collection's order user to decide to show the collection in the storefront */
+  enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
+  /** The collection's name */
   name: Scalars['String']['output'];
   products: ProductList;
-  published: Scalars['Boolean']['output'];
+  /** The collection's slug used in the URL */
   slug: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
 };
 
+/** A collection is a group of products that are displayed together in the storefront. */
 export type CollectionAssetsArgs = {
   input?: InputMaybe<ListInput>;
 };
 
+/** A collection is a group of products that are displayed together in the storefront. */
 export type CollectionProductsArgs = {
-  input?: InputMaybe<ListInput>;
+  input?: InputMaybe<ProductListInput>;
 };
 
 export type CollectionList = List & {
   __typename?: 'CollectionList';
   count: Scalars['Int']['output'];
   items: Array<Collection>;
+  pageInfo: PageInfo;
 };
 
 export type Country = Node & {
   __typename?: 'Country';
   createdAt: Scalars['Date']['output'];
-  enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  states: Array<State>;
   updatedAt: Scalars['Date']['output'];
-};
-
-export type CountryList = {
-  __typename?: 'CountryList';
-  count: Scalars['Int']['output'];
-  items: Array<Country>;
 };
 
 export type CreateAddressInput = {
@@ -171,9 +173,16 @@ export type Customer = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
-/**  Utils  */
+export type CustomerAddressesArgs = {
+  input?: InputMaybe<ListInput>;
+};
+
+export type CustomerOrdersArgs = {
+  input?: InputMaybe<OrderListInput>;
+};
+
 export enum CustomerErrorCode {
-  CustomerNotFound = 'CUSTOMER_NOT_FOUND',
+  DisabledCustomer = 'DISABLED_CUSTOMER',
   EmailAlreadyExists = 'EMAIL_ALREADY_EXISTS',
   InvalidAccessToken = 'INVALID_ACCESS_TOKEN',
   InvalidCredentials = 'INVALID_CREDENTIALS',
@@ -191,6 +200,7 @@ export type CustomerList = List & {
   __typename?: 'CustomerList';
   count: Scalars['Int']['output'];
   items: Array<Customer>;
+  pageInfo: PageInfo;
 };
 
 /**  Results  */
@@ -210,12 +220,13 @@ export type GenerateCustomerAccessTokenResult = {
 export type List = {
   count: Scalars['Int']['output'];
   items: Array<Node>;
+  pageInfo: PageInfo;
 };
 
 export type ListInput = {
   /** Skip the first n results */
   skip?: InputMaybe<Scalars['Int']['input']>;
-  /** takes n result from where the cursor is (skip position) */
+  /** takes n result from where the skip position is */
   take?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -228,7 +239,7 @@ export type Mutation = {
   addPaymentToOrder: OrderResult;
   addShipmentToOrder: OrderResult;
   addShippingAddressToOrder: OrderResult;
-  /** Create a new customer.  */
+  /** Create a new customer. */
   createCustomer: CustomerResult;
   createOrder: OrderResult;
   /** Generate a token for the customer. This token is used to modify the customer's data. */
@@ -280,7 +291,7 @@ export type MutationCreateCustomerArgs = {
 };
 
 export type MutationCreateOrderArgs = {
-  input?: InputMaybe<CreateOrderInput>;
+  input: CreateOrderInput;
 };
 
 export type MutationGenerateCustomerAccessTokenArgs = {
@@ -329,22 +340,23 @@ export type Option = Node & {
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
-  values?: Maybe<Array<OptionValue>>;
+  values: Array<OptionValue>;
 };
 
 export type OptionList = List & {
   __typename?: 'OptionList';
   count: Scalars['Int']['output'];
   items: Array<Option>;
+  pageInfo: PageInfo;
 };
 
 export type OptionValue = Node & {
   __typename?: 'OptionValue';
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
   option: Option;
   updatedAt: Scalars['Date']['output'];
-  value: Scalars['String']['output'];
 };
 
 export type Order = Node & {
@@ -368,31 +380,33 @@ export type Order = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
+export type OrderLinesArgs = {
+  input?: InputMaybe<ListInput>;
+};
+
 /**  Utils  */
 export enum OrderErrorCode {
-  CountryNotFound = 'COUNTRY_NOT_FOUND',
   CustomerDisabled = 'CUSTOMER_DISABLED',
   CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
   ForbiddenOrderAction = 'FORBIDDEN_ORDER_ACTION',
-  LineNotFound = 'LINE_NOT_FOUND',
-  MissingPaymentHandler = 'MISSING_PAYMENT_HANDLER',
   MissingShippingAddress = 'MISSING_SHIPPING_ADDRESS',
-  MissingShippingPriceCalculator = 'MISSING_SHIPPING_PRICE_CALCULATOR',
   NotEnoughStock = 'NOT_ENOUGH_STOCK',
-  OrderNotFound = 'ORDER_NOT_FOUND',
   OrderTransitionError = 'ORDER_TRANSITION_ERROR',
   PaymentDeclined = 'PAYMENT_DECLINED',
   /** Payment failed due to an unexpected error in the payment handler */
   PaymentFailed = 'PAYMENT_FAILED',
   PaymentMethodNotFound = 'PAYMENT_METHOD_NOT_FOUND',
-  ShippingMethodNotFound = 'SHIPPING_METHOD_NOT_FOUND',
-  VariantNotFound = 'VARIANT_NOT_FOUND'
+  ShippingMethodNotFound = 'SHIPPING_METHOD_NOT_FOUND'
 }
 
 export type OrderErrorResult = {
   __typename?: 'OrderErrorResult';
   code: OrderErrorCode;
   message: Scalars['String']['output'];
+};
+
+export type OrderFilters = {
+  code?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type OrderLine = Node & {
@@ -410,12 +424,23 @@ export type OrderLineList = List & {
   __typename?: 'OrderLineList';
   count: Scalars['Int']['output'];
   items: Array<OrderLine>;
+  pageInfo: PageInfo;
 };
 
 export type OrderList = List & {
   __typename?: 'OrderList';
   count: Scalars['Int']['output'];
   items: Array<Order>;
+  pageInfo: PageInfo;
+};
+
+export type OrderListInput = {
+  /** Filters to apply */
+  filters?: InputMaybe<OrderFilters>;
+  /** Skip the first n results */
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  /** takes n result from where the skip position is */
+  take?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**  Results  */
@@ -439,13 +464,24 @@ export type OrderShippingAddressJson = {
 };
 
 export enum OrderState {
+  /** The order has been canceled by the admin */
   Canceled = 'CANCELED',
+  /** The order has been delivered and is completes */
   Delivered = 'DELIVERED',
+  /** The order is being modified by the customer (CRUD line actions, adding contact info and shipment info) */
   Modifying = 'MODIFYING',
+  /** The order is ready to be paid */
   PaymentAdded = 'PAYMENT_ADDED',
+  /** The payment has been authorized by the payment provider */
   PaymentAuthorized = 'PAYMENT_AUTHORIZED',
+  /** The order has been shipped (carrier and tracking code added) */
   Shipped = 'SHIPPED'
 }
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  total: Scalars['Int']['output'];
+};
 
 export type Payment = Node & {
   __typename?: 'Payment';
@@ -457,33 +493,47 @@ export type Payment = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
-export type PaymentList = List & {
-  __typename?: 'PaymentList';
-  count: Scalars['Int']['output'];
-  items: Array<Payment>;
-};
-
-export type PaymentMethod = Node & {
+/** A payment method is a way to pay for an order in your shop, like credit card, paypal, etc */
+export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   createdAt: Scalars['Date']['output'];
-  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * Whether the payment method is enabled or not
+   * Not enabled payment methods will not be shown in the storefront
+   * Useful for payment methods that are not ready to be used yet
+   */
   enabled: Scalars['Boolean']['output'];
-  handlerCode: Scalars['String']['output'];
+  /** The payment method's icon */
+  icon: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** The payment method's name (e.g. 'Stripe') */
   name: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
 };
 
 export type Product = Node & {
   __typename?: 'Product';
+  /**
+   * Whether the product is archived or not.
+   * Archived products are not exposed to the storefront API and are not visible in the admin ui by default.
+   * Useful for products that are not available anymore but you don't want to lose their data.
+   */
+  archived: Scalars['Boolean']['output'];
   assets: AssetList;
   createdAt: Scalars['Date']['output'];
+  /** The product's description */
   description?: Maybe<Scalars['String']['output']>;
+  /**
+   * Whether the products is enabled or not.
+   * Not enabled products are not exposed to the storefront API but are visible in the admin ui.
+   * Useful for products that are not published by now but they planned to be published in the future.
+   */
+  enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
+  /** The product's name */
   name: Scalars['String']['output'];
-  onlineOnly: Scalars['Boolean']['output'];
   options: Array<Option>;
-  published: Scalars['Boolean']['output'];
+  /** A human-friendly unique string for the Product automatically generated from its name */
   slug: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
   variants: VariantList;
@@ -497,10 +547,24 @@ export type ProductVariantsArgs = {
   input?: InputMaybe<ListInput>;
 };
 
+export type ProductFilters = {
+  name?: InputMaybe<StringFilter>;
+};
+
 export type ProductList = List & {
   __typename?: 'ProductList';
   count: Scalars['Int']['output'];
   items: Array<Product>;
+  pageInfo: PageInfo;
+};
+
+export type ProductListInput = {
+  /** Filters to apply */
+  filters?: InputMaybe<ProductFilters>;
+  /** Skip the first n results */
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  /** takes n result from where the skip position is */
+  take?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
@@ -509,15 +573,12 @@ export type Query = {
   availableShippingMethods: Array<ShippingMethod>;
   collection?: Maybe<Collection>;
   collections: CollectionList;
-  countries: CountryList;
-  country?: Maybe<Country>;
+  countries: Array<Country>;
   /** Get the customer by the access token. */
   customer?: Maybe<Customer>;
   order?: Maybe<Order>;
   product?: Maybe<Product>;
   products: ProductList;
-  variant?: Maybe<Variant>;
-  variants: VariantList;
 };
 
 export type QueryAvailableShippingMethodsArgs = {
@@ -531,14 +592,6 @@ export type QueryCollectionArgs = {
 
 export type QueryCollectionsArgs = {
   input?: InputMaybe<ListInput>;
-};
-
-export type QueryCountriesArgs = {
-  input?: InputMaybe<ListInput>;
-};
-
-export type QueryCountryArgs = {
-  id: Scalars['ID']['input'];
 };
 
 export type QueryCustomerArgs = {
@@ -556,15 +609,7 @@ export type QueryProductArgs = {
 };
 
 export type QueryProductsArgs = {
-  input?: InputMaybe<ListInput>;
-};
-
-export type QueryVariantArgs = {
-  id: Scalars['ID']['input'];
-};
-
-export type QueryVariantsArgs = {
-  input?: InputMaybe<ListInput>;
+  input?: InputMaybe<ProductListInput>;
 };
 
 export type Shipment = Node & {
@@ -579,21 +624,37 @@ export type Shipment = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
-export type ShipmentList = List & {
-  __typename?: 'ShipmentList';
-  count: Scalars['Int']['output'];
-  items: Array<Shipment>;
-};
-
+/** A shipping method is a method chosen by the customer to ship the order to the customer's address */
 export type ShippingMethod = Node & {
   __typename?: 'ShippingMethod';
   createdAt: Scalars['Date']['output'];
+  /** The shipping method's description */
   description?: Maybe<Scalars['String']['output']>;
+  /**
+   * Whether the shipping method is enabled or not
+   * Not enabled shipping methods will not be shown in the storefront
+   * Useful for shipping methods that are not ready to be used yet
+   */
   enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
+  /** The shipping method's name (e.g. 'Stripe') */
   name: Scalars['String']['output'];
-  price: Scalars['Int']['output'];
+  pricePreview: Scalars['Int']['output'];
   updatedAt: Scalars['Date']['output'];
+};
+
+export type State = Node & {
+  __typename?: 'State';
+  country: Country;
+  createdAt: Scalars['Date']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+export type StringFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateCustomerInput = {
@@ -612,31 +673,50 @@ export type UpdateOrderLineInput = {
   quantity: Scalars['Int']['input'];
 };
 
+/**
+ * A variant is a specific version of a product.
+ * For example, a product can have a variant with a specific color, size, or material.
+ */
 export type Variant = Node & {
   __typename?: 'Variant';
+  asset?: Maybe<Asset>;
+  /**
+   * The variant's comparison price.
+   * Useful when you want to mark a variant as on sale. Comparison price should be higher than the sale price.
+   */
+  comparisonPrice?: Maybe<Scalars['Int']['output']>;
+  /**
+   * The variant's cost per unit.
+   * Useful when you want to calculate the profit of a variant.
+   */
+  costPerUnit?: Maybe<Scalars['Int']['output']>;
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
-  optionValues?: Maybe<Array<OptionValue>>;
-  price: Scalars['Float']['output'];
+  optionValues: Array<OptionValue>;
   product: Product;
-  published: Scalars['Boolean']['output'];
-  sku: Scalars['String']['output'];
+  /**
+   * The variant's weight
+   * Useful when you want to indicate that the variant needs shipping.
+   */
+  requiresShipping: Scalars['Boolean']['output'];
+  /** The variant's sale price */
+  salePrice: Scalars['Int']['output'];
+  /** The variant's SKU */
+  sku?: Maybe<Scalars['String']['output']>;
+  /** The variant's stock */
   stock: Scalars['Int']['output'];
   updatedAt: Scalars['Date']['output'];
-};
-
-export type VariantOptionValuesArgs = {
-  withDeleted?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type VariantList = List & {
   __typename?: 'VariantList';
   count: Scalars['Int']['output'];
   items: Array<Variant>;
+  pageInfo: PageInfo;
 };
 
 export type CreateCartMutationVariables = Exact<{
-  input?: InputMaybe<CreateOrderInput>;
+  input: CreateOrderInput;
 }>;
 
 export type CreateCartMutation = {
@@ -764,7 +844,7 @@ export type CartFragment = {
         __typename?: 'Variant';
         id: string;
         stock: number;
-        optionValues?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
+        optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
         product: {
           __typename?: 'Product';
           name: string;
@@ -823,7 +903,6 @@ export type GetAvailablePaymentMethodsQuery = {
     id: string;
     name: string;
     enabled: boolean;
-    description?: string | null;
   }>;
 };
 
@@ -837,7 +916,7 @@ export type GetAvailableShippingMethodsQuery = {
     __typename?: 'ShippingMethod';
     id: string;
     name: string;
-    price: number;
+    pricePreview: number;
     description?: string | null;
   }>;
 };
@@ -846,10 +925,7 @@ export type GetCountriesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCountriesQuery = {
   __typename?: 'Query';
-  countries: {
-    __typename?: 'CountryList';
-    items: Array<{ __typename?: 'Country'; id: string; name: string }>;
-  };
+  countries: Array<{ __typename?: 'Country'; id: string; name: string }>;
 };
 
 export type CollectionProductFragment = {
@@ -859,7 +935,7 @@ export type CollectionProductFragment = {
   slug: string;
   variants: {
     __typename?: 'VariantList';
-    items: Array<{ __typename?: 'Variant'; id: string; price: number; stock: number }>;
+    items: Array<{ __typename?: 'Variant'; id: string; salePrice: number; stock: number }>;
   };
   assets: {
     __typename?: 'AssetList';
@@ -907,7 +983,7 @@ export type GetCollectionDetailsQuery = {
     id: string;
     name: string;
     slug: string;
-    description?: string | null;
+    description: string;
   } | null;
 };
 
@@ -930,7 +1006,7 @@ export type OrderFragment = {
         __typename?: 'Variant';
         id: string;
         stock: number;
-        optionValues?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
+        optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
         product: {
           __typename?: 'Product';
           name: string;
@@ -996,16 +1072,16 @@ export type ProductDetailsFragment = {
     __typename?: 'Option';
     id: string;
     name: string;
-    values?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
+    values: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
   }>;
   variants: {
     __typename?: 'VariantList';
     items: Array<{
       __typename?: 'Variant';
       id: string;
-      price: number;
+      salePrice: number;
       stock: number;
-      optionValues?: Array<{ __typename?: 'OptionValue'; id: string; value: string }> | null;
+      optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
     }>;
   };
 } & { ' $fragmentName'?: 'ProductDetailsFragment' };
@@ -1059,7 +1135,7 @@ export const CartFragmentDoc = new TypedDocumentString(
         stock
         optionValues {
           id
-          value
+          name
         }
         product {
           name
@@ -1114,7 +1190,7 @@ export const CollectionProductFragmentDoc = new TypedDocumentString(
   variants(input: {take: 1}) {
     items {
       id
-      price
+      salePrice
       stock
     }
   }
@@ -1148,7 +1224,7 @@ export const OrderFragmentDoc = new TypedDocumentString(
         stock
         optionValues {
           id
-          value
+          name
         }
         product {
           name
@@ -1214,17 +1290,17 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
     name
     values {
       id
-      value
+      name
     }
   }
   variants {
     items {
       id
-      price
+      salePrice
       stock
       optionValues {
         id
-        value
+        name
       }
     }
   }
@@ -1233,7 +1309,7 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
   { fragmentName: 'ProductDetails' }
 ) as unknown as TypedDocumentString<ProductDetailsFragment, unknown>;
 export const CreateCartDocument = new TypedDocumentString(`
-    mutation CreateCart($input: CreateOrderInput) {
+    mutation CreateCart($input: CreateOrderInput!) {
   createOrder(input: $input) {
     apiErrors {
       code
@@ -1372,7 +1448,7 @@ export const GetCartDocument = new TypedDocumentString(`
         stock
         optionValues {
           id
-          value
+          name
         }
         product {
           name
@@ -1421,7 +1497,6 @@ export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
     id
     name
     enabled
-    description
   }
 }
     `) as unknown as TypedDocumentString<
@@ -1433,7 +1508,7 @@ export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
   availableShippingMethods(orderId: $cartId) {
     id
     name
-    price
+    pricePreview
     description
   }
 }
@@ -1444,10 +1519,8 @@ export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
 export const GetCountriesDocument = new TypedDocumentString(`
     query GetCountries {
   countries {
-    items {
-      id
-      name
-    }
+    id
+    name
   }
 }
     `) as unknown as TypedDocumentString<GetCountriesQuery, GetCountriesQueryVariables>;
@@ -1479,7 +1552,7 @@ export const GetCollectionProductsDocument = new TypedDocumentString(`
   variants(input: {take: 1}) {
     items {
       id
-      price
+      salePrice
       stock
     }
   }
@@ -1530,7 +1603,7 @@ export const GetOrderDocument = new TypedDocumentString(`
         stock
         optionValues {
           id
-          value
+          name
         }
         product {
           name
@@ -1597,17 +1670,17 @@ export const GetProductDetailsDocument = new TypedDocumentString(`
     name
     values {
       id
-      value
+      name
     }
   }
   variants {
     items {
       id
-      price
+      salePrice
       stock
       optionValues {
         id
-        value
+        name
       }
     }
   }

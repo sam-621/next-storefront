@@ -19,17 +19,17 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql(`
       name
       values {
         id
-        value
+        name
       }
     }
     variants {
       items {
         id
-        price
+        salePrice
         stock
         optionValues {
           id
-          value
+          name
         }
       }
     }

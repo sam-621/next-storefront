@@ -1,7 +1,7 @@
 import { graphql } from '../codegen';
 
 export const CREATE_CART_MUTATION = graphql(`
-  mutation CreateCart($input: CreateOrderInput) {
+  mutation CreateCart($input: CreateOrderInput!) {
     createOrder(input: $input) {
       apiErrors {
         code

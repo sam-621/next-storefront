@@ -12,7 +12,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n  mutation CreateCart($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n      }\n    }\n  }\n':
+  '\n  mutation CreateCart($input: CreateOrderInput!) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n      }\n    }\n  }\n':
     types.CreateCartDocument,
   '\n  mutation AddToCart($cartId: ID!, $input: CreateOrderLineInput!) {\n    addLineToOrder(orderId: $cartId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n      }\n    }\n  }\n':
     types.AddToCartDocument,
@@ -28,17 +28,17 @@ const documents = {
     types.AddShipmentToOrderMutationDocument,
   '\n  mutation AddPaymentToCartMutation($cartId: ID!, $input: AddPaymentToOrderInput!) {\n    addPaymentToOrder(orderId: $cartId, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n        code\n      }\n    }\n  }\n':
     types.AddPaymentToCartMutationDocument,
-  '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            value\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
+  '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
     types.CartFragmentDoc,
   '\n  query GetCart($id: ID) {\n    order(id: $id) {\n      ...Cart\n    }\n  }\n':
     types.GetCartDocument,
-  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n':
+  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n    }\n  }\n':
     types.GetAvailablePaymentMethodsDocument,
-  '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      price\n      description\n    }\n  }\n':
+  '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      pricePreview\n      description\n    }\n  }\n':
     types.GetAvailableShippingMethodsDocument,
-  '\n  query GetCountries {\n    countries {\n      items {\n        id\n        name\n      }\n    }\n  }\n':
+  '\n  query GetCountries {\n    countries {\n      id\n      name\n    }\n  }\n':
     types.GetCountriesDocument,
-  '\n  fragment CollectionProduct on Product {\n    id\n    name\n    slug\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n':
+  '\n  fragment CollectionProduct on Product {\n    id\n    name\n    slug\n    variants(input: { take: 1 }) {\n      items {\n        id\n        salePrice\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n':
     types.CollectionProductFragmentDoc,
   '\n  query GetCollectionsSlug {\n    collections(input: { take: 3 }) {\n      items {\n        id\n        name\n        slug\n      }\n    }\n  }\n':
     types.GetCollectionsSlugDocument,
@@ -46,11 +46,11 @@ const documents = {
     types.GetCollectionProductsDocument,
   '\n  query GetCollectionDetails($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      description\n    }\n  }\n':
     types.GetCollectionDetailsDocument,
-  '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            value\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
+  '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
     types.OrderFragmentDoc,
   '\n  query GetOrder($code: String!) {\n    order(code: $code) {\n      ...Order\n    }\n  }\n':
     types.GetOrderDocument,
-  '\n  fragment ProductDetails on Product {\n    id\n    name\n    slug\n    description\n    assets {\n      items {\n        id\n        name\n        order\n        source\n      }\n    }\n    options {\n      id\n      name\n      values {\n        id\n        value\n      }\n    }\n    variants {\n      items {\n        id\n        price\n        stock\n        optionValues {\n          id\n          value\n        }\n      }\n    }\n  }\n':
+  '\n  fragment ProductDetails on Product {\n    id\n    name\n    slug\n    description\n    assets {\n      items {\n        id\n        name\n        order\n        source\n      }\n    }\n    options {\n      id\n      name\n      values {\n        id\n        name\n      }\n    }\n    variants {\n      items {\n        id\n        salePrice\n        stock\n        optionValues {\n          id\n          name\n        }\n      }\n    }\n  }\n':
     types.ProductDetailsFragmentDoc,
   '\n  query GetProductDetails($slug: String!) {\n    product(slug: $slug) {\n      ...ProductDetails\n    }\n  }\n':
     types.GetProductDetailsDocument
@@ -60,7 +60,7 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  mutation CreateCart($input: CreateOrderInput) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n      }\n    }\n  }\n'
+  source: '\n  mutation CreateCart($input: CreateOrderInput!) {\n    createOrder(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      order {\n        id\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CreateCartDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -108,7 +108,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            value\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n'
+  source: '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n'
 ): typeof import('./graphql').CartFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -120,25 +120,25 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n      description\n    }\n  }\n'
+  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n    }\n  }\n'
 ): typeof import('./graphql').GetAvailablePaymentMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      price\n      description\n    }\n  }\n'
+  source: '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      pricePreview\n      description\n    }\n  }\n'
 ): typeof import('./graphql').GetAvailableShippingMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetCountries {\n    countries {\n      items {\n        id\n        name\n      }\n    }\n  }\n'
+  source: '\n  query GetCountries {\n    countries {\n      id\n      name\n    }\n  }\n'
 ): typeof import('./graphql').GetCountriesDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment CollectionProduct on Product {\n    id\n    name\n    slug\n    variants(input: { take: 1 }) {\n      items {\n        id\n        price\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n'
+  source: '\n  fragment CollectionProduct on Product {\n    id\n    name\n    slug\n    variants(input: { take: 1 }) {\n      items {\n        id\n        salePrice\n        stock\n      }\n    }\n    assets(input: { take: 1 }) {\n      items {\n        id\n        source\n        order\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CollectionProductFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -162,7 +162,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            value\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n'
+  source: '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n'
 ): typeof import('./graphql').OrderFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -174,7 +174,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment ProductDetails on Product {\n    id\n    name\n    slug\n    description\n    assets {\n      items {\n        id\n        name\n        order\n        source\n      }\n    }\n    options {\n      id\n      name\n      values {\n        id\n        value\n      }\n    }\n    variants {\n      items {\n        id\n        price\n        stock\n        optionValues {\n          id\n          value\n        }\n      }\n    }\n  }\n'
+  source: '\n  fragment ProductDetails on Product {\n    id\n    name\n    slug\n    description\n    assets {\n      items {\n        id\n        name\n        order\n        source\n      }\n    }\n    options {\n      id\n      name\n      values {\n        id\n        name\n      }\n    }\n    variants {\n      items {\n        id\n        salePrice\n        stock\n        optionValues {\n          id\n          name\n        }\n      }\n    }\n  }\n'
 ): typeof import('./graphql').ProductDetailsFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

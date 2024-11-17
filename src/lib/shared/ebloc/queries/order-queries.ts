@@ -18,7 +18,7 @@ export const ORDER_FRAGMENT = graphql(`
           stock
           optionValues {
             id
-            value
+            name
           }
           product {
             name

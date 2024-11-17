@@ -51,7 +51,7 @@ export const ShippingForm: FC<Props> = ({ methods }) => {
                       <div className="mt-1 text-slate-700">{m.description}</div>
                     </div>
                     <div>
-                      <span className="font-medium text-sm">{formatPrice(m.price)}</span>
+                      <span className="font-medium text-sm">{formatPrice(m.pricePreview)}</span>
                     </div>
                   </div>
                   <div>

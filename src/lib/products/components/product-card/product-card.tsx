@@ -25,7 +25,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
       </Link>
       <div className="flex justify-between px-4">
         <h3 className="text-sm text-gray-700">{name}</h3>
-        <p className="text-sm font-medium text-gray-900">{formatPrice(defaultVariant.price)}</p>
+        <p className="text-sm font-medium text-gray-900">{formatPrice(defaultVariant.salePrice)}</p>
       </div>
       <div className="px-4 pb-4">
         <AddToCart

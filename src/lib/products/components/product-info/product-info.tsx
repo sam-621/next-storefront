@@ -13,7 +13,7 @@ export const ProductInfo: FC<Props> = ({ product }) => {
       <div className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold leading-9">{product.name}</h1>
         <span className="leading-9 text-3xl font-normal">
-          {formatPrice(variants.items[0].price)}
+          {formatPrice(variants.items[0].salePrice)}
         </span>
       </div>
 

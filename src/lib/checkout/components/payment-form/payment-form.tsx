@@ -44,7 +44,7 @@ export const PaymentForm: FC<Props> = ({ methods }) => {
                     <CheckCircleIcon className="h-5 w-5 flex-none text-indigo-600" />
                   )}
                 </div>
-                <div className="mt-1 text-slate-700">{m.description}</div>
+                {/* <div className="mt-1 text-slate-700">{m.description}</div> */}
               </div>
             ))}
           </div>

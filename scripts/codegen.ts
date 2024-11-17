@@ -1,6 +1,6 @@
 import { type CodegenConfig } from '@graphql-codegen/cli';
 
-const GQL_SCHEMA_URL = process.env.EBLOC_STOREFRONT_API_URL;
+const GQL_SCHEMA_URL = process.env.VENDYX_SHOP_API_URL;
 
 const config: CodegenConfig = {
   schema: GQL_SCHEMA_URL,

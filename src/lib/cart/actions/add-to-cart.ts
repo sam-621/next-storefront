@@ -5,12 +5,12 @@ import { cookies } from 'next/headers';
 
 import {
   ADD_TO_CART_MUTATION,
+  ApiError,
   CacheTags,
   CookiesDurations,
   CookiesNames,
   CREATE_CART_MUTATION,
-  eblocFetcher,
-  OrderErrorCode
+  eblocFetcher
 } from '@/lib/shared';
 
 export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
@@ -35,22 +35,24 @@ export const addToCart = async (_: any, input: { variantId: string; quantity: nu
     return;
   }
 
-  const {
-    addLineToOrder: { apiErrors }
-  } = await eblocFetcher(ADD_TO_CART_MUTATION, {
-    cartId,
-    input: { productVariantId: variantId, quantity }
-  });
+  try {
+    const {
+      addLineToOrder: { apiErrors }
+    } = await eblocFetcher(ADD_TO_CART_MUTATION, {
+      cartId,
+      input: { productVariantId: variantId, quantity }
+    });
 
-  if (apiErrors.length) {
+    if (apiErrors.length) {
+      return apiErrors[0]?.code;
+    }
+  } catch (error) {
     // cart id cookie has a non-existing cart id
-    if (apiErrors[0].code === OrderErrorCode.OrderNotFound) {
+    if (error instanceof ApiError && error.code === 404) {
       cookies().delete(CookiesNames.cartId);
       await addToCart(_, input);
       return;
     }
-
-    return apiErrors[0]?.code;
   }
 
   revalidateTag(CacheTags.cart[0]);

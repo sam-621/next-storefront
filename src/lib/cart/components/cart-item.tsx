@@ -25,7 +25,7 @@ export const CartItem: FC<Props> = ({ line }) => {
             <div>
               <h3>{line.productVariant.product.name}</h3>
               <span className="text-gray-500 text-sm font-normal">
-                {line.productVariant.optionValues?.map(v => v.value).join(' / ')}
+                {line.productVariant.optionValues?.map(v => v.name).join(' / ')}
               </span>
             </div>
             <p className="ml-4">{formatPrice(unitPrice)}</p>
