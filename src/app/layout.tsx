@@ -8,8 +8,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Next storefront',
-  description: 'Next storefront powered by Vendyx'
+  title: 'Storefront',
+  description: 'Storefront powered by Vendyx'
 };
 
 export default function RootLayout({
