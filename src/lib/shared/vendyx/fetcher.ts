@@ -5,10 +5,10 @@ import { type TypedDocumentString } from './codegen/graphql';
  *
  * @usage
  * ```tsx
- * const result = await eblocFetcher(TypedQuery);
+ * const result = await vendyxFetcher(TypedQuery);
  * ```
  */
-export const eblocFetcher = async <R, V>(
+export const vendyxFetcher = async <R, V>(
   query: TypedDocumentString<R, V>,
   variables?: V,
   tags?: string[]

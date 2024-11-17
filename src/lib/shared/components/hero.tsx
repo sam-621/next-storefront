@@ -11,10 +11,10 @@ export const Hero: FC<Props> = async ({ action }) => {
         <div className="section flex flex-col gap-8 items-center w-full">
           <div className="flex flex-col gap-4">
             <h1 className="font-bold text-4xl xl:text-6xl text-white text-center">
-              EBloc storefront
+              Vendyx storefront
             </h1>
             <p className="text-xl text-white font-light text-center max-w-3xl">
-              Our storefront demonstrates how EBloc streamlines operations, enhances user
+              Our storefront demonstrates how Vendyx streamlines operations, enhances user
               experience, and drives sales.
             </p>
           </div>

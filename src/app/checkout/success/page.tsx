@@ -8,6 +8,10 @@ import { type CartFragment, Scroll } from '@/lib/shared';
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
   const code = searchParams.code ?? '';
+  console.log({
+    code
+  });
+
   const order = await getOrder(code);
 
   if (!order) {

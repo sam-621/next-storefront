@@ -9,7 +9,7 @@ import {
   CacheTags,
   CookiesNames,
   type CreateAddressInput,
-  eblocFetcher,
+  vendyxFetcher,
   getOrderError,
   SET_CUSTOMER_TO_CART_MUTATION,
   SET_SHIPPING_ADDRESS_TO_CART_MUTATION
@@ -55,13 +55,13 @@ export const setCustomerInfoToCart = async (input: Input) => {
 };
 
 const addCustomer = async (cartId: string, customer: AddCustomerToOrderInput) => {
-  const result = await eblocFetcher(SET_CUSTOMER_TO_CART_MUTATION, { cartId, input: customer });
+  const result = await vendyxFetcher(SET_CUSTOMER_TO_CART_MUTATION, { cartId, input: customer });
 
   return result;
 };
 
 const addShippingAddress = async (cartId: string, address: CreateAddressInput) => {
-  const result = await eblocFetcher(SET_SHIPPING_ADDRESS_TO_CART_MUTATION, {
+  const result = await vendyxFetcher(SET_SHIPPING_ADDRESS_TO_CART_MUTATION, {
     cartId,
     input: address
   });

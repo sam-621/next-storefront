@@ -22,7 +22,7 @@ export default async function ShippingPage() {
     <>
       <CheckoutContentLayout>
         <CheckoutContentLayout.Section sticky>
-          <ShippingForm methods={methods} />
+          <ShippingForm methods={methods} shipment={cart.shipment} />
         </CheckoutContentLayout.Section>
         <CheckoutContentLayout.Section className="bg-gray-50">
           <CartSummary cart={cart} />

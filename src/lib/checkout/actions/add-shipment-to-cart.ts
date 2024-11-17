@@ -8,7 +8,7 @@ import {
   ADD_SHIPMENT_TO_CART_MUTATION,
   CacheTags,
   CookiesNames,
-  eblocFetcher,
+  vendyxFetcher,
   getOrderError
 } from '@/lib/shared';
 
@@ -20,7 +20,7 @@ export const addShipmentToCart = async (_: any, methodId: string) => {
 
   const {
     addShipmentToOrder: { apiErrors }
-  } = await eblocFetcher(ADD_SHIPMENT_TO_CART_MUTATION, { cartId, input: { methodId } });
+  } = await vendyxFetcher(ADD_SHIPMENT_TO_CART_MUTATION, { cartId, input: { methodId } });
 
   if (apiErrors.length) {
     return getOrderError(apiErrors[0]?.code);

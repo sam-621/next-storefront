@@ -10,7 +10,7 @@ import {
   CookiesDurations,
   CookiesNames,
   CREATE_CART_MUTATION,
-  eblocFetcher
+  vendyxFetcher
 } from '@/lib/shared';
 
 export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
@@ -21,7 +21,7 @@ export const addToCart = async (_: any, input: { variantId: string; quantity: nu
   if (!cartId) {
     const {
       createOrder: { order, apiErrors }
-    } = await eblocFetcher(CREATE_CART_MUTATION, {
+    } = await vendyxFetcher(CREATE_CART_MUTATION, {
       input: { line: { quantity, productVariantId: variantId } }
     });
 
@@ -38,7 +38,7 @@ export const addToCart = async (_: any, input: { variantId: string; quantity: nu
   try {
     const {
       addLineToOrder: { apiErrors }
-    } = await eblocFetcher(ADD_TO_CART_MUTATION, {
+    } = await vendyxFetcher(ADD_TO_CART_MUTATION, {
       cartId,
       input: { productVariantId: variantId, quantity }
     });

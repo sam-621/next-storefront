@@ -9,6 +9,7 @@ import Link from 'next/link';
 
 import {
   Button,
+  type CartFragment,
   cn,
   formatPrice,
   type GetAvailableShippingMethodsQuery,
@@ -19,9 +20,12 @@ import { addShipmentToCart } from '../../actions';
 import { MethodsEmptyState } from '../checkout-empty-states/methods-empty-state';
 import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 
-export const ShippingForm: FC<Props> = ({ methods }) => {
+export const ShippingForm: FC<Props> = ({ methods, shipment }) => {
+  const defaultMethodSelected = methods.find(m => m.name === shipment?.method);
   const [error, action] = useFormState(addShipmentToCart, null);
-  const [selected, setSelected] = useState<string>(methods[0]?.id ?? '');
+  const [selected, setSelected] = useState<string>(
+    defaultMethodSelected?.id ?? methods[0]?.id ?? ''
+  );
 
   useNotification(error ?? '', 'error');
 
@@ -102,4 +106,5 @@ const SubmitButton = ({ disabled }: { disabled: boolean }) => {
 
 type Props = {
   methods: GetAvailableShippingMethodsQuery['availableShippingMethods'];
+  shipment: CartFragment['shipment'];
 };

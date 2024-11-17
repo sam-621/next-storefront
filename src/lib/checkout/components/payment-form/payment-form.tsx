@@ -26,7 +26,7 @@ export const PaymentForm: FC<Props> = ({ methods }) => {
     <form action={actionWithMethod} className="flex flex-col gap-6">
       <CheckoutFormCard title="Payment methods">
         {hasMethods ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex gap-4">
             {methods.map(m => (
               <div
                 key={m.id}

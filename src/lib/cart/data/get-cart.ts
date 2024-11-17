@@ -6,7 +6,7 @@ import {
   CacheTags,
   CART_FRAGMENT,
   CookiesNames,
-  eblocFetcher,
+  vendyxFetcher,
   GET_CART_QUERY,
   getFragmentData
 } from '@/lib/shared';
@@ -14,7 +14,7 @@ import {
 export const getCart = async () => {
   const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';
 
-  const result = await eblocFetcher(GET_CART_QUERY, { id: cartId }, CacheTags.cart);
+  const result = await vendyxFetcher(GET_CART_QUERY, { id: cartId }, CacheTags.cart);
   const cart = getFragmentData(CART_FRAGMENT, result.order);
 
   return cart;
