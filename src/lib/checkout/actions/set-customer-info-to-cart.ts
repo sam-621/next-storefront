@@ -9,10 +9,10 @@ import {
   CacheTags,
   CookiesNames,
   type CreateAddressInput,
-  vendyxFetcher,
   getOrderError,
   SET_CUSTOMER_TO_CART_MUTATION,
-  SET_SHIPPING_ADDRESS_TO_CART_MUTATION
+  SET_SHIPPING_ADDRESS_TO_CART_MUTATION,
+  vendyxFetcher
 } from '@/lib/shared';
 
 /**

@@ -8,8 +8,8 @@ import {
   ADD_SHIPMENT_TO_CART_MUTATION,
   CacheTags,
   CookiesNames,
-  vendyxFetcher,
-  getOrderError
+  getOrderError,
+  vendyxFetcher
 } from '@/lib/shared';
 
 /**

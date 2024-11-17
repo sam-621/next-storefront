@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { CacheTags, vendyxFetcher, REMOVE_CART_LINE_MUTATION } from '@/lib/shared';
+import { CacheTags, REMOVE_CART_LINE_MUTATION, vendyxFetcher } from '@/lib/shared';
 
 export const removeFromCart = async (_: any, lineId: string) => {
   const {

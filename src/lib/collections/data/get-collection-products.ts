@@ -1,8 +1,8 @@
 import {
   COLLECTION_PRODUCT_FRAGMENT,
-  vendyxFetcher,
   GET_COLLECTION_PRODUCTS_QUERY,
-  getFragmentData
+  getFragmentData,
+  vendyxFetcher
 } from '@/lib/shared';
 
 export const getCollectionProducts = async (slug: string) => {

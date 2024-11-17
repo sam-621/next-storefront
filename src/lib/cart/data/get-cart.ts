@@ -6,9 +6,9 @@ import {
   CacheTags,
   CART_FRAGMENT,
   CookiesNames,
-  vendyxFetcher,
   GET_CART_QUERY,
-  getFragmentData
+  getFragmentData,
+  vendyxFetcher
 } from '@/lib/shared';
 
 export const getCart = async () => {
