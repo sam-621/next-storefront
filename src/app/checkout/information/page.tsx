@@ -6,9 +6,6 @@ import { CartSummary, CheckoutContentLayout, getCountries, InformationForm } fro
 export default async function CheckoutPage() {
   const cart = await getCart();
   const countries = await getCountries();
-  console.log({
-    countries
-  });
 
   if (!cart) {
     redirect('/');

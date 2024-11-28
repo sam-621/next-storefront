@@ -97,6 +97,10 @@ export const GET_COUNTRIES_QUERY = graphql(`
     countries {
       id
       name
+      states {
+        id
+        name
+      }
     }
   }
 `);

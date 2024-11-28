@@ -54,6 +54,19 @@ export type Address = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
+export type AddressJson = {
+  __typename?: 'AddressJson';
+  city: Scalars['String']['output'];
+  country: Scalars['String']['output'];
+  fullName?: Maybe<Scalars['String']['output']>;
+  postalCode: Scalars['String']['output'];
+  /** State or region */
+  province: Scalars['String']['output'];
+  references?: Maybe<Scalars['String']['output']>;
+  streetLine1: Scalars['String']['output'];
+  streetLine2?: Maybe<Scalars['String']['output']>;
+};
+
 export type AddressList = List & {
   __typename?: 'AddressList';
   count: Scalars['Int']['output'];
@@ -93,7 +106,7 @@ export type Collection = Node & {
   assets: AssetList;
   createdAt: Scalars['Date']['output'];
   /** The collection's description */
-  description: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   /** The collection's order user to decide to show the collection in the storefront */
   enabled: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
@@ -370,7 +383,7 @@ export type Order = Node & {
   /** The date and time when a payment has been added to the order */
   placedAt?: Maybe<Scalars['Date']['output']>;
   shipment?: Maybe<Shipment>;
-  shippingAddress?: Maybe<OrderShippingAddressJson>;
+  shippingAddress?: Maybe<AddressJson>;
   state: OrderState;
   /** Order lines total less discounts */
   subtotal: Scalars['Int']['output'];
@@ -448,19 +461,6 @@ export type OrderResult = {
   __typename?: 'OrderResult';
   apiErrors: Array<OrderErrorResult>;
   order?: Maybe<Order>;
-};
-
-export type OrderShippingAddressJson = {
-  __typename?: 'OrderShippingAddressJson';
-  city: Scalars['String']['output'];
-  country: Scalars['String']['output'];
-  fullName?: Maybe<Scalars['String']['output']>;
-  postalCode: Scalars['String']['output'];
-  /** State or region */
-  province: Scalars['String']['output'];
-  references?: Maybe<Scalars['String']['output']>;
-  streetLine1: Scalars['String']['output'];
-  streetLine2?: Maybe<Scalars['String']['output']>;
 };
 
 export enum OrderState {
@@ -866,7 +866,7 @@ export type CartFragment = {
     phoneNumber?: string | null;
   } | null;
   shippingAddress?: {
-    __typename?: 'OrderShippingAddressJson';
+    __typename?: 'AddressJson';
     streetLine1: string;
     streetLine2?: string | null;
     postalCode: string;
@@ -925,7 +925,12 @@ export type GetCountriesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCountriesQuery = {
   __typename?: 'Query';
-  countries: Array<{ __typename?: 'Country'; id: string; name: string }>;
+  countries: Array<{
+    __typename?: 'Country';
+    id: string;
+    name: string;
+    states: Array<{ __typename?: 'State'; id: string; name: string }>;
+  }>;
 };
 
 export type CollectionProductFragment = {
@@ -983,7 +988,7 @@ export type GetCollectionDetailsQuery = {
     id: string;
     name: string;
     slug: string;
-    description: string;
+    description?: string | null;
   } | null;
 };
 
@@ -1028,7 +1033,7 @@ export type OrderFragment = {
     phoneNumber?: string | null;
   } | null;
   shippingAddress?: {
-    __typename?: 'OrderShippingAddressJson';
+    __typename?: 'AddressJson';
     streetLine1: string;
     streetLine2?: string | null;
     postalCode: string;
@@ -1521,6 +1526,10 @@ export const GetCountriesDocument = new TypedDocumentString(`
   countries {
     id
     name
+    states {
+      id
+      name
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetCountriesQuery, GetCountriesQueryVariables>;

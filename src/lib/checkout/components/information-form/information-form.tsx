@@ -8,8 +8,11 @@ import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 import { useInformationForm } from './use-information-form';
 
 export const InformationForm: FC<Props> = ({ cart, countries }) => {
-  const { onSubmit, formState, register, isLoading } = useInformationForm(cart);
+  const { onSubmit, formState, register, isLoading, watch } = useInformationForm(cart);
   const { errors } = formState;
+
+  const country = watch('country') ?? cart.shippingAddress?.country ?? countries[0].name;
+  const states = countries.find(c => c.name === country)?.states ?? [];
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-10">
@@ -42,6 +45,7 @@ export const InformationForm: FC<Props> = ({ cart, countries }) => {
           error={errors.country?.message}
           label="Country"
           items={countries.map(c => c.name)}
+          placeholder="Select a country"
         />
         <Input
           {...register('streetLine1')}
@@ -62,11 +66,11 @@ export const InformationForm: FC<Props> = ({ cart, countries }) => {
             label="City"
             placeholder="Culiacán"
           />
-          <Input
+          <Select
             {...register('province')}
             error={errors.province?.message}
             label="Province"
-            placeholder="Sinaloa"
+            items={states.map(s => s.name)}
           />
           <Input
             {...register('postalCode')}

@@ -3,7 +3,7 @@ import { type FC, forwardRef, type SelectHTMLAttributes } from 'react';
 import { cn } from '../utils';
 
 export const Select: FC<Props> = forwardRef<HTMLSelectElement, Props>(
-  ({ label, items, error, className, ...rest }, ref) => {
+  ({ label, items, error, className, placeholder, ...rest }, ref) => {
     return (
       <div className="w-full">
         <label htmlFor={label} className="block text-sm font-medium leading-6 text-gray-700">
@@ -38,4 +38,5 @@ type Props = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   items: string[];
   error?: string;
+  placeholder?: string;
 };
