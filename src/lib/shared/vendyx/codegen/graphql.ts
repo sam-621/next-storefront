@@ -862,6 +862,7 @@ export type CartFragment = {
         id: string;
         stock: number;
         optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
+        asset?: { __typename?: 'Asset'; id: string; source: string } | null;
         product: {
           __typename?: 'Product';
           name: string;
@@ -1154,6 +1155,10 @@ export const CartFragmentDoc = new TypedDocumentString(
         optionValues {
           id
           name
+        }
+        asset {
+          id
+          source
         }
         product {
           name
@@ -1471,6 +1476,10 @@ export const GetCartDocument = new TypedDocumentString(`
         optionValues {
           id
           name
+        }
+        asset {
+          id
+          source
         }
         product {
           name

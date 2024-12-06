@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { type CartFragment, DEFAULT_PRODUCT_IMAGE, formatPrice } from '@/lib/shared';
 
 export const CartSummaryItem: FC<Props> = ({ line }) => {
+  const variantImage = line.productVariant.asset?.source;
   const { assets, name } = line.productVariant.product;
-  const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
+  const image = variantImage ?? assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
 
   return (
     <article className="flex">

@@ -20,6 +20,10 @@ export const CART_FRAGMENT = graphql(`
             id
             name
           }
+          asset {
+            id
+            source
+          }
           product {
             name
             slug

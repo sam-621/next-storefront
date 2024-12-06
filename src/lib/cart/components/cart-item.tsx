@@ -9,8 +9,9 @@ import { CartRemoveButton } from './cart-remove-button';
 
 export const CartItem: FC<Props> = ({ line }) => {
   const { unitPrice, quantity } = line;
+  const variantImage = line.productVariant.asset?.source;
   const { name, assets } = line.productVariant.product;
-  const image = assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
+  const image = variantImage ?? assets.items[0]?.source ?? DEFAULT_PRODUCT_IMAGE.sm;
   const availableStock = line.productVariant.stock;
 
   return (
