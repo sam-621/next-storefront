@@ -1099,6 +1099,7 @@ export type ProductDetailsFragment = {
       salePrice: number;
       stock: number;
       optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
+      asset?: { __typename?: 'Asset'; id: string; source: string } | null;
     }>;
   };
 } & { ' $fragmentName'?: 'ProductDetailsFragment' };
@@ -1318,6 +1319,10 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
       optionValues {
         id
         name
+      }
+      asset {
+        id
+        source
       }
     }
   }
@@ -1701,6 +1706,10 @@ export const GetProductDetailsDocument = new TypedDocumentString(`
       optionValues {
         id
         name
+      }
+      asset {
+        id
+        source
       }
     }
   }

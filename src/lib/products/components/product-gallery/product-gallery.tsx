@@ -1,15 +1,29 @@
 'use client';
 
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
 import { cn, DEFAULT_PRODUCT_IMAGE, type ProductDetailsFragment } from '@/lib/shared';
 
+import { useVariantContext } from '../../contexts';
 import { ProductImage } from './product-image';
 
-export const ProductGallery: FC<Props> = ({ assets }) => {
-  const [selectedImage, setSelectedImage] = useState(assets[0]);
+export const ProductGallery: FC<Props> = ({ product }) => {
+  const {
+    assets: { items: assets }
+  } = product;
+  const { variant } = useVariantContext();
 
-  if (!assets.length) {
+  const [selectedImage, setSelectedImage] = useState(variant?.asset ?? assets[0]);
+
+  useEffect(() => {
+    const variantAsset = variant?.asset;
+
+    if (variantAsset) {
+      setSelectedImage(variantAsset);
+    }
+  }, [variant]);
+
+  if (!selectedImage) {
     return (
       <ProductImage src={DEFAULT_PRODUCT_IMAGE.lg} alt="default" className="rounded-lg h-fit" />
     );
@@ -17,11 +31,7 @@ export const ProductGallery: FC<Props> = ({ assets }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ProductImage
-        src={selectedImage.source}
-        alt={selectedImage.name}
-        className="rounded-lg h-fit"
-      />
+      <ProductImage src={selectedImage.source} alt={product.name} className="rounded-lg h-fit" />
       {assets.length >= 2 && (
         <div className="hidden xl:flex gap-4">
           {assets.map(asset => (
@@ -47,5 +57,5 @@ export const ProductGallery: FC<Props> = ({ assets }) => {
 };
 
 type Props = {
-  assets: ProductDetailsFragment['assets']['items'];
+  product: ProductDetailsFragment;
 };

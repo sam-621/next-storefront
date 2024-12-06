@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn dotenv -e .env.local -- yarn codegen && next dev",
+    "dev": "yarn dotenv -e .env.development yarn codegen && yarn dotenv -e .env.development next dev",
     "local": "yarn dotenv -e .env.local -- yarn codegen && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.local && prettier --write ./src/lib/shared/vendyx/codegen"
+    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.development && prettier --write ./src/lib/shared/vendyx/codegen"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.1",

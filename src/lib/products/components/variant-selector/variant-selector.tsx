@@ -5,25 +5,25 @@ import { type FC } from 'react';
 import { AddToCart } from '@/lib/cart/components';
 import { buttonVariants, cn, type ProductDetailsFragment } from '@/lib/shared';
 
-import { useVariantSelector } from './use-variant-selector';
+import { useVariantContext } from '../../contexts';
 
-export const VariantSelector: FC<Props> = ({ options, variants }) => {
-  const { onVariantChange, selectedVariant, selectedOptions } = useVariantSelector(variants);
+export const VariantSelector: FC<Props> = ({ options: optionsProps, variants }) => {
+  const { changeVariant, variant, options } = useVariantContext();
 
-  const allOptionsSelected = options.length === Object.keys(selectedOptions).length;
-  const variantIsInStock = Boolean(selectedVariant?.stock);
+  const allOptionsSelected = optionsProps.length === Object.keys(options).length;
+  const variantIsInStock = Boolean(variant?.stock);
 
   return (
     <div className="flex flex-col gap-8">
-      {options.map(option => (
+      {optionsProps.map(option => (
         <div key={option.id} className="flex flex-col gap-2">
           <h3 className="text-sm font-medium">{option.name}</h3>
           <div className="flex flex-wrap gap-3">
             {option.values?.map(value => {
-              const isSelected = selectedOptions[option.name] === value.name;
+              const isSelected = options[option.name] === value.name;
 
               // Get the selected option values that are not present the current option
-              const filtered = Array.from(Object.entries(selectedOptions))
+              const filtered = Array.from(Object.entries(options))
                 .filter(([key]) => key !== option.name)
                 .map(([_, value]) => value);
 
@@ -59,7 +59,7 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
                       isSelected && 'border-indigo-600',
                       isSoldOut && 'opacity-25 cursor-not-allowed'
                     )}
-                    onClick={() => onVariantChange(option.name, value.name)}
+                    onClick={() => changeVariant(option.name, value.name)}
                   >
                     {value.name}
                   </button>
@@ -73,7 +73,7 @@ export const VariantSelector: FC<Props> = ({ options, variants }) => {
         <AddToCart
           soldOutText="Add to cart"
           availableForSale={allOptionsSelected && variantIsInStock}
-          variantId={selectedVariant?.id ?? ''}
+          variantId={variant?.id ?? ''}
           className={buttonVariants({ size: 'lg', className: 'w-full' })}
         />
       </div>

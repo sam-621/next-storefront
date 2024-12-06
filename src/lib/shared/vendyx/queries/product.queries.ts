@@ -31,6 +31,10 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql(`
           id
           name
         }
+        asset {
+          id
+          source
+        }
       }
     }
   }

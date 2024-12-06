@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressContentEditableWarning>
-      <body className={inter.className}>
+    <html lang="en">
+      <body className={inter.className} suppressHydrationWarning>
         <TopLoader />
         <Toaster />
         {children}
