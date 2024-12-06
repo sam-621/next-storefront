@@ -76,7 +76,6 @@ export const GET_AVAILABLE_PAYMENT_METHODS_QUERY = graphql(`
     availablePaymentMethods {
       id
       name
-      enabled
     }
   }
 `);

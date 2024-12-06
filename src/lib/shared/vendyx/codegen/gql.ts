@@ -32,7 +32,7 @@ const documents = {
     types.CartFragmentDoc,
   '\n  query GetCart($id: ID) {\n    order(id: $id) {\n      ...Cart\n    }\n  }\n':
     types.GetCartDocument,
-  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n    }\n  }\n':
+  '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n    }\n  }\n':
     types.GetAvailablePaymentMethodsDocument,
   '\n  query GetAvailableShippingMethods($cartId: ID!) {\n    availableShippingMethods(orderId: $cartId) {\n      id\n      name\n      pricePreview\n      description\n    }\n  }\n':
     types.GetAvailableShippingMethodsDocument,
@@ -120,7 +120,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n      enabled\n    }\n  }\n'
+  source: '\n  query GetAvailablePaymentMethods {\n    availablePaymentMethods {\n      id\n      name\n    }\n  }\n'
 ): typeof import('./graphql').GetAvailablePaymentMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

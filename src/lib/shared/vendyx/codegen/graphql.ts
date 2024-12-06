@@ -255,6 +255,8 @@ export type Mutation = {
   /** Create a new customer. */
   createCustomer: CustomerResult;
   createOrder: OrderResult;
+  /** Create paypal order and return the paypal order id */
+  createPaypalOrder: PaypalResult;
   /** Generate a token for the customer. This token is used to modify the customer's data. */
   generateCustomerAccessToken: GenerateCustomerAccessTokenResult;
   /** Change the customer's password with the token received from the request recovery password email */
@@ -305,6 +307,10 @@ export type MutationCreateCustomerArgs = {
 
 export type MutationCreateOrderArgs = {
   input: CreateOrderInput;
+};
+
+export type MutationCreatePaypalOrderArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 export type MutationGenerateCustomerAccessTokenArgs = {
@@ -497,18 +503,29 @@ export type Payment = Node & {
 export type PaymentMethod = {
   __typename?: 'PaymentMethod';
   createdAt: Scalars['Date']['output'];
-  /**
-   * Whether the payment method is enabled or not
-   * Not enabled payment methods will not be shown in the storefront
-   * Useful for payment methods that are not ready to be used yet
-   */
-  enabled: Scalars['Boolean']['output'];
   /** The payment method's icon */
-  icon: Scalars['String']['output'];
+  icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   /** The payment method's name (e.g. 'Stripe') */
   name: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
+};
+
+export enum PaypalErrorCode {
+  PaypalError = 'PAYPAL_ERROR',
+  UnknownError = 'UNKNOWN_ERROR'
+}
+
+export type PaypalErrorResult = {
+  __typename?: 'PaypalErrorResult';
+  code?: Maybe<PaypalErrorCode>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaypalResult = {
+  __typename?: 'PaypalResult';
+  apiErrors: Array<PaypalErrorResult>;
+  orderId?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product = Node & {
@@ -898,12 +915,7 @@ export type GetAvailablePaymentMethodsQueryVariables = Exact<{ [key: string]: ne
 
 export type GetAvailablePaymentMethodsQuery = {
   __typename?: 'Query';
-  availablePaymentMethods: Array<{
-    __typename?: 'PaymentMethod';
-    id: string;
-    name: string;
-    enabled: boolean;
-  }>;
+  availablePaymentMethods: Array<{ __typename?: 'PaymentMethod'; id: string; name: string }>;
 };
 
 export type GetAvailableShippingMethodsQueryVariables = Exact<{
@@ -1501,7 +1513,6 @@ export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
   availablePaymentMethods {
     id
     name
-    enabled
   }
 }
     `) as unknown as TypedDocumentString<
