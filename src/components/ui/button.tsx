@@ -6,16 +6,17 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/shared/utils';
 
 const buttonVariants = cva(
-  'flex justify-center items-center gap-2 transition-colors px-8 disabled:opacity-60 disabled:cursor-not-allowed',
+  'flex justify-center items-center gap-2 transition-colors px-8 rounded-md disabled:opacity-60 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         default: 'text-white bg-indigo-600 hover:bg-indigo-700 disabled:hover:bg-indigo-600',
-        secondary: 'text-gray-900  rounded bg-gray-100 hover:bg-gray-200 disabled:hover:bg-gray-100'
+        secondary: 'text-gray-900 bg-gray-100 hover:bg-gray-200 disabled:hover:bg-gray-100',
+        outline: 'text-gray-900 border border-gray-200 hover:bg-gray-50 disabled:hover:bg-gray-100'
       },
       size: {
-        md: 'py-2 text-sm rounded',
-        lg: 'py-3 rounded-md'
+        md: 'py-2 text-sm ',
+        lg: 'py-3'
       }
     },
     defaultVariants: {
