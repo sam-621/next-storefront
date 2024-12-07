@@ -1005,6 +1005,81 @@ export type GetCollectionDetailsQuery = {
   } | null;
 };
 
+export type CustomerDetailsFragment = {
+  __typename?: 'Customer';
+  id: string;
+  email: string;
+  firstName?: string | null;
+  lastName: string;
+  phoneNumber?: string | null;
+} & { ' $fragmentName'?: 'CustomerDetailsFragment' };
+
+export type GetCustomerQueryVariables = Exact<{
+  accessToken: Scalars['String']['input'];
+}>;
+
+export type GetCustomerQuery = {
+  __typename?: 'Query';
+  customer?:
+    | ({ __typename?: 'Customer' } & {
+        ' $fragmentRefs'?: { CustomerDetailsFragment: CustomerDetailsFragment };
+      })
+    | null;
+};
+
+export type CreateCustomerMutationMutationVariables = Exact<{
+  input: CreateCustomerInput;
+}>;
+
+export type CreateCustomerMutationMutation = {
+  __typename?: 'Mutation';
+  createCustomer: {
+    __typename?: 'CustomerResult';
+    apiErrors: Array<{
+      __typename?: 'CustomerErrorResult';
+      code: CustomerErrorCode;
+      message: string;
+    }>;
+    customer?: { __typename?: 'Customer'; id: string } | null;
+  };
+};
+
+export type GenerateAccessTokenMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+export type GenerateAccessTokenMutation = {
+  __typename?: 'Mutation';
+  generateCustomerAccessToken: {
+    __typename?: 'GenerateCustomerAccessTokenResult';
+    accessToken?: string | null;
+    apiErrors: Array<{
+      __typename?: 'CustomerErrorResult';
+      code: CustomerErrorCode;
+      message: string;
+    }>;
+  };
+};
+
+export type UpdateCustomerMutationVariables = Exact<{
+  accessToken: Scalars['String']['input'];
+  input: UpdateCustomerInput;
+}>;
+
+export type UpdateCustomerMutation = {
+  __typename?: 'Mutation';
+  updateCustomer: {
+    __typename?: 'CustomerResult';
+    apiErrors: Array<{
+      __typename?: 'CustomerErrorResult';
+      code: CustomerErrorCode;
+      message: string;
+    }>;
+    customer?: { __typename?: 'Customer'; id: string } | null;
+  };
+};
+
 export type OrderFragment = {
   __typename?: 'Order';
   id: string;
@@ -1228,6 +1303,18 @@ export const CollectionProductFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'CollectionProduct' }
 ) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
+export const CustomerDetailsFragmentDoc = new TypedDocumentString(
+  `
+    fragment CustomerDetails on Customer {
+  id
+  email
+  firstName
+  lastName
+  phoneNumber
+}
+    `,
+  { fragmentName: 'CustomerDetails' }
+) as unknown as TypedDocumentString<CustomerDetailsFragment, unknown>;
 export const OrderFragmentDoc = new TypedDocumentString(
   `
     fragment Order on Order {
@@ -1614,6 +1701,62 @@ export const GetCollectionDetailsDocument = new TypedDocumentString(`
   GetCollectionDetailsQuery,
   GetCollectionDetailsQueryVariables
 >;
+export const GetCustomerDocument = new TypedDocumentString(`
+    query GetCustomer($accessToken: String!) {
+  customer(accessToken: $accessToken) {
+    ...CustomerDetails
+  }
+}
+    fragment CustomerDetails on Customer {
+  id
+  email
+  firstName
+  lastName
+  phoneNumber
+}`) as unknown as TypedDocumentString<GetCustomerQuery, GetCustomerQueryVariables>;
+export const CreateCustomerMutationDocument = new TypedDocumentString(`
+    mutation CreateCustomerMutation($input: CreateCustomerInput!) {
+  createCustomer(input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    customer {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CreateCustomerMutationMutation,
+  CreateCustomerMutationMutationVariables
+>;
+export const GenerateAccessTokenDocument = new TypedDocumentString(`
+    mutation GenerateAccessToken($email: String!, $password: String!) {
+  generateCustomerAccessToken(email: $email, password: $password) {
+    apiErrors {
+      code
+      message
+    }
+    accessToken
+  }
+}
+    `) as unknown as TypedDocumentString<
+  GenerateAccessTokenMutation,
+  GenerateAccessTokenMutationVariables
+>;
+export const UpdateCustomerDocument = new TypedDocumentString(`
+    mutation UpdateCustomer($accessToken: String!, $input: UpdateCustomerInput!) {
+  updateCustomer(accessToken: $accessToken, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    customer {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateCustomerMutation, UpdateCustomerMutationVariables>;
 export const GetOrderDocument = new TypedDocumentString(`
     query GetOrder($code: String!) {
   order(code: $code) {

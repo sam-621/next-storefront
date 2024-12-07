@@ -1,4 +1,5 @@
 import { OrderErrorCode, type OrderErrorResult } from '../types';
+import { GenericError } from './common.errors';
 
 export const getOrderError = (error?: OrderErrorResult | null) => {
   if (!error) {
@@ -35,5 +36,3 @@ export const getOrderError = (error?: OrderErrorResult | null) => {
 
   return GenericError;
 };
-
-const GenericError = 'An error occurred. Please try again.';

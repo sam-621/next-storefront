@@ -46,6 +46,16 @@ const documents = {
     types.GetCollectionProductsDocument,
   '\n  query GetCollectionDetails($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      description\n    }\n  }\n':
     types.GetCollectionDetailsDocument,
+  '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n  }\n':
+    types.CustomerDetailsFragmentDoc,
+  '\n  query GetCustomer($accessToken: String!) {\n    customer(accessToken: $accessToken) {\n      ...CustomerDetails\n    }\n  }\n':
+    types.GetCustomerDocument,
+  '\n  mutation CreateCustomerMutation($input: CreateCustomerInput!) {\n    createCustomer(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n':
+    types.CreateCustomerMutationDocument,
+  '\n  mutation GenerateAccessToken($email: String!, $password: String!) {\n    generateCustomerAccessToken(email: $email, password: $password) {\n      apiErrors {\n        code\n        message\n      }\n      accessToken\n    }\n  }\n':
+    types.GenerateAccessTokenDocument,
+  '\n  mutation UpdateCustomer($accessToken: String!, $input: UpdateCustomerInput!) {\n    updateCustomer(accessToken: $accessToken, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n':
+    types.UpdateCustomerDocument,
   '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
     types.OrderFragmentDoc,
   '\n  query GetOrder($code: String!) {\n    order(code: $code) {\n      ...Order\n    }\n  }\n':
@@ -158,6 +168,36 @@ export function graphql(
 export function graphql(
   source: '\n  query GetCollectionDetails($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      description\n    }\n  }\n'
 ): typeof import('./graphql').GetCollectionDetailsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n  }\n'
+): typeof import('./graphql').CustomerDetailsFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  query GetCustomer($accessToken: String!) {\n    customer(accessToken: $accessToken) {\n      ...CustomerDetails\n    }\n  }\n'
+): typeof import('./graphql').GetCustomerDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation CreateCustomerMutation($input: CreateCustomerInput!) {\n    createCustomer(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n'
+): typeof import('./graphql').CreateCustomerMutationDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation GenerateAccessToken($email: String!, $password: String!) {\n    generateCustomerAccessToken(email: $email, password: $password) {\n      apiErrors {\n        code\n        message\n      }\n      accessToken\n    }\n  }\n'
+): typeof import('./graphql').GenerateAccessTokenDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdateCustomer($accessToken: String!, $input: UpdateCustomerInput!) {\n    updateCustomer(accessToken: $accessToken, input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n'
+): typeof import('./graphql').UpdateCustomerDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
