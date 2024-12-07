@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.development && prettier --write ./src/lib/shared/vendyx/codegen"
+    "codegen": "yarn graphql-codegen --require dotenv/config --config ./scripts/codegen.ts dotenv_config_path=.env.development && prettier --write ./src/lib/vendyx/codegen"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.1",

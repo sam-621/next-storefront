@@ -14,7 +14,7 @@ export const CollectionService = {
     slugs: 'collections:slugs'
   },
 
-  async getCollection(slug: string) {
+  async getBySlug(slug: string) {
     const { collection } = await fetcher(GET_COLLECTION_DETAILS_QUERY, { slug });
 
     return collection;

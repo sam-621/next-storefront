@@ -3,57 +3,47 @@
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import {
-  ADD_TO_CART_MUTATION,
-  ApiError,
-  CacheTags,
-  CookiesDurations,
-  CookiesNames,
-  CREATE_CART_MUTATION,
-  vendyxFetcher
-} from '@/lib/shared';
+import { CookiesDurations, CookiesNames } from '@/lib/shared/constants';
+import { ApiError } from '@/lib/vendyx/fetcher';
+import { CartService } from '@/lib/vendyx/services';
 
-export const addToCart = async (_: any, input: { variantId: string; quantity: number }) => {
+export const addToCart = async (input: Input) => {
   const cartId = cookies().get(CookiesNames.cartId)?.value;
 
   const { variantId, quantity } = input;
 
+  // If there is no cart id cookie, it means the user doesn't have a cart yet, so we create one
   if (!cartId) {
-    const {
-      createOrder: { order, apiErrors }
-    } = await vendyxFetcher(CREATE_CART_MUTATION, {
-      input: { line: { quantity, productVariantId: variantId } }
+    const result = await CartService.create({
+      line: { productVariantId: variantId, quantity }
     });
 
-    if (apiErrors.length) {
-      return apiErrors[0]?.code;
+    if (!result.success) {
+      return { error: result.error, errorCode: result.errorCode };
     }
 
-    cookies().set(CookiesNames.cartId, order?.id ?? '', { maxAge: CookiesDurations.month });
-    revalidateTag(CacheTags.cart[0]);
+    cookies().set(CookiesNames.cartId, result.cartId ?? '', { maxAge: CookiesDurations.month });
+    revalidateTag(CartService.Tags.cart(result.cartId));
 
     return;
   }
 
+  // If there is a cart id cookie, we add the product to the cart
   try {
-    const {
-      addLineToOrder: { apiErrors }
-    } = await vendyxFetcher(ADD_TO_CART_MUTATION, {
-      cartId,
-      input: { productVariantId: variantId, quantity }
-    });
+    const result = await CartService.addLine(cartId, { productVariantId: variantId, quantity });
 
-    if (apiErrors.length) {
-      return apiErrors[0]?.code;
+    if (!result.success) {
+      return { error: result.error, errorCode: result.errorCode };
     }
+
+    revalidateTag(CartService.Tags.cart(result.cartId));
   } catch (error) {
-    // cart id cookie has a non-existing cart id
+    // cart id in cookie has a non-existing cart, so we remove the cookie and create a new cart
     if (error instanceof ApiError && error.code === 404) {
       cookies().delete(CookiesNames.cartId);
-      await addToCart(_, input);
-      return;
+      await addToCart(input);
     }
   }
-
-  revalidateTag(CacheTags.cart[0]);
 };
+
+type Input = { variantId: string; quantity: number };

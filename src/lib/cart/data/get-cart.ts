@@ -1,21 +1,5 @@
-'use server';
-
-import { cookies } from 'next/headers';
-
-import {
-  CacheTags,
-  CART_FRAGMENT,
-  CookiesNames,
-  GET_CART_QUERY,
-  getFragmentData,
-  vendyxFetcher
-} from '@/lib/shared';
+import { CartService } from '@/lib/vendyx/services';
 
 export const getCart = async () => {
-  const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';
-
-  const result = await vendyxFetcher(GET_CART_QUERY, { id: cartId }, CacheTags.cart);
-  const cart = getFragmentData(CART_FRAGMENT, result.order);
-
-  return cart;
+  return await CartService.getCart();
 };

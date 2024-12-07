@@ -2,15 +2,14 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { CacheTags, UPDATE_CART_LINE_MUTATION, vendyxFetcher } from '@/lib/shared';
+import { CartService } from '@/lib/vendyx/services';
 
-export const updateCartItem = async (_: any, input: { id: string; quantity: number }) => {
-  const { id, quantity } = input;
+export const updateCartItem = async (lineId: string, input: { quantity: number }) => {
+  const result = await CartService.updateLine(lineId, { quantity: input.quantity });
 
-  await vendyxFetcher(UPDATE_CART_LINE_MUTATION, {
-    lineId: id,
-    input: { quantity }
-  });
+  if (!result.success) {
+    return { error: result.error, errorCode: result.errorCode };
+  }
 
-  revalidateTag(CacheTags.cart[0]);
+  revalidateTag(CartService.Tags.cart(result.cartId));
 };

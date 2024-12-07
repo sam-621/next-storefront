@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { Toaster, TopLoader } from '@/lib/shared';
+import { Toaster } from '@/lib/shared/notification';
+import { TopLoader } from '@/lib/shared/top-loader';
 
 import './globals.css';
 

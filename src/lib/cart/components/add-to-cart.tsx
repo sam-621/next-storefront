@@ -1,57 +1,12 @@
 'use client';
 
-import { type FC } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { type FC, useTransition } from 'react';
 
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
-import { getOrderError, type OrderErrorCode, useNotification } from '@/lib/shared';
+import { notification } from '@/lib/shared/notification';
 
 import { addToCart } from '../actions';
-
-const SubmitButton: FC<SubmitButtonProps> = ({
-  text,
-  soldOutText,
-  availableForSale,
-  onClick,
-  error,
-  className
-}) => {
-  const { pending } = useFormStatus();
-
-  useNotification(getOrderError(error), 'error', pending);
-
-  if (!availableForSale) {
-    return (
-      <button disabled className={className}>
-        {soldOutText}
-      </button>
-    );
-  }
-
-  return (
-    <div>
-      {/* {Boolean(error) && (
-        <div className="flex items-center gap-1 mb-1">
-          <ExclamationCircleIcon className="w-5 h-5 text-red-500" />
-          <p className={cn('text-red-500 text-sm')}>{getOrderError(error)}</p>
-        </div>
-      )} */}
-      <button
-        type="submit"
-        onClick={(e: React.FormEvent<HTMLButtonElement>) => {
-          e.stopPropagation();
-          onClick && onClick();
-        }}
-        disabled={pending}
-        className={className}
-      >
-        {pending && <ArrowPathIcon className="animate-spin" width={16} height={16} />}
-        {pending ? 'Adding...' : text}
-      </button>
-    </div>
-  );
-};
 
 export const AddToCart: FC<Props> = ({
   availableForSale,
@@ -61,20 +16,35 @@ export const AddToCart: FC<Props> = ({
   soldOutText = 'Sold out',
   className
 }) => {
-  const [error, action] = useFormState(addToCart, null);
+  const [isLoading, startTransition] = useTransition();
 
-  const actionWithVariant = action.bind(null, { quantity, variantId });
+  const exec = () => {
+    startTransition(async () => {
+      const result = await addToCart({ variantId, quantity });
 
-  return (
-    <form action={actionWithVariant}>
-      <SubmitButton
-        error={error}
-        availableForSale={availableForSale}
-        text={text}
-        soldOutText={soldOutText}
-        className={className}
-      />
-    </form>
+      if (result?.error) {
+        notification.error(result.error);
+      }
+    });
+  };
+
+  return availableForSale ? (
+    <button
+      type="submit"
+      onClick={(e: React.FormEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        exec();
+      }}
+      disabled={isLoading}
+      className={className}
+    >
+      {isLoading && <ArrowPathIcon className="animate-spin" width={16} height={16} />}
+      {isLoading ? 'Adding...' : text}
+    </button>
+  ) : (
+    <button disabled className={className}>
+      {soldOutText}
+    </button>
   );
 };
 
@@ -94,13 +64,4 @@ type Props = {
    */
   soldOutText?: string;
   className?: string;
-};
-
-type SubmitButtonProps = {
-  text: string;
-  soldOutText: string;
-  availableForSale: boolean;
-  error: OrderErrorCode | null | undefined;
-  className?: string;
-  onClick?: () => void;
 };

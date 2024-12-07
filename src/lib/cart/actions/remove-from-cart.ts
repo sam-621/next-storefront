@@ -2,16 +2,14 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { CacheTags, REMOVE_CART_LINE_MUTATION, vendyxFetcher } from '@/lib/shared';
+import { CartService } from '@/lib/vendyx/services';
 
-export const removeFromCart = async (_: any, lineId: string) => {
-  const {
-    removeOrderLine: { apiErrors }
-  } = await vendyxFetcher(REMOVE_CART_LINE_MUTATION, { lineId });
+export const removeFromCart = async (lineId: string) => {
+  const result = await CartService.removeLine(lineId);
 
-  if (apiErrors.length) {
-    return apiErrors[0].code;
+  if (!result.success) {
+    return { error: result.error, errorCode: result.errorCode };
   }
 
-  revalidateTag(CacheTags.cart[0]);
+  revalidateTag(CartService.Tags.cart(result.cartId));
 };

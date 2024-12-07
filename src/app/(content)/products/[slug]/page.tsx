@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 
-import { getProductDetails, ProductGallery, ProductInfo } from '@/lib/products';
+import { ProductGallery, ProductInfo } from '@/components/products';
 import { VariantProvider } from '@/lib/products/contexts';
+import { getProductDetails } from '@/lib/products/data';
 
 export default async function ProductDetailsPage({
   params,

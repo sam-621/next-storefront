@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { CookiesNames } from '@/lib/shared';
+import { CookiesNames } from '@/lib/shared/constants';
 
 import { getFragmentData } from '../codegen';
 import { getOrderError } from '../errors';
@@ -76,7 +76,7 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
   async addLine(cartId: string, input: CreateOrderLineInput): Promise<Result> {
@@ -93,7 +93,7 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
   async updateLine(lineId: string, input: UpdateOrderLineInput): Promise<Result> {
@@ -110,10 +110,10 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
-  async removeLine(lineId: string) {
+  async removeLine(lineId: string): Promise<Result> {
     const {
       removeOrderLine: { apiErrors, order }
     } = await fetcher(REMOVE_CART_LINE_MUTATION, {
@@ -126,10 +126,10 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
-  async addCustomer(cartId: string, input: AddCustomerToOrderInput) {
+  async addCustomer(cartId: string, input: AddCustomerToOrderInput): Promise<Result> {
     const {
       addCustomerToOrder: { apiErrors, order }
     } = await fetcher(ADD_CUSTOMER_TO_CART_MUTATION, { cartId, input });
@@ -140,10 +140,10 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
-  async addShippingAddress(cartId: string, input: CreateAddressInput) {
+  async addShippingAddress(cartId: string, input: CreateAddressInput): Promise<Result> {
     const {
       addShippingAddressToOrder: { apiErrors, order }
     } = await fetcher(ADD_SHIPPING_ADDRESS_TO_CART_MUTATION, {
@@ -157,10 +157,10 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id ?? '' };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
-  async addShipment(cartId: string, input: AddShipmentToOrderInput) {
+  async addShipment(cartId: string, input: AddShipmentToOrderInput): Promise<Result> {
     const {
       addShipmentToOrder: { apiErrors, order }
     } = await fetcher(ADD_SHIPMENT_TO_CART_MUTATION, {
@@ -174,10 +174,10 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id };
+    return { success: true, cartId: order?.id ?? '' };
   },
 
-  async addPayment(cartId: string, input: AddPaymentToOrderInput) {
+  async addPayment(cartId: string, input: AddPaymentToOrderInput): Promise<AddPaymentResult> {
     const {
       addPaymentToOrder: { apiErrors, order }
     } = await fetcher(ADD_PAYMENT_TO_CART_MUTATION, {
@@ -191,14 +191,26 @@ export const CartService = {
       return { success: false, error, errorCode: apiErrors[0].code };
     }
 
-    return { success: true, orderId: order?.id };
+    return { success: true, cartId: order?.code ?? '', orderCode: order?.code ?? '' };
   }
 };
 
 type Result =
   | {
       success: true;
-      orderId: string;
+      cartId: string;
+    }
+  | {
+      success: false;
+      error: string;
+      errorCode: OrderErrorCode;
+    };
+
+type AddPaymentResult =
+  | {
+      success: true;
+      cartId: string;
+      orderCode: string;
     }
   | {
       success: false;

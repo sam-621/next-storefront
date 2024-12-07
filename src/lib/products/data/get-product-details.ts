@@ -1,13 +1,5 @@
-import {
-  GET_PRODUCT_DETAILS_QUERY,
-  getFragmentData,
-  PRODUCT_DETAILS_FRAGMENT,
-  vendyxFetcher
-} from '@/lib/shared';
+import { ProductService } from '@/lib/vendyx/services';
 
 export const getProductDetails = async (slug: string) => {
-  const result = await vendyxFetcher(GET_PRODUCT_DETAILS_QUERY, { slug });
-  const product = getFragmentData(PRODUCT_DETAILS_FRAGMENT, result.product);
-
-  return product;
+  return await ProductService.getBySlug(slug);
 };

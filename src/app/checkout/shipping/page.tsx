@@ -1,13 +1,8 @@
 import { redirect } from 'next/navigation';
 
-import { getCart } from '@/lib/cart';
-import {
-  CartSummary,
-  CheckoutContentLayout,
-  getAvailableShippingMethods,
-  ShippingForm
-} from '@/lib/checkout';
-import { Scroll } from '@/lib/shared';
+import { CartSummary, CheckoutContentLayout, ShippingForm } from '@/components/checkout';
+import { getAvailableShippingMethods, getCart } from '@/lib/cart/data';
+import { Scroll } from '@/lib/shared/components';
 
 export default async function ShippingPage() {
   const cart = await getCart();

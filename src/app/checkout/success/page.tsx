@@ -2,9 +2,10 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { CartSummary, CheckoutContentLayout } from '@/lib/checkout';
+import { CartSummary, CheckoutContentLayout } from '@/components/checkout';
 import { getOrder } from '@/lib/orders';
-import { type CartFragment, Scroll } from '@/lib/shared';
+import { Scroll } from '@/lib/shared/components';
+import { type CartFragment } from '@/lib/vendyx/types';
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
   const code = searchParams.code ?? '';

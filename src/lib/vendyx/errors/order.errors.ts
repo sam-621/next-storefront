@@ -6,7 +6,7 @@ export const getOrderError = (error?: OrderErrorResult | null) => {
   }
 
   if (error.code === OrderErrorCode.NotEnoughStock) {
-    return `You can't add more of this product to the cart.`;
+    return `Product out of stock.`;
   }
 
   if (error.code === OrderErrorCode.CustomerInvalidEmail) {

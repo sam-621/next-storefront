@@ -9,7 +9,10 @@ import {
   useState
 } from 'react';
 
-import { getVariantByOptions, type ProductDetailsFragment, useUrlState } from '@/lib/shared';
+import { useUrlState } from '@/lib/shared/hooks';
+import { type ProductDetailsFragment } from '@/lib/vendyx/types';
+
+import { getVariantByOptions } from '../utils';
 
 type Schema = {
   variant: ProductDetailsFragment['variants']['items'][0] | null;

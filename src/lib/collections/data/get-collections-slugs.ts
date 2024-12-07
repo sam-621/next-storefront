@@ -1,7 +1,5 @@
-import { GET_COLLECTIONS_SLUG_QUERY, vendyxFetcher } from '@/lib/shared';
+import { CollectionService } from '@/lib/vendyx/services';
 
 export const getCollectionsSlugs = async () => {
-  const { collections } = await vendyxFetcher(GET_COLLECTIONS_SLUG_QUERY);
-
-  return collections.items;
+  return await CollectionService.getSlugs();
 };

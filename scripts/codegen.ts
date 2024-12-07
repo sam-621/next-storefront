@@ -4,9 +4,9 @@ const GQL_SCHEMA_URL = process.env.VENDYX_SHOP_API_URL;
 
 const config: CodegenConfig = {
   schema: GQL_SCHEMA_URL,
-  documents: ['./src/api/**/*.ts'],
+  documents: ['./src/lib/vendyx/**/*.ts'],
   generates: {
-    './src/api/codegen/': {
+    './src/lib/vendyx/codegen/': {
       preset: 'client',
       presetConfig: {
         fragmentMasking: { unmaskFunctionName: 'getFragmentData' }

@@ -1,9 +1,9 @@
 import { UserIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-import { Cart } from '@/lib/cart';
-import { getCollectionsSlugs } from '@/lib/collections';
-import { Logo, MobileHeaderDrawer } from '@/lib/shared';
+import { Cart } from '@/components/cart';
+import { Logo, MobileHeaderDrawer } from '@/components/shared';
+import { getCollectionsSlugs } from '@/lib/collections/data';
 
 export default async function RootLayout({
   children

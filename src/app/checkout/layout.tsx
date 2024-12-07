@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { CheckoutSteps, CheckoutStepsMobile } from '@/lib/checkout';
-import { Logo } from '@/lib/shared';
+import { CheckoutSteps, CheckoutStepsMobile } from '@/components/checkout';
+import { Logo } from '@/components/shared';
 
 export default function RootLayout({
   children
