@@ -5,22 +5,18 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-  [_ in K]?: never;
-};
-export type Incremental<T> =
-  | T
-  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  Date: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: { input: any; output: any };
+  JSON: { input: any; output: any; }
 };
 
 export type AddCustomerToOrderInput = {
@@ -118,10 +114,12 @@ export type Collection = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
+
 /** A collection is a group of products that are displayed together in the storefront. */
 export type CollectionAssetsArgs = {
   input?: InputMaybe<ListInput>;
 };
+
 
 /** A collection is a group of products that are displayed together in the storefront. */
 export type CollectionProductsArgs = {
@@ -186,9 +184,11 @@ export type Customer = Node & {
   updatedAt: Scalars['Date']['output'];
 };
 
+
 export type CustomerAddressesArgs = {
   input?: InputMaybe<ListInput>;
 };
+
 
 export type CustomerOrdersArgs = {
   input?: InputMaybe<OrderListInput>;
@@ -271,75 +271,91 @@ export type Mutation = {
   updateOrderLine: OrderResult;
 };
 
+
 export type MutationAddAddressToCustomerArgs = {
   accessToken: Scalars['String']['input'];
   input: CreateAddressInput;
 };
+
 
 export type MutationAddCustomerToOrderArgs = {
   input: AddCustomerToOrderInput;
   orderId: Scalars['ID']['input'];
 };
 
+
 export type MutationAddLineToOrderArgs = {
   input: CreateOrderLineInput;
   orderId: Scalars['ID']['input'];
 };
+
 
 export type MutationAddPaymentToOrderArgs = {
   input: AddPaymentToOrderInput;
   orderId: Scalars['ID']['input'];
 };
 
+
 export type MutationAddShipmentToOrderArgs = {
   input: AddShipmentToOrderInput;
   orderId: Scalars['ID']['input'];
 };
+
 
 export type MutationAddShippingAddressToOrderArgs = {
   input: CreateAddressInput;
   orderId: Scalars['ID']['input'];
 };
 
+
 export type MutationCreateCustomerArgs = {
   input: CreateCustomerInput;
 };
+
 
 export type MutationCreateOrderArgs = {
   input: CreateOrderInput;
 };
 
+
 export type MutationCreatePaypalOrderArgs = {
   orderId: Scalars['ID']['input'];
 };
+
 
 export type MutationGenerateCustomerAccessTokenArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
+
 export type MutationRecoverCustomerPasswordArgs = {
   password: Scalars['String']['input'];
   urlToken: Scalars['String']['input'];
 };
 
+
 export type MutationRemoveOrderLineArgs = {
   lineId: Scalars['ID']['input'];
 };
 
+
 export type MutationRequestRecoveryCustomerPasswordArgs = {
   email: Scalars['String']['input'];
 };
+
 
 export type MutationUpdateCustomerArgs = {
   accessToken: Scalars['String']['input'];
   input: UpdateCustomerInput;
 };
 
+
 export type MutationUpdateCustomerPasswordArgs = {
   accessToken: Scalars['String']['input'];
   input: UpdateCustomerPasswordInput;
 };
+
 
 export type MutationUpdateOrderLineArgs = {
   input: UpdateOrderLineInput;
@@ -398,6 +414,7 @@ export type Order = Node & {
   totalQuantity: Scalars['Int']['output'];
   updatedAt: Scalars['Date']['output'];
 };
+
 
 export type OrderLinesArgs = {
   input?: InputMaybe<ListInput>;
@@ -556,9 +573,11 @@ export type Product = Node & {
   variants: VariantList;
 };
 
+
 export type ProductAssetsArgs = {
   input?: InputMaybe<ListInput>;
 };
+
 
 export type ProductVariantsArgs = {
   input?: InputMaybe<ListInput>;
@@ -598,32 +617,39 @@ export type Query = {
   products: ProductList;
 };
 
+
 export type QueryAvailableShippingMethodsArgs = {
   orderId: Scalars['ID']['input'];
 };
+
 
 export type QueryCollectionArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+
 export type QueryCollectionsArgs = {
   input?: InputMaybe<ListInput>;
 };
 
+
 export type QueryCustomerArgs = {
   accessToken: Scalars['String']['input'];
 };
+
 
 export type QueryOrderArgs = {
   code?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+
 export type QueryProductArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
+
 
 export type QueryProductsArgs = {
   input?: InputMaybe<ProductListInput>;
@@ -732,391 +758,144 @@ export type VariantList = List & {
   pageInfo: PageInfo;
 };
 
+export type CartFragment = { __typename?: 'Order', id: string, code: string, subtotal: number, total: number, totalQuantity: number, lines: { __typename?: 'OrderLineList', items: Array<{ __typename?: 'OrderLine', id: string, linePrice: number, quantity: number, unitPrice: number, productVariant: { __typename?: 'Variant', id: string, stock: number, optionValues: Array<{ __typename?: 'OptionValue', id: string, name: string }>, asset?: { __typename?: 'Asset', id: string, source: string } | null, product: { __typename?: 'Product', name: string, slug: string, assets: { __typename?: 'AssetList', items: Array<{ __typename?: 'Asset', id: string, source: string }> } } } }> }, customer?: { __typename?: 'Customer', id: string, firstName?: string | null, lastName: string, email: string, phoneNumber?: string | null } | null, shippingAddress?: { __typename?: 'AddressJson', streetLine1: string, streetLine2?: string | null, postalCode: string, city: string, province: string, country: string, references?: string | null } | null, shipment?: { __typename?: 'Shipment', id: string, amount: number, method: string } | null, payment?: { __typename?: 'Payment', id: string, amount: number, transactionId?: string | null, method: string } | null } & { ' $fragmentName'?: 'CartFragment' };
+
+export type GetCartQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetCartQuery = { __typename?: 'Query', order?: (
+    { __typename?: 'Order' }
+    & { ' $fragmentRefs'?: { 'CartFragment': CartFragment } }
+  ) | null };
+
+export type GetAvailablePaymentMethodsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAvailablePaymentMethodsQuery = { __typename?: 'Query', availablePaymentMethods: Array<{ __typename?: 'PaymentMethod', id: string, name: string }> };
+
+export type GetAvailableShippingMethodsQueryVariables = Exact<{
+  cartId: Scalars['ID']['input'];
+}>;
+
+
+export type GetAvailableShippingMethodsQuery = { __typename?: 'Query', availableShippingMethods: Array<{ __typename?: 'ShippingMethod', id: string, name: string, pricePreview: number, description?: string | null }> };
+
+export type GetCountriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCountriesQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', id: string, name: string, states: Array<{ __typename?: 'State', id: string, name: string }> }> };
+
 export type CreateCartMutationVariables = Exact<{
   input: CreateOrderInput;
 }>;
 
-export type CreateCartMutation = {
-  __typename?: 'Mutation';
-  createOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type CreateCartMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type AddToCartMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: CreateOrderLineInput;
 }>;
 
-export type AddToCartMutation = {
-  __typename?: 'Mutation';
-  addLineToOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type AddToCartMutation = { __typename?: 'Mutation', addLineToOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type UpdateCartLineMutationVariables = Exact<{
   lineId: Scalars['ID']['input'];
   input: UpdateOrderLineInput;
 }>;
 
-export type UpdateCartLineMutation = {
-  __typename?: 'Mutation';
-  updateOrderLine: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type UpdateCartLineMutation = { __typename?: 'Mutation', updateOrderLine: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type RemoveCartLineMutationVariables = Exact<{
   lineId: Scalars['ID']['input'];
 }>;
 
-export type RemoveCartLineMutation = {
-  __typename?: 'Mutation';
-  removeOrderLine: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
 
-export type SetCustomerToCartMutationVariables = Exact<{
+export type RemoveCartLineMutation = { __typename?: 'Mutation', removeOrderLine: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
+
+export type AddCustomerToCartMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: AddCustomerToOrderInput;
 }>;
 
-export type SetCustomerToCartMutation = {
-  __typename?: 'Mutation';
-  addCustomerToOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type AddCustomerToCartMutation = { __typename?: 'Mutation', addCustomerToOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type AddShippingAddressToCartMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: CreateAddressInput;
 }>;
 
-export type AddShippingAddressToCartMutation = {
-  __typename?: 'Mutation';
-  addShippingAddressToOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type AddShippingAddressToCartMutation = { __typename?: 'Mutation', addShippingAddressToOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type AddShipmentToOrderMutationMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: AddShipmentToOrderInput;
 }>;
 
-export type AddShipmentToOrderMutationMutation = {
-  __typename?: 'Mutation';
-  addShipmentToOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string } | null;
-  };
-};
+
+export type AddShipmentToOrderMutationMutation = { __typename?: 'Mutation', addShipmentToOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string } | null } };
 
 export type AddPaymentToCartMutationMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
   input: AddPaymentToOrderInput;
 }>;
 
-export type AddPaymentToCartMutationMutation = {
-  __typename?: 'Mutation';
-  addPaymentToOrder: {
-    __typename?: 'OrderResult';
-    apiErrors: Array<{ __typename?: 'OrderErrorResult'; code: OrderErrorCode; message: string }>;
-    order?: { __typename?: 'Order'; id: string; code: string } | null;
-  };
-};
 
-export type CartFragment = {
-  __typename?: 'Order';
-  id: string;
-  code: string;
-  subtotal: number;
-  total: number;
-  totalQuantity: number;
-  lines: {
-    __typename?: 'OrderLineList';
-    items: Array<{
-      __typename?: 'OrderLine';
-      id: string;
-      linePrice: number;
-      quantity: number;
-      unitPrice: number;
-      productVariant: {
-        __typename?: 'Variant';
-        id: string;
-        stock: number;
-        optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
-        asset?: { __typename?: 'Asset'; id: string; source: string } | null;
-        product: {
-          __typename?: 'Product';
-          name: string;
-          slug: string;
-          assets: {
-            __typename?: 'AssetList';
-            items: Array<{ __typename?: 'Asset'; id: string; source: string }>;
-          };
-        };
-      };
-    }>;
-  };
-  customer?: {
-    __typename?: 'Customer';
-    id: string;
-    firstName?: string | null;
-    lastName: string;
-    email: string;
-    phoneNumber?: string | null;
-  } | null;
-  shippingAddress?: {
-    __typename?: 'AddressJson';
-    streetLine1: string;
-    streetLine2?: string | null;
-    postalCode: string;
-    city: string;
-    province: string;
-    country: string;
-    references?: string | null;
-  } | null;
-  shipment?: { __typename?: 'Shipment'; id: string; amount: number; method: string } | null;
-  payment?: {
-    __typename?: 'Payment';
-    id: string;
-    amount: number;
-    transactionId?: string | null;
-    method: string;
-  } | null;
-} & { ' $fragmentName'?: 'CartFragment' };
+export type AddPaymentToCartMutationMutation = { __typename?: 'Mutation', addPaymentToOrder: { __typename?: 'OrderResult', apiErrors: Array<{ __typename?: 'OrderErrorResult', code: OrderErrorCode, message: string }>, order?: { __typename?: 'Order', id: string, code: string } | null } };
 
-export type GetCartQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['ID']['input']>;
-}>;
+export type CollectionProductFragment = { __typename?: 'Product', id: string, name: string, slug: string, variants: { __typename?: 'VariantList', items: Array<{ __typename?: 'Variant', id: string, salePrice: number, stock: number }> }, assets: { __typename?: 'AssetList', items: Array<{ __typename?: 'Asset', id: string, source: string, order: number }> } } & { ' $fragmentName'?: 'CollectionProductFragment' };
 
-export type GetCartQuery = {
-  __typename?: 'Query';
-  order?: ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { CartFragment: CartFragment } }) | null;
-};
+export type GetCollectionsSlugQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAvailablePaymentMethodsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAvailablePaymentMethodsQuery = {
-  __typename?: 'Query';
-  availablePaymentMethods: Array<{ __typename?: 'PaymentMethod'; id: string; name: string }>;
-};
-
-export type GetAvailableShippingMethodsQueryVariables = Exact<{
-  cartId: Scalars['ID']['input'];
-}>;
-
-export type GetAvailableShippingMethodsQuery = {
-  __typename?: 'Query';
-  availableShippingMethods: Array<{
-    __typename?: 'ShippingMethod';
-    id: string;
-    name: string;
-    pricePreview: number;
-    description?: string | null;
-  }>;
-};
-
-export type GetCountriesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCountriesQuery = {
-  __typename?: 'Query';
-  countries: Array<{
-    __typename?: 'Country';
-    id: string;
-    name: string;
-    states: Array<{ __typename?: 'State'; id: string; name: string }>;
-  }>;
-};
-
-export type CollectionProductFragment = {
-  __typename?: 'Product';
-  id: string;
-  name: string;
-  slug: string;
-  variants: {
-    __typename?: 'VariantList';
-    items: Array<{ __typename?: 'Variant'; id: string; salePrice: number; stock: number }>;
-  };
-  assets: {
-    __typename?: 'AssetList';
-    items: Array<{ __typename?: 'Asset'; id: string; source: string; order: number }>;
-  };
-} & { ' $fragmentName'?: 'CollectionProductFragment' };
-
-export type GetCollectionsSlugQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCollectionsSlugQuery = {
-  __typename?: 'Query';
-  collections: {
-    __typename?: 'CollectionList';
-    items: Array<{ __typename?: 'Collection'; id: string; name: string; slug: string }>;
-  };
-};
+export type GetCollectionsSlugQuery = { __typename?: 'Query', collections: { __typename?: 'CollectionList', items: Array<{ __typename?: 'Collection', id: string, name: string, slug: string }> } };
 
 export type GetCollectionProductsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type GetCollectionProductsQuery = {
-  __typename?: 'Query';
-  collection?: {
-    __typename?: 'Collection';
-    products: {
-      __typename?: 'ProductList';
-      items: Array<
-        { __typename?: 'Product' } & {
-          ' $fragmentRefs'?: { CollectionProductFragment: CollectionProductFragment };
-        }
-      >;
-    };
-  } | null;
-};
+
+export type GetCollectionProductsQuery = { __typename?: 'Query', collection?: { __typename?: 'Collection', products: { __typename?: 'ProductList', items: Array<(
+        { __typename?: 'Product' }
+        & { ' $fragmentRefs'?: { 'CollectionProductFragment': CollectionProductFragment } }
+      )> } } | null };
 
 export type GetCollectionDetailsQueryVariables = Exact<{
   slug?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type GetCollectionDetailsQuery = {
-  __typename?: 'Query';
-  collection?: {
-    __typename?: 'Collection';
-    id: string;
-    name: string;
-    slug: string;
-    description?: string | null;
-  } | null;
-};
 
-export type OrderFragment = {
-  __typename?: 'Order';
-  id: string;
-  code: string;
-  subtotal: number;
-  total: number;
-  totalQuantity: number;
-  lines: {
-    __typename?: 'OrderLineList';
-    items: Array<{
-      __typename?: 'OrderLine';
-      id: string;
-      linePrice: number;
-      quantity: number;
-      unitPrice: number;
-      productVariant: {
-        __typename?: 'Variant';
-        id: string;
-        stock: number;
-        optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
-        product: {
-          __typename?: 'Product';
-          name: string;
-          slug: string;
-          assets: {
-            __typename?: 'AssetList';
-            items: Array<{ __typename?: 'Asset'; id: string; source: string }>;
-          };
-        };
-      };
-    }>;
-  };
-  customer?: {
-    __typename?: 'Customer';
-    id: string;
-    firstName?: string | null;
-    lastName: string;
-    email: string;
-    phoneNumber?: string | null;
-  } | null;
-  shippingAddress?: {
-    __typename?: 'AddressJson';
-    streetLine1: string;
-    streetLine2?: string | null;
-    postalCode: string;
-    city: string;
-    province: string;
-    country: string;
-    references?: string | null;
-  } | null;
-  shipment?: { __typename?: 'Shipment'; id: string; amount: number; method: string } | null;
-  payment?: {
-    __typename?: 'Payment';
-    id: string;
-    amount: number;
-    transactionId?: string | null;
-    method: string;
-  } | null;
-} & { ' $fragmentName'?: 'OrderFragment' };
+export type GetCollectionDetailsQuery = { __typename?: 'Query', collection?: { __typename?: 'Collection', id: string, name: string, slug: string, description?: string | null } | null };
+
+export type OrderFragment = { __typename?: 'Order', id: string, code: string, subtotal: number, total: number, totalQuantity: number, lines: { __typename?: 'OrderLineList', items: Array<{ __typename?: 'OrderLine', id: string, linePrice: number, quantity: number, unitPrice: number, productVariant: { __typename?: 'Variant', id: string, stock: number, optionValues: Array<{ __typename?: 'OptionValue', id: string, name: string }>, product: { __typename?: 'Product', name: string, slug: string, assets: { __typename?: 'AssetList', items: Array<{ __typename?: 'Asset', id: string, source: string }> } } } }> }, customer?: { __typename?: 'Customer', id: string, firstName?: string | null, lastName: string, email: string, phoneNumber?: string | null } | null, shippingAddress?: { __typename?: 'AddressJson', streetLine1: string, streetLine2?: string | null, postalCode: string, city: string, province: string, country: string, references?: string | null } | null, shipment?: { __typename?: 'Shipment', id: string, amount: number, method: string } | null, payment?: { __typename?: 'Payment', id: string, amount: number, transactionId?: string | null, method: string } | null } & { ' $fragmentName'?: 'OrderFragment' };
 
 export type GetOrderQueryVariables = Exact<{
   code: Scalars['String']['input'];
 }>;
 
-export type GetOrderQuery = {
-  __typename?: 'Query';
-  order?:
-    | ({ __typename?: 'Order' } & { ' $fragmentRefs'?: { OrderFragment: OrderFragment } })
-    | null;
-};
 
-export type ProductDetailsFragment = {
-  __typename?: 'Product';
-  id: string;
-  name: string;
-  slug: string;
-  description?: string | null;
-  assets: {
-    __typename?: 'AssetList';
-    items: Array<{ __typename?: 'Asset'; id: string; name: string; order: number; source: string }>;
-  };
-  options: Array<{
-    __typename?: 'Option';
-    id: string;
-    name: string;
-    values: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
-  }>;
-  variants: {
-    __typename?: 'VariantList';
-    items: Array<{
-      __typename?: 'Variant';
-      id: string;
-      salePrice: number;
-      stock: number;
-      optionValues: Array<{ __typename?: 'OptionValue'; id: string; name: string }>;
-      asset?: { __typename?: 'Asset'; id: string; source: string } | null;
-    }>;
-  };
-} & { ' $fragmentName'?: 'ProductDetailsFragment' };
+export type GetOrderQuery = { __typename?: 'Query', order?: (
+    { __typename?: 'Order' }
+    & { ' $fragmentRefs'?: { 'OrderFragment': OrderFragment } }
+  ) | null };
+
+export type ProductDetailsFragment = { __typename?: 'Product', id: string, name: string, slug: string, description?: string | null, assets: { __typename?: 'AssetList', items: Array<{ __typename?: 'Asset', id: string, name: string, order: number, source: string }> }, options: Array<{ __typename?: 'Option', id: string, name: string, values: Array<{ __typename?: 'OptionValue', id: string, name: string }> }>, variants: { __typename?: 'VariantList', items: Array<{ __typename?: 'Variant', id: string, salePrice: number, stock: number, optionValues: Array<{ __typename?: 'OptionValue', id: string, name: string }>, asset?: { __typename?: 'Asset', id: string, source: string } | null }> } } & { ' $fragmentName'?: 'ProductDetailsFragment' };
 
 export type GetProductDetailsQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
 
-export type GetProductDetailsQuery = {
-  __typename?: 'Query';
-  product?:
-    | ({ __typename?: 'Product' } & {
-        ' $fragmentRefs'?: { ProductDetailsFragment: ProductDetailsFragment };
-      })
-    | null;
-};
+
+export type GetProductDetailsQuery = { __typename?: 'Query', product?: (
+    { __typename?: 'Product' }
+    & { ' $fragmentRefs'?: { 'ProductDetailsFragment': ProductDetailsFragment } }
+  ) | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -1124,10 +903,7 @@ export class TypedDocumentString<TResult, TVariables>
 {
   __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-  constructor(
-    private value: string,
-    public __meta__?: Record<string, any>
-  ) {
+  constructor(private value: string, public __meta__?: Record<string, any>) {
     super(value);
   }
 
@@ -1135,8 +911,7 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-export const CartFragmentDoc = new TypedDocumentString(
-  `
+export const CartFragmentDoc = new TypedDocumentString(`
     fragment Cart on Order {
   id
   code
@@ -1201,11 +976,8 @@ export const CartFragmentDoc = new TypedDocumentString(
     method
   }
 }
-    `,
-  { fragmentName: 'Cart' }
-) as unknown as TypedDocumentString<CartFragment, unknown>;
-export const CollectionProductFragmentDoc = new TypedDocumentString(
-  `
+    `, {"fragmentName":"Cart"}) as unknown as TypedDocumentString<CartFragment, unknown>;
+export const CollectionProductFragmentDoc = new TypedDocumentString(`
     fragment CollectionProduct on Product {
   id
   name
@@ -1225,11 +997,8 @@ export const CollectionProductFragmentDoc = new TypedDocumentString(
     }
   }
 }
-    `,
-  { fragmentName: 'CollectionProduct' }
-) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
-export const OrderFragmentDoc = new TypedDocumentString(
-  `
+    `, {"fragmentName":"CollectionProduct"}) as unknown as TypedDocumentString<CollectionProductFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(`
     fragment Order on Order {
   id
   code
@@ -1290,11 +1059,8 @@ export const OrderFragmentDoc = new TypedDocumentString(
     method
   }
 }
-    `,
-  { fragmentName: 'Order' }
-) as unknown as TypedDocumentString<OrderFragment, unknown>;
-export const ProductDetailsFragmentDoc = new TypedDocumentString(
-  `
+    `, {"fragmentName":"Order"}) as unknown as TypedDocumentString<OrderFragment, unknown>;
+export const ProductDetailsFragmentDoc = new TypedDocumentString(`
     fragment ProductDetails on Product {
   id
   name
@@ -1332,126 +1098,7 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
     }
   }
 }
-    `,
-  { fragmentName: 'ProductDetails' }
-) as unknown as TypedDocumentString<ProductDetailsFragment, unknown>;
-export const CreateCartDocument = new TypedDocumentString(`
-    mutation CreateCart($input: CreateOrderInput!) {
-  createOrder(input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<CreateCartMutation, CreateCartMutationVariables>;
-export const AddToCartDocument = new TypedDocumentString(`
-    mutation AddToCart($cartId: ID!, $input: CreateOrderLineInput!) {
-  addLineToOrder(orderId: $cartId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<AddToCartMutation, AddToCartMutationVariables>;
-export const UpdateCartLineDocument = new TypedDocumentString(`
-    mutation UpdateCartLine($lineId: ID!, $input: UpdateOrderLineInput!) {
-  updateOrderLine(lineId: $lineId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<UpdateCartLineMutation, UpdateCartLineMutationVariables>;
-export const RemoveCartLineDocument = new TypedDocumentString(`
-    mutation RemoveCartLine($lineId: ID!) {
-  removeOrderLine(lineId: $lineId) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<RemoveCartLineMutation, RemoveCartLineMutationVariables>;
-export const SetCustomerToCartDocument = new TypedDocumentString(`
-    mutation SetCustomerToCart($cartId: ID!, $input: AddCustomerToOrderInput!) {
-  addCustomerToOrder(orderId: $cartId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<
-  SetCustomerToCartMutation,
-  SetCustomerToCartMutationVariables
->;
-export const AddShippingAddressToCartDocument = new TypedDocumentString(`
-    mutation addShippingAddressToCart($cartId: ID!, $input: CreateAddressInput!) {
-  addShippingAddressToOrder(orderId: $cartId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<
-  AddShippingAddressToCartMutation,
-  AddShippingAddressToCartMutationVariables
->;
-export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
-    mutation AddShipmentToOrderMutation($cartId: ID!, $input: AddShipmentToOrderInput!) {
-  addShipmentToOrder(orderId: $cartId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<
-  AddShipmentToOrderMutationMutation,
-  AddShipmentToOrderMutationMutationVariables
->;
-export const AddPaymentToCartMutationDocument = new TypedDocumentString(`
-    mutation AddPaymentToCartMutation($cartId: ID!, $input: AddPaymentToOrderInput!) {
-  addPaymentToOrder(orderId: $cartId, input: $input) {
-    apiErrors {
-      code
-      message
-    }
-    order {
-      id
-      code
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<
-  AddPaymentToCartMutationMutation,
-  AddPaymentToCartMutationMutationVariables
->;
+    `, {"fragmentName":"ProductDetails"}) as unknown as TypedDocumentString<ProductDetailsFragment, unknown>;
 export const GetCartDocument = new TypedDocumentString(`
     query GetCart($id: ID) {
   order(id: $id) {
@@ -1529,10 +1176,7 @@ export const GetAvailablePaymentMethodsDocument = new TypedDocumentString(`
     name
   }
 }
-    `) as unknown as TypedDocumentString<
-  GetAvailablePaymentMethodsQuery,
-  GetAvailablePaymentMethodsQueryVariables
->;
+    `) as unknown as TypedDocumentString<GetAvailablePaymentMethodsQuery, GetAvailablePaymentMethodsQueryVariables>;
 export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
     query GetAvailableShippingMethods($cartId: ID!) {
   availableShippingMethods(orderId: $cartId) {
@@ -1542,10 +1186,7 @@ export const GetAvailableShippingMethodsDocument = new TypedDocumentString(`
     description
   }
 }
-    `) as unknown as TypedDocumentString<
-  GetAvailableShippingMethodsQuery,
-  GetAvailableShippingMethodsQueryVariables
->;
+    `) as unknown as TypedDocumentString<GetAvailableShippingMethodsQuery, GetAvailableShippingMethodsQueryVariables>;
 export const GetCountriesDocument = new TypedDocumentString(`
     query GetCountries {
   countries {
@@ -1558,6 +1199,111 @@ export const GetCountriesDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetCountriesQuery, GetCountriesQueryVariables>;
+export const CreateCartDocument = new TypedDocumentString(`
+    mutation CreateCart($input: CreateOrderInput!) {
+  createOrder(input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<CreateCartMutation, CreateCartMutationVariables>;
+export const AddToCartDocument = new TypedDocumentString(`
+    mutation AddToCart($cartId: ID!, $input: CreateOrderLineInput!) {
+  addLineToOrder(orderId: $cartId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddToCartMutation, AddToCartMutationVariables>;
+export const UpdateCartLineDocument = new TypedDocumentString(`
+    mutation UpdateCartLine($lineId: ID!, $input: UpdateOrderLineInput!) {
+  updateOrderLine(lineId: $lineId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateCartLineMutation, UpdateCartLineMutationVariables>;
+export const RemoveCartLineDocument = new TypedDocumentString(`
+    mutation RemoveCartLine($lineId: ID!) {
+  removeOrderLine(lineId: $lineId) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<RemoveCartLineMutation, RemoveCartLineMutationVariables>;
+export const AddCustomerToCartDocument = new TypedDocumentString(`
+    mutation AddCustomerToCart($cartId: ID!, $input: AddCustomerToOrderInput!) {
+  addCustomerToOrder(orderId: $cartId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddCustomerToCartMutation, AddCustomerToCartMutationVariables>;
+export const AddShippingAddressToCartDocument = new TypedDocumentString(`
+    mutation addShippingAddressToCart($cartId: ID!, $input: CreateAddressInput!) {
+  addShippingAddressToOrder(orderId: $cartId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddShippingAddressToCartMutation, AddShippingAddressToCartMutationVariables>;
+export const AddShipmentToOrderMutationDocument = new TypedDocumentString(`
+    mutation AddShipmentToOrderMutation($cartId: ID!, $input: AddShipmentToOrderInput!) {
+  addShipmentToOrder(orderId: $cartId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddShipmentToOrderMutationMutation, AddShipmentToOrderMutationMutationVariables>;
+export const AddPaymentToCartMutationDocument = new TypedDocumentString(`
+    mutation AddPaymentToCartMutation($cartId: ID!, $input: AddPaymentToOrderInput!) {
+  addPaymentToOrder(orderId: $cartId, input: $input) {
+    apiErrors {
+      code
+      message
+    }
+    order {
+      id
+      code
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddPaymentToCartMutationMutation, AddPaymentToCartMutationMutationVariables>;
 export const GetCollectionsSlugDocument = new TypedDocumentString(`
     query GetCollectionsSlug {
   collections(input: {take: 3}) {
@@ -1597,10 +1343,7 @@ export const GetCollectionProductsDocument = new TypedDocumentString(`
       order
     }
   }
-}`) as unknown as TypedDocumentString<
-  GetCollectionProductsQuery,
-  GetCollectionProductsQueryVariables
->;
+}`) as unknown as TypedDocumentString<GetCollectionProductsQuery, GetCollectionProductsQueryVariables>;
 export const GetCollectionDetailsDocument = new TypedDocumentString(`
     query GetCollectionDetails($slug: String) {
   collection(slug: $slug) {
@@ -1610,10 +1353,7 @@ export const GetCollectionDetailsDocument = new TypedDocumentString(`
     description
   }
 }
-    `) as unknown as TypedDocumentString<
-  GetCollectionDetailsQuery,
-  GetCollectionDetailsQueryVariables
->;
+    `) as unknown as TypedDocumentString<GetCollectionDetailsQuery, GetCollectionDetailsQueryVariables>;
 export const GetOrderDocument = new TypedDocumentString(`
     query GetOrder($code: String!) {
   order(code: $code) {
