@@ -1,3 +1,5 @@
+import { LoginForm } from '@/components/customer';
+
 export default function LoginPage() {
-  return <h1>Hola</h1>;
+  return <LoginForm />;
 }
