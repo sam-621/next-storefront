@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -25,7 +26,8 @@ export const register = async (input: Input) => {
   const { accessToken } = tokenResult;
 
   cookies().set(CookiesNames.accessToken, accessToken, { maxAge: CookiesDurations.days_7 });
-  redirect('/');
+  revalidateTag(CustomerService.Tags.customer(accessToken));
+  redirect('/?from=register');
 };
 
 type Input = {

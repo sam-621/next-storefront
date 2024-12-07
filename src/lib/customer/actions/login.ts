@@ -1,7 +1,10 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { CookiesDurations, CookiesNames } from '@/lib/shared/constants';
 import { CustomerService } from '@/lib/vendyx/services';
 
 export const login = async (email: string, password: string) => {
@@ -11,5 +14,7 @@ export const login = async (email: string, password: string) => {
     return { error: result.error, errorCode: result.errorCode };
   }
 
-  redirect('/');
+  cookies().set(CookiesNames.accessToken, result.accessToken, { maxAge: CookiesDurations.days_7 });
+  revalidateTag(CustomerService.Tags.customer(result.accessToken));
+  redirect('/?from=login');
 };

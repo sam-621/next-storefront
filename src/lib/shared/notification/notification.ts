@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+import { type ExternalToast, toast } from 'sonner';
 
 /**
  * Notification module
@@ -80,4 +80,4 @@ export const notification = {
 type NotificationOptions = {
   id?: string | number;
   description?: string;
-};
+} & ExternalToast;
