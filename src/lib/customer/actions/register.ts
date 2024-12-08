@@ -27,7 +27,7 @@ export const register = async (input: Input) => {
 
   cookies().set(CookiesNames.accessToken, accessToken, { maxAge: CookiesDurations.days_7 });
   revalidateTag(CustomerService.Tags.customer(accessToken));
-  redirect('/?from=register');
+  redirect(`/?from=register&customer=${input?.firstName ?? input.lastName}`);
 };
 
 type Input = {

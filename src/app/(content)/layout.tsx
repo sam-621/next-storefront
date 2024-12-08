@@ -1,7 +1,10 @@
-import { UserIcon } from '@heroicons/react/24/outline';
+import { Suspense } from 'react';
+
 import Link from 'next/link';
 
 import { Cart } from '@/components/cart';
+import { CartButton } from '@/components/cart/cart-button';
+import { CustomerAvatar } from '@/components/customer';
 import { Logo, MobileHeaderDrawer } from '@/components/shared';
 import { getCollectionsSlugs } from '@/lib/collections/data';
 
@@ -32,8 +35,12 @@ export default async function RootLayout({
           ))}
         </nav>
         <div className="flex gap-6 lg:w-[90px]">
-          <UserIcon className="w-6 h-6 text-gray-400 flex-shrink-0" />
-          <Cart />
+          <Suspense fallback={<CustomerAvatar.Placeholder />}>
+            <CustomerAvatar />
+          </Suspense>
+          <Suspense fallback={<CartButton />}>
+            <Cart />
+          </Suspense>
           <MobileHeaderDrawer collections={collections} />
         </div>
       </header>
