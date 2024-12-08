@@ -10,12 +10,13 @@ import { addCustomerInfoToCart } from '@/lib/cart/actions';
 import { FormMessages } from '@/lib/shared/forms';
 import { notification } from '@/lib/shared/notification';
 import { type MakeAny } from '@/lib/shared/utils';
-import { type CartFragment } from '@/lib/vendyx/types';
+import { type CartFragment, type CustomerDetailsFragment } from '@/lib/vendyx/types';
 
-export const useInformationForm = (cart: CartFragment) => {
+export const useInformationForm = (cart: CartFragment, account: CustomerDetailsFragment | null) => {
   const [isLoading, startTransition] = useTransition();
 
-  const { customer, shippingAddress } = cart;
+  const { shippingAddress } = cart;
+  const customer = cart.customer ?? account;
 
   const form = useForm<FormInput>({
     mode: 'onBlur',

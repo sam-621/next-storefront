@@ -3,13 +3,17 @@
 import { type FC } from 'react';
 
 import { Button, Input, Select } from '@/components/ui';
-import { type CartFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
+import {
+  type CartFragment,
+  type CustomerDetailsFragment,
+  type GetCountriesQuery
+} from '@/lib/vendyx/types';
 
 import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 import { useInformationForm } from './use-information-form';
 
-export const InformationForm: FC<Props> = ({ cart, countries }) => {
-  const { onSubmit, formState, register, isLoading, watch } = useInformationForm(cart);
+export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
+  const { onSubmit, formState, register, isLoading, watch } = useInformationForm(cart, customer);
   const { errors } = formState;
 
   const country = watch('country') ?? cart.shippingAddress?.country ?? countries[0].name;
@@ -105,6 +109,7 @@ export const InformationForm: FC<Props> = ({ cart, countries }) => {
 };
 
 type Props = {
+  customer: CustomerDetailsFragment | null;
   cart: CartFragment;
   countries: GetCountriesQuery['countries'];
 };
