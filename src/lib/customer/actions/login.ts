@@ -16,7 +16,7 @@ export const login = async (email: string, password: string) => {
     return { error: result.error, errorCode: result.errorCode };
   }
 
-  const customer = await getCustomer();
+  const customer = await getCustomer(result.accessToken);
 
   cookies().set(CookiesNames.accessToken, result.accessToken, { maxAge: CookiesDurations.days_7 });
   revalidateTag(CustomerService.Tags.customer(result.accessToken));
