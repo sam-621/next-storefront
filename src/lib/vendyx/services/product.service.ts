@@ -8,7 +8,11 @@ export const ProductService = {
   },
 
   async getBySlug(slug: string) {
-    const result = await fetcher(GET_PRODUCT_DETAILS_QUERY, { slug }, [this.Tags.product(slug)]);
+    const result = await fetcher(
+      GET_PRODUCT_DETAILS_QUERY,
+      { slug },
+      { tags: [this.Tags.product(slug)] }
+    );
     const product = getFragmentData(PRODUCT_DETAILS_FRAGMENT, result.product);
 
     return product;

@@ -8,7 +8,7 @@ export const OrderService = {
   },
 
   async getByCode(code: string) {
-    const result = await fetcher(GET_ORDER_QUERY, { code }, [this.Tags.order(code)]);
+    const result = await fetcher(GET_ORDER_QUERY, { code }, { tags: [this.Tags.order(code)] });
     const order = getFragmentData(ORDER_FRAGMENT, result.order);
 
     return order;

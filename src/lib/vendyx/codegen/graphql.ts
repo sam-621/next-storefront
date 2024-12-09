@@ -45,6 +45,7 @@ export type Address = Node & {
   createdAt: Scalars['Date']['output'];
   fullName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  isDefault: Scalars['Boolean']['output'];
   postalCode: Scalars['String']['output'];
   /** State or region */
   province: Scalars['String']['output'];
@@ -147,6 +148,7 @@ export type Country = Node & {
 export type CreateAddressInput = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
   postalCode: Scalars['String']['input'];
   province: Scalars['String']['input'];
   references?: InputMaybe<Scalars['String']['input']>;
@@ -195,7 +197,6 @@ export type CustomerOrdersArgs = {
 };
 
 export enum CustomerErrorCode {
-  DisabledCustomer = 'DISABLED_CUSTOMER',
   EmailAlreadyExists = 'EMAIL_ALREADY_EXISTS',
   InvalidAccessToken = 'INVALID_ACCESS_TOKEN',
   InvalidCredentials = 'INVALID_CREDENTIALS',
@@ -245,8 +246,6 @@ export type ListInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Add a new address to the customer. */
-  addAddressToCustomer: CustomerResult;
   addCustomerToOrder: OrderResult;
   addLineToOrder: OrderResult;
   addPaymentToOrder: OrderResult;
@@ -254,26 +253,26 @@ export type Mutation = {
   addShippingAddressToOrder: OrderResult;
   /** Create a new customer. */
   createCustomer: CustomerResult;
+  createCustomerAddress: Address;
   createOrder: OrderResult;
   /** Create paypal order and return the paypal order id */
   createPaypalOrder: PaypalResult;
-  /** Generate a token for the customer. This token is used to modify the customer's data. */
+  /** Disable the customer account. */
+  disableCustomer: CustomerResult;
+  /** Generate a token for a customer. This token is used to modify the customer's data. */
   generateCustomerAccessToken: GenerateCustomerAccessTokenResult;
   /** Change the customer's password with the token received from the request recovery password email */
   recoverCustomerPassword: CustomerResult;
+  removeCustomerAddress: Address;
   removeOrderLine: OrderResult;
   /** Send an email to the customer with a link to reset the password. The link contains a token that is used to execute the recoverCustomerPassword mutation. */
   requestRecoveryCustomerPassword: CustomerResult;
   /** Update the customer's data. */
   updateCustomer: CustomerResult;
+  updateCustomerAddress: Address;
   /** Update the customer's password providing the current password and the new password */
   updateCustomerPassword: CustomerResult;
   updateOrderLine: OrderResult;
-};
-
-export type MutationAddAddressToCustomerArgs = {
-  accessToken: Scalars['String']['input'];
-  input: CreateAddressInput;
 };
 
 export type MutationAddCustomerToOrderArgs = {
@@ -305,6 +304,10 @@ export type MutationCreateCustomerArgs = {
   input: CreateCustomerInput;
 };
 
+export type MutationCreateCustomerAddressArgs = {
+  input: CreateAddressInput;
+};
+
 export type MutationCreateOrderArgs = {
   input: CreateOrderInput;
 };
@@ -323,6 +326,10 @@ export type MutationRecoverCustomerPasswordArgs = {
   urlToken: Scalars['String']['input'];
 };
 
+export type MutationRemoveCustomerAddressArgs = {
+  addressId: Scalars['ID']['input'];
+};
+
 export type MutationRemoveOrderLineArgs = {
   lineId: Scalars['ID']['input'];
 };
@@ -332,12 +339,15 @@ export type MutationRequestRecoveryCustomerPasswordArgs = {
 };
 
 export type MutationUpdateCustomerArgs = {
-  accessToken: Scalars['String']['input'];
   input: UpdateCustomerInput;
 };
 
+export type MutationUpdateCustomerAddressArgs = {
+  addressId: Scalars['ID']['input'];
+  input: UpdateAddressInput;
+};
+
 export type MutationUpdateCustomerPasswordArgs = {
-  accessToken: Scalars['String']['input'];
   input: UpdateCustomerPasswordInput;
 };
 
@@ -591,8 +601,8 @@ export type Query = {
   collection?: Maybe<Collection>;
   collections: CollectionList;
   countries: Array<Country>;
-  /** Get the customer by the access token. */
-  customer?: Maybe<Customer>;
+  /** Get authenticated customer */
+  me?: Maybe<Customer>;
   order?: Maybe<Order>;
   product?: Maybe<Product>;
   products: ProductList;
@@ -609,10 +619,6 @@ export type QueryCollectionArgs = {
 
 export type QueryCollectionsArgs = {
   input?: InputMaybe<ListInput>;
-};
-
-export type QueryCustomerArgs = {
-  accessToken: Scalars['String']['input'];
 };
 
 export type QueryOrderArgs = {
@@ -674,6 +680,17 @@ export type StringFilter = {
   equals?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type UpdateAddressInput = {
+  city?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  postalCode?: InputMaybe<Scalars['String']['input']>;
+  province?: InputMaybe<Scalars['String']['input']>;
+  references?: InputMaybe<Scalars['String']['input']>;
+  streetLine1?: InputMaybe<Scalars['String']['input']>;
+  streetLine2?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateCustomerInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
@@ -682,8 +699,8 @@ export type UpdateCustomerInput = {
 };
 
 export type UpdateCustomerPasswordInput = {
+  confirmPassword: Scalars['String']['input'];
   newPassword: Scalars['String']['input'];
-  password: Scalars['String']['input'];
 };
 
 export type UpdateOrderLineInput = {
@@ -1014,13 +1031,11 @@ export type CustomerDetailsFragment = {
   phoneNumber?: string | null;
 } & { ' $fragmentName'?: 'CustomerDetailsFragment' };
 
-export type GetCustomerQueryVariables = Exact<{
-  accessToken: Scalars['String']['input'];
-}>;
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCustomerQuery = {
+export type MeQuery = {
   __typename?: 'Query';
-  customer?:
+  me?:
     | ({ __typename?: 'Customer' } & {
         ' $fragmentRefs'?: { CustomerDetailsFragment: CustomerDetailsFragment };
       })
@@ -1063,7 +1078,6 @@ export type GenerateAccessTokenMutation = {
 };
 
 export type UpdateCustomerMutationVariables = Exact<{
-  accessToken: Scalars['String']['input'];
   input: UpdateCustomerInput;
 }>;
 
@@ -1701,9 +1715,9 @@ export const GetCollectionDetailsDocument = new TypedDocumentString(`
   GetCollectionDetailsQuery,
   GetCollectionDetailsQueryVariables
 >;
-export const GetCustomerDocument = new TypedDocumentString(`
-    query GetCustomer($accessToken: String!) {
-  customer(accessToken: $accessToken) {
+export const MeDocument = new TypedDocumentString(`
+    query Me {
+  me {
     ...CustomerDetails
   }
 }
@@ -1713,7 +1727,7 @@ export const GetCustomerDocument = new TypedDocumentString(`
   firstName
   lastName
   phoneNumber
-}`) as unknown as TypedDocumentString<GetCustomerQuery, GetCustomerQueryVariables>;
+}`) as unknown as TypedDocumentString<MeQuery, MeQueryVariables>;
 export const CreateCustomerMutationDocument = new TypedDocumentString(`
     mutation CreateCustomerMutation($input: CreateCustomerInput!) {
   createCustomer(input: $input) {
@@ -1745,8 +1759,8 @@ export const GenerateAccessTokenDocument = new TypedDocumentString(`
   GenerateAccessTokenMutationVariables
 >;
 export const UpdateCustomerDocument = new TypedDocumentString(`
-    mutation UpdateCustomer($accessToken: String!, $input: UpdateCustomerInput!) {
-  updateCustomer(accessToken: $accessToken, input: $input) {
+    mutation UpdateCustomer($input: UpdateCustomerInput!) {
+  updateCustomer(input: $input) {
     apiErrors {
       code
       message

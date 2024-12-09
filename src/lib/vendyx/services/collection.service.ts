@@ -15,13 +15,21 @@ export const CollectionService = {
   },
 
   async getBySlug(slug: string) {
-    const { collection } = await fetcher(GET_COLLECTION_DETAILS_QUERY, { slug });
+    const { collection } = await fetcher(
+      GET_COLLECTION_DETAILS_QUERY,
+      { slug },
+      { tags: [CollectionService.Tags.collection(slug)] }
+    );
 
     return collection;
   },
 
   async getProducts(slug: string) {
-    const { collection } = await fetcher(GET_COLLECTION_PRODUCTS_QUERY, { slug });
+    const { collection } = await fetcher(
+      GET_COLLECTION_PRODUCTS_QUERY,
+      { slug },
+      { tags: [CollectionService.Tags.products(slug)] }
+    );
 
     const data = getFragmentData(COLLECTION_PRODUCT_FRAGMENT, collection?.products.items);
 
@@ -29,7 +37,11 @@ export const CollectionService = {
   },
 
   async getSlugs() {
-    const { collections } = await fetcher(GET_COLLECTIONS_SLUG_QUERY);
+    const { collections } = await fetcher(
+      GET_COLLECTIONS_SLUG_QUERY,
+      {},
+      { tags: [CollectionService.Tags.slugs] }
+    );
 
     return collections.items;
   }

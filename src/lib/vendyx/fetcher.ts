@@ -11,21 +11,22 @@ import { type TypedDocumentString } from './codegen/graphql';
 export const fetcher = async <R, V>(
   query: TypedDocumentString<R, V>,
   variables?: V,
-  tags?: string[]
+  options?: Options
 ): Promise<R> => {
   const result = await fetch(process.env.VENDYX_SHOP_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       x_vendyx_shop_api_key: process.env.VENDYX_SHOP_API_KEY,
-      shop_id: process.env.VENDYX_SHOP_ID
+      shop_id: process.env.VENDYX_SHOP_ID,
+      ...options?.headers
     },
     body: JSON.stringify({
       query: query.toString(),
       variables
     }),
     cache: 'no-store',
-    next: { tags }
+    next: { tags: options?.tags, revalidate: options?.revalidate }
   });
 
   const { data, errors } = await result.json();
@@ -51,3 +52,10 @@ export class ApiError extends Error {
     super(message);
   }
 }
+
+type Options = {
+  tags?: string[];
+  cache?: RequestCache | null;
+  revalidate?: number;
+  headers?: Record<string, string>;
+};

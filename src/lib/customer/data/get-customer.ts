@@ -6,5 +6,5 @@ import { CustomerService } from '@/lib/vendyx/services';
 export const getCustomer = async (accessToken?: string) => {
   const _accessToken = accessToken ?? cookies().get(CookiesNames.accessToken)?.value;
 
-  return _accessToken ? (await CustomerService.getByAccessToken(_accessToken)) ?? null : null;
+  return _accessToken ? (await CustomerService.me()) ?? null : null;
 };

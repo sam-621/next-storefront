@@ -10,9 +10,9 @@ export const CUSTOMER_DETAILS_FRAGMENT = graphql(`
   }
 `);
 
-export const GET_CUSTOMER_BY_ACCESS_TOKEN_QUERY = graphql(`
-  query GetCustomer($accessToken: String!) {
-    customer(accessToken: $accessToken) {
+export const ME_QUERY = graphql(`
+  query Me {
+    me {
       ...CustomerDetails
     }
   }
@@ -45,8 +45,8 @@ export const GENERATE_ACCESS_TOKEN_MUTATION = graphql(`
 `);
 
 export const UPDATE_CUSTOMER_MUTATION = graphql(`
-  mutation UpdateCustomer($accessToken: String!, $input: UpdateCustomerInput!) {
-    updateCustomer(accessToken: $accessToken, input: $input) {
+  mutation UpdateCustomer($input: UpdateCustomerInput!) {
+    updateCustomer(input: $input) {
       apiErrors {
         code
         message

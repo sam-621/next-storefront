@@ -19,6 +19,6 @@ export const login = async (email: string, password: string) => {
   const customer = await getCustomer(result.accessToken);
 
   cookies().set(CookiesNames.accessToken, result.accessToken, { maxAge: CookiesDurations.days_7 });
-  revalidateTag(CustomerService.Tags.customer(result.accessToken));
+  revalidateTag(CustomerService.Tags.customer);
   redirect(`/?from=login&customer=${customer?.firstName ?? customer?.lastName}`);
 };

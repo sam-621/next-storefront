@@ -12,11 +12,11 @@ export const updateCustomer = async (input: UpdateCustomerInput) => {
 
   if (!accessToken) return;
 
-  const result = await CustomerService.update(accessToken, input);
+  const result = await CustomerService.update(input);
 
   if (!result.success) {
     return { error: result.error, errorCode: result.errorCode };
   }
 
-  revalidateTag(CustomerService.Tags.customer(accessToken));
+  revalidateTag(CustomerService.Tags.customer);
 };

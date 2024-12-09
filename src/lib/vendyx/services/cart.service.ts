@@ -39,7 +39,11 @@ export const CartService = {
   async getCart() {
     const cartId = cookies().get(CookiesNames.cartId)?.value ?? '';
 
-    const result = await fetcher(GET_CART_QUERY, { id: cartId }, [this.Tags.cart(cartId)]);
+    const result = await fetcher(
+      GET_CART_QUERY,
+      { id: cartId },
+      { tags: [this.Tags.cart(cartId)] }
+    );
     const cart = getFragmentData(CART_FRAGMENT, result.order);
 
     return cart;

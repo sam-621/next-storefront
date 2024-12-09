@@ -1,3 +1,7 @@
+import { cookies } from 'next/headers';
+
+import { CookiesNames } from '@/lib/shared/constants';
+
 import { getFragmentData } from '../codegen';
 import { getCustomerError } from '../errors';
 import { fetcher } from '../fetcher';
@@ -5,7 +9,7 @@ import {
   CREATE_CUSTOMER_MUTATION,
   CUSTOMER_DETAILS_FRAGMENT,
   GENERATE_ACCESS_TOKEN_MUTATION,
-  GET_CUSTOMER_BY_ACCESS_TOKEN_QUERY,
+  ME_QUERY,
   UPDATE_CUSTOMER_MUTATION
 } from '../operations';
 import {
@@ -16,15 +20,21 @@ import {
 
 export const CustomerService = {
   Tags: {
-    customer: (id: string) => `customer:${id}`
+    customer: 'customer'
   },
 
-  async getByAccessToken(accessToken: string) {
-    const result = await fetcher(GET_CUSTOMER_BY_ACCESS_TOKEN_QUERY, { accessToken }, [
-      this.Tags.customer(accessToken)
-    ]);
+  async me() {
+    const accessToken = cookies().get(CookiesNames.accessToken)?.value;
 
-    const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.customer);
+    if (!accessToken) return null;
+
+    const result = await fetcher(
+      ME_QUERY,
+      {},
+      { tags: [CustomerService.Tags.customer], headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.me);
 
     return customer;
   },
@@ -43,10 +53,16 @@ export const CustomerService = {
     return { success: true, customerId: customer?.id ?? '' };
   },
 
-  async update(accessToken: string, input: UpdateCustomerInput): Promise<Result> {
+  async update(input: UpdateCustomerInput): Promise<Result> {
+    const accessToken = cookies().get(CookiesNames.accessToken)?.value;
+
     const {
       updateCustomer: { apiErrors, customer }
-    } = await fetcher(UPDATE_CUSTOMER_MUTATION, { accessToken, input });
+    } = await fetcher(
+      UPDATE_CUSTOMER_MUTATION,
+      { input },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
 
     const error = getCustomerError(apiErrors[0]);
 
