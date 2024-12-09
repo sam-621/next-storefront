@@ -1,6 +1,5 @@
 'use client';
 
-// import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { DocumentPlusIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 import { Dialog } from '@/components/ui';

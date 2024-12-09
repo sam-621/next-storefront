@@ -3,6 +3,7 @@ import { type FC } from 'react';
 import { formatPhoneNumber } from '@/lib/shared/utils';
 import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
 
+import { RemoveAddressButton } from '../remove-address';
 import { UpsertAddressButton } from '../upsert-address';
 
 export const AddressCard: FC<Props> = ({ title, address, countries }) => {
@@ -13,7 +14,8 @@ export const AddressCard: FC<Props> = ({ title, address, countries }) => {
           <span className="text-sm">{title}</span>
           <p>{address.fullName}</p>
         </div>
-        <div>
+        <div className="flex gap-2">
+          <RemoveAddressButton address={address} />
           <UpsertAddressButton countries={countries} address={address} />
         </div>
       </header>
