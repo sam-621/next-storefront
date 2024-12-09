@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { useDialog } from '@/components/ui';
-import { createAddress } from '@/lib/addresss/actions';
+import { createAddress } from '@/lib/address/actions';
 import { FormMessages } from '@/lib/shared/forms';
 import { type GetCountriesQuery } from '@/lib/vendyx/types';
 
