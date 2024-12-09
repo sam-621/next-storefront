@@ -43,7 +43,7 @@ export type Address = Node & {
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
-  fullName?: Maybe<Scalars['String']['output']>;
+  fullName: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isDefault: Scalars['Boolean']['output'];
   phoneNumber: Scalars['String']['output'];
@@ -149,6 +149,7 @@ export type Country = Node & {
 export type CreateAddressInput = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
+  fullName: Scalars['String']['input'];
   isDefault?: InputMaybe<Scalars['Boolean']['input']>;
   phoneNumber: Scalars['String']['input'];
   postalCode: Scalars['String']['input'];
@@ -685,6 +686,7 @@ export type StringFilter = {
 export type UpdateAddressInput = {
   city?: InputMaybe<Scalars['String']['input']>;
   country?: InputMaybe<Scalars['String']['input']>;
+  fullName?: InputMaybe<Scalars['String']['input']>;
   isDefault?: InputMaybe<Scalars['Boolean']['input']>;
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
   postalCode?: InputMaybe<Scalars['String']['input']>;
@@ -1065,7 +1067,7 @@ export type CustomerDetailsFragment = {
     items: Array<{
       __typename?: 'Address';
       id: string;
-      fullName?: string | null;
+      fullName: string;
       streetLine1: string;
       streetLine2?: string | null;
       postalCode: string;

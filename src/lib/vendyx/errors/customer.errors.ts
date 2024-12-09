@@ -4,10 +4,6 @@ import { GenericError } from './common.errors';
 export const getCustomerError = (error?: CustomerErrorResult) => {
   if (!error) return null;
 
-  if (error.code === CustomerErrorCode.DisabledCustomer) {
-    return 'This customer account is disabled.';
-  }
-
   if (error.code === CustomerErrorCode.EmailAlreadyExists) {
     return 'This email is already in use.';
   }
