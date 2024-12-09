@@ -7,6 +7,20 @@ export const CUSTOMER_DETAILS_FRAGMENT = graphql(`
     firstName
     lastName
     phoneNumber
+    addresses {
+      items {
+        id
+        fullName
+        streetLine1
+        streetLine2
+        postalCode
+        city
+        province
+        country
+        phoneNumber
+        references
+      }
+    }
   }
 `);
 
