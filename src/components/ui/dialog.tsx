@@ -55,6 +55,10 @@ const Close: FC<PropsWithChildren & { className?: string }> = ({ children, class
 
 const Content: FC<PropsWithChildren & { className?: string }> = ({ children, className }) => {
   const { isOpen, setIsOpen } = useDialog();
+  console.log({
+    isOpen
+  });
+
   return (
     <HDialog open={isOpen} onClose={setIsOpen} className="relative z-10">
       <DialogBackdrop
@@ -66,7 +70,7 @@ const Content: FC<PropsWithChildren & { className?: string }> = ({ children, cla
           <DialogPanel
             transition
             className={cn(
-              'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95',
+              'w-full relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95',
               className
             )}
           >
