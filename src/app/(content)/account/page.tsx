@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { AccountDetailsForm, AccountLayout } from '@/components/account';
+import { AccountAddresses, AccountDetailsForm, AccountLayout } from '@/components/account';
 import { getCustomer } from '@/lib/customer/data';
 
 export default async function AccountPage() {
@@ -17,6 +17,10 @@ export default async function AccountPage() {
         subtitle="Information about your account and how to contact you"
       >
         <AccountDetailsForm customer={customer} />
+      </AccountLayout.Card>
+      <hr />
+      <AccountLayout.Card title="Addresses" subtitle="Manage your addresses">
+        <AccountAddresses addresses={customer.addresses.items} />
       </AccountLayout.Card>
       <hr />
       <AccountLayout.Card title="Account" subtitle="Manage your account">

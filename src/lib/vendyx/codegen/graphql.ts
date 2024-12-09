@@ -46,6 +46,7 @@ export type Address = Node & {
   fullName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isDefault: Scalars['Boolean']['output'];
+  phoneNumber: Scalars['String']['output'];
   postalCode: Scalars['String']['output'];
   /** State or region */
   province: Scalars['String']['output'];
@@ -149,6 +150,7 @@ export type CreateAddressInput = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
   isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  phoneNumber: Scalars['String']['input'];
   postalCode: Scalars['String']['input'];
   province: Scalars['String']['input'];
   references?: InputMaybe<Scalars['String']['input']>;
@@ -684,6 +686,7 @@ export type UpdateAddressInput = {
   city?: InputMaybe<Scalars['String']['input']>;
   country?: InputMaybe<Scalars['String']['input']>;
   isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
   postalCode?: InputMaybe<Scalars['String']['input']>;
   province?: InputMaybe<Scalars['String']['input']>;
   references?: InputMaybe<Scalars['String']['input']>;
@@ -1057,6 +1060,22 @@ export type CustomerDetailsFragment = {
   firstName?: string | null;
   lastName: string;
   phoneNumber?: string | null;
+  addresses: {
+    __typename?: 'AddressList';
+    items: Array<{
+      __typename?: 'Address';
+      id: string;
+      fullName?: string | null;
+      streetLine1: string;
+      streetLine2?: string | null;
+      postalCode: string;
+      city: string;
+      province: string;
+      country: string;
+      phoneNumber: string;
+      references?: string | null;
+    }>;
+  };
 } & { ' $fragmentName'?: 'CustomerDetailsFragment' };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -1353,6 +1372,20 @@ export const CustomerDetailsFragmentDoc = new TypedDocumentString(
   firstName
   lastName
   phoneNumber
+  addresses {
+    items {
+      id
+      fullName
+      streetLine1
+      streetLine2
+      postalCode
+      city
+      province
+      country
+      phoneNumber
+      references
+    }
+  }
 }
     `,
   { fragmentName: 'CustomerDetails' }
@@ -1785,6 +1818,20 @@ export const MeDocument = new TypedDocumentString(`
   firstName
   lastName
   phoneNumber
+  addresses {
+    items {
+      id
+      fullName
+      streetLine1
+      streetLine2
+      postalCode
+      city
+      province
+      country
+      phoneNumber
+      references
+    }
+  }
 }`) as unknown as TypedDocumentString<MeQuery, MeQueryVariables>;
 export const CreateCustomerMutationDocument = new TypedDocumentString(`
     mutation CreateCustomerMutation($input: CreateCustomerInput!) {

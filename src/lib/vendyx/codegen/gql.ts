@@ -52,7 +52,7 @@ const documents = {
     types.GetCollectionProductsDocument,
   '\n  query GetCollectionDetails($slug: String) {\n    collection(slug: $slug) {\n      id\n      name\n      slug\n      description\n    }\n  }\n':
     types.GetCollectionDetailsDocument,
-  '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n  }\n':
+  '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n    addresses {\n      items {\n        id\n        fullName\n        streetLine1\n        streetLine2\n        postalCode\n        city\n        province\n        country\n        phoneNumber\n        references\n      }\n    }\n  }\n':
     types.CustomerDetailsFragmentDoc,
   '\n  query Me {\n    me {\n      ...CustomerDetails\n    }\n  }\n': types.MeDocument,
   '\n  mutation CreateCustomerMutation($input: CreateCustomerInput!) {\n    createCustomer(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n':
@@ -195,7 +195,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n  }\n'
+  source: '\n  fragment CustomerDetails on Customer {\n    id\n    email\n    firstName\n    lastName\n    phoneNumber\n    addresses {\n      items {\n        id\n        fullName\n        streetLine1\n        streetLine2\n        postalCode\n        city\n        province\n        country\n        phoneNumber\n        references\n      }\n    }\n  }\n'
 ): typeof import('./graphql').CustomerDetailsFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

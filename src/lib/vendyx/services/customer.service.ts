@@ -23,12 +23,23 @@ export const CustomerService = {
     customer: 'customer'
   },
 
-  async me() {
+  async me(accessToken?: string) {
     // If there is no access token, don't make the request because it will fail
-    const accessToken = cookies().get(CookiesNames.accessToken)?.value;
-    if (!accessToken) return null;
+    const accessTokenInCookies = cookies().get(CookiesNames.accessToken)?.value;
+    if (!accessTokenInCookies && !accessToken) return null;
 
-    const result = await fetcher(ME_QUERY, {}, { tags: [CustomerService.Tags.customer] });
+    const result = await fetcher(
+      ME_QUERY,
+      {},
+      {
+        tags: [CustomerService.Tags.customer],
+        headers: accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`
+            }
+          : undefined
+      }
+    );
     const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.me);
     return customer;
   },
