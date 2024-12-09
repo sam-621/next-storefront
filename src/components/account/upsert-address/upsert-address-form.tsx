@@ -1,16 +1,16 @@
 import { type FC } from 'react';
 
 import { Button, Dialog, Input, Select } from '@/components/ui';
-import { type GetCountriesQuery } from '@/lib/vendyx/types';
+import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
 
-import { useCreateAddressForm } from './use-create-address-form';
+import { useUpsertAddressForm } from './use-upsert-address-form';
 
-export const CreateAddressForm: FC<Props> = ({ countries }) => {
-  const { register, formState, onSubmit, isLoading, watch } = useCreateAddressForm(countries);
+export const UpsertAddressForm: FC<Props> = ({ countries, address }) => {
+  const { register, formState, onSubmit, isLoading, watch } = useUpsertAddressForm(
+    countries,
+    address
+  );
   const { errors } = formState;
-  console.log({
-    errors
-  });
 
   const country = watch('country') ?? countries[0].name;
   const states = countries.find(c => c.name === country)?.states ?? [];
@@ -80,4 +80,5 @@ export const CreateAddressForm: FC<Props> = ({ countries }) => {
 
 type Props = {
   countries: GetCountriesQuery['countries'];
+  address?: CustomerDetailsFragment['addresses']['items'][0];
 };

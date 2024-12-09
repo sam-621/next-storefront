@@ -1,11 +1,11 @@
 import { type FC } from 'react';
 
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
-
 import { formatPhoneNumber } from '@/lib/shared/utils';
-import { type CustomerDetailsFragment } from '@/lib/vendyx/types';
+import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
 
-export const AddressCard: FC<Props> = ({ title, address }) => {
+import { UpsertAddressButton } from '../upsert-address';
+
+export const AddressCard: FC<Props> = ({ title, address, countries }) => {
   return (
     <article className="flex flex-col gap-6 bg-gray-50 border rounded-lg p-6">
       <header className="flex items-start justify-between">
@@ -14,9 +14,7 @@ export const AddressCard: FC<Props> = ({ title, address }) => {
           <p>{address.fullName}</p>
         </div>
         <div>
-          <button>
-            <PencilSquareIcon className="h-6 w-6 text-indigo-600" />
-          </button>
+          <UpsertAddressButton countries={countries} address={address} />
         </div>
       </header>
       <hr />
@@ -37,4 +35,5 @@ export const AddressCard: FC<Props> = ({ title, address }) => {
 type Props = {
   title: string;
   address: CustomerDetailsFragment['addresses']['items'][0];
+  countries: GetCountriesQuery['countries'];
 };

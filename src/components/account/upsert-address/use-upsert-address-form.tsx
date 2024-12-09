@@ -5,46 +5,52 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { useDialog } from '@/components/ui';
-import { createAddress } from '@/lib/address/actions';
+import { createAddress, updateAddress } from '@/lib/address/actions';
 import { FormMessages } from '@/lib/shared/forms';
-import { type GetCountriesQuery } from '@/lib/vendyx/types';
+import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
 
-export const useCreateAddressForm = (countries: GetCountriesQuery['countries']) => {
+export const useUpsertAddressForm = (
+  countries: GetCountriesQuery['countries'],
+  address?: CustomerDetailsFragment['addresses']['items'][0]
+) => {
   const { setIsOpen } = useDialog();
   const [isLoading, startTransition] = useTransition();
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const country = countries[0].name;
-  const states = countries.find(c => c.name === country)?.states ?? [];
+  const country = address?.country ?? countries[0].name;
+  const defaultState = address?.province ?? countries.find(c => c.name === country)?.states[0].name;
 
   const form = useForm<FormInput>({
     mode: 'onChange',
     reValidateMode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
-      fullName: '',
+      fullName: address?.fullName ?? '',
       country,
-      city: '',
-      postalCode: '',
-      province: states[0].name,
-      streetLine1: '',
-      streetLine2: '',
-      references: ''
+      city: address?.city ?? '',
+      postalCode: address?.postalCode ?? '',
+      phoneNumber: address?.phoneNumber ?? '',
+      province: defaultState,
+      streetLine1: address?.streetLine1 ?? '',
+      streetLine2: address?.streetLine2 ?? '',
+      references: address?.references ?? ''
     },
     resolver: zodResolver(schema)
   });
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      console.log('somooo');
-
       setIsOpen(false);
     }
   }, [isSuccess, isLoading]);
 
   const onSubmit = (input: FormInput) => {
     startTransition(async () => {
-      await createAddress(input);
+      if (address) {
+        await updateAddress(address.id, input);
+      } else {
+        await createAddress(input);
+      }
       setIsSuccess(true);
     });
   };
