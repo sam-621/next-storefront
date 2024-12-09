@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import { type CustomerDetailsFragment } from '@/lib/vendyx/types';
 
+import { CreateAddressButton } from '../create-address';
 import { AddressCard } from './address-card';
 
 export const AccountAddresses: FC<Props> = ({ addresses }) => {
@@ -10,6 +11,7 @@ export const AccountAddresses: FC<Props> = ({ addresses }) => {
       {addresses.map((address, index) => (
         <AddressCard key={index} title={`Address ${index + 1}`} address={address} />
       ))}
+      <CreateAddressButton />
     </div>
   );
 };
