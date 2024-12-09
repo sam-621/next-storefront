@@ -1,3 +1,6 @@
+import { cookies } from 'next/headers';
+
+import { CookiesNames } from '../shared/constants';
 import { type TypedDocumentString } from './codegen/graphql';
 
 /**
@@ -19,6 +22,7 @@ export const fetcher = async <R, V>(
       'Content-Type': 'application/json',
       x_vendyx_shop_api_key: process.env.VENDYX_SHOP_API_KEY,
       shop_id: process.env.VENDYX_SHOP_ID,
+      Authorization: `Bearer ${cookies().get(CookiesNames.accessToken)?.value}`,
       ...options?.headers
     },
     body: JSON.stringify({

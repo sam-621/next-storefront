@@ -12,6 +12,12 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+  '\n  mutation CreateCustomerAddress($input: CreateAddressInput!) {\n    createCustomerAddress(input: $input) {\n      id\n    }\n  }\n':
+    types.CreateCustomerAddressDocument,
+  '\n  mutation UpdateCustomerAddress($id: ID!, $input: UpdateAddressInput!) {\n    updateCustomerAddress(addressId: $id, input: $input) {\n      id\n    }\n  }\n':
+    types.UpdateCustomerAddressDocument,
+  '\n  mutation RemoveCustomerAddress($id: ID!) {\n    removeCustomerAddress(addressId: $id) {\n      id\n    }\n  }\n':
+    types.RemoveCustomerAddressDocument,
   '\n  fragment Cart on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          asset {\n            id\n            source\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
     types.CartFragmentDoc,
   '\n  query GetCart($id: ID) {\n    order(id: $id) {\n      ...Cart\n    }\n  }\n':
@@ -65,6 +71,24 @@ const documents = {
     types.GetProductDetailsDocument
 };
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation CreateCustomerAddress($input: CreateAddressInput!) {\n    createCustomerAddress(input: $input) {\n      id\n    }\n  }\n'
+): typeof import('./graphql').CreateCustomerAddressDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdateCustomerAddress($id: ID!, $input: UpdateAddressInput!) {\n    updateCustomerAddress(addressId: $id, input: $input) {\n      id\n    }\n  }\n'
+): typeof import('./graphql').UpdateCustomerAddressDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation RemoveCustomerAddress($id: ID!) {\n    removeCustomerAddress(addressId: $id) {\n      id\n    }\n  }\n'
+): typeof import('./graphql').RemoveCustomerAddressDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -749,6 +749,34 @@ export type VariantList = List & {
   pageInfo: PageInfo;
 };
 
+export type CreateCustomerAddressMutationVariables = Exact<{
+  input: CreateAddressInput;
+}>;
+
+export type CreateCustomerAddressMutation = {
+  __typename?: 'Mutation';
+  createCustomerAddress: { __typename?: 'Address'; id: string };
+};
+
+export type UpdateCustomerAddressMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: UpdateAddressInput;
+}>;
+
+export type UpdateCustomerAddressMutation = {
+  __typename?: 'Mutation';
+  updateCustomerAddress: { __typename?: 'Address'; id: string };
+};
+
+export type RemoveCustomerAddressMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+export type RemoveCustomerAddressMutation = {
+  __typename?: 'Mutation';
+  removeCustomerAddress: { __typename?: 'Address'; id: string };
+};
+
 export type CartFragment = {
   __typename?: 'Order';
   id: string;
@@ -1436,6 +1464,36 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
     `,
   { fragmentName: 'ProductDetails' }
 ) as unknown as TypedDocumentString<ProductDetailsFragment, unknown>;
+export const CreateCustomerAddressDocument = new TypedDocumentString(`
+    mutation CreateCustomerAddress($input: CreateAddressInput!) {
+  createCustomerAddress(input: $input) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CreateCustomerAddressMutation,
+  CreateCustomerAddressMutationVariables
+>;
+export const UpdateCustomerAddressDocument = new TypedDocumentString(`
+    mutation UpdateCustomerAddress($id: ID!, $input: UpdateAddressInput!) {
+  updateCustomerAddress(addressId: $id, input: $input) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<
+  UpdateCustomerAddressMutation,
+  UpdateCustomerAddressMutationVariables
+>;
+export const RemoveCustomerAddressDocument = new TypedDocumentString(`
+    mutation RemoveCustomerAddress($id: ID!) {
+  removeCustomerAddress(addressId: $id) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<
+  RemoveCustomerAddressMutation,
+  RemoveCustomerAddressMutationVariables
+>;
 export const GetCartDocument = new TypedDocumentString(`
     query GetCart($id: ID) {
   order(id: $id) {

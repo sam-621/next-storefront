@@ -24,18 +24,12 @@ export const CustomerService = {
   },
 
   async me() {
+    // If there is no access token, don't make the request because it will fail
     const accessToken = cookies().get(CookiesNames.accessToken)?.value;
-
     if (!accessToken) return null;
 
-    const result = await fetcher(
-      ME_QUERY,
-      {},
-      { tags: [CustomerService.Tags.customer], headers: { Authorization: `Bearer ${accessToken}` } }
-    );
-
+    const result = await fetcher(ME_QUERY, {}, { tags: [CustomerService.Tags.customer] });
     const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.me);
-
     return customer;
   },
 
@@ -54,15 +48,9 @@ export const CustomerService = {
   },
 
   async update(input: UpdateCustomerInput): Promise<Result> {
-    const accessToken = cookies().get(CookiesNames.accessToken)?.value;
-
     const {
       updateCustomer: { apiErrors, customer }
-    } = await fetcher(
-      UPDATE_CUSTOMER_MUTATION,
-      { input },
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    );
+    } = await fetcher(UPDATE_CUSTOMER_MUTATION, { input });
 
     const error = getCustomerError(apiErrors[0]);
 
