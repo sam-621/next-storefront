@@ -18,7 +18,7 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
   const { shippingAddress } = cart;
   const customer = cart.customer ?? account;
 
-  const form = useForm<FormInput>({
+  const form = useForm<InformationFormInput>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
     criteriaMode: 'all',
@@ -37,7 +37,7 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
     resolver: zodResolver(schema)
   });
 
-  const onSubmit = async (input: FormInput) => {
+  const onSubmit = async (input: InformationFormInput) => {
     startTransition(async () => {
       const result = await addCustomerInfoToCart(input);
 
@@ -61,13 +61,14 @@ const schema = z.object({
   country: z.string({ message: FormMessages.required }),
   streetLine1: z.string().min(5, FormMessages.minChars(5)),
   streetLine2: z.string().optional(),
-  city: z.string({ message: FormMessages.required }),
+  city: z.string().min(1, FormMessages.required),
   province: z.string({ message: FormMessages.required }),
   postalCode: z.string().min(5, FormMessages.minChars(5)),
-  references: z.string().optional()
-} satisfies MakeAny<FormInput>);
+  references: z.string().optional(),
+  isEditing: z.boolean().optional()
+} satisfies MakeAny<InformationFormInput>);
 
-type FormInput = {
+export type InformationFormInput = {
   email: string;
   firstName: string;
   lastName: string;
@@ -78,4 +79,5 @@ type FormInput = {
   province: string;
   postalCode: string;
   references: string;
+  isEditing: boolean;
 };
