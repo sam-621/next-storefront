@@ -1,5 +1,7 @@
 import { type FC } from 'react';
 
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+
 import { formatPhoneNumber } from '@/lib/shared/utils';
 import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
 
@@ -23,7 +25,12 @@ export const AddressCard: FC<Props> = ({ title, address, countries }) => {
         </div>
         <div className="flex gap-2">
           <RemoveAddressButton address={address} />
-          <UpsertAddressButton countries={countries} address={address} />
+          <UpsertAddressButton
+            title={`Edit address ${address.postalCode}`}
+            countries={countries}
+            address={address}
+            trigger={<PencilSquareIcon className="h-6 w-6 text-indigo-600" />}
+          />
         </div>
       </header>
       <hr />

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC } from 'react';
+import { type FC, type KeyboardEvent } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import { Button, Input, Select } from '@/components/ui';
@@ -13,6 +13,7 @@ import {
 
 import { CheckoutFormCard } from '../checkout-layouts/checkout-card';
 import { DefaultCustomerInfoCard } from './default-customer-info-card';
+import { ShippingAddressSelector } from './shipping-address-selector';
 import { useInformationForm } from './use-information-form';
 
 export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
@@ -20,12 +21,19 @@ export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
   const { onSubmit, formState, register, isLoading, watch } = form;
   const { errors } = formState;
 
+  const isEditing = watch('isEditing');
   const country = watch('country') ?? cart.shippingAddress?.country ?? countries[0].name;
   const states = countries.find(c => c.name === country)?.states ?? [];
 
+  const control = (e: KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter' && form.getValues('isEditing')) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <FormProvider {...form}>
-      <form onSubmit={onSubmit} className="flex flex-col gap-10">
+      <form onSubmit={onSubmit} className="flex flex-col gap-10" onKeyDown={control}>
         <CheckoutFormCard title="Contact information">
           {customer ? (
             <DefaultCustomerInfoCard
@@ -64,58 +72,71 @@ export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
         </CheckoutFormCard>
 
         <CheckoutFormCard title="Shipping address">
-          <Select
-            {...register('country')}
-            error={errors.country?.message}
-            label="Country"
-            items={countries.map(c => c.name)}
-            placeholder="Select a country"
-          />
-          <Input
-            {...register('streetLine1')}
-            error={errors.streetLine1?.message}
-            label="Address"
-            placeholder=""
-          />
-          <Input
-            {...register('streetLine2')}
-            error={errors.streetLine2?.message}
-            label="Apartment, suite, etc."
-            placeholder=""
-          />
-          <div className="grid grid-cols-3 gap-4">
-            <Input
-              {...register('city')}
-              error={errors.city?.message}
-              label="City"
-              placeholder="Culiacán"
-            />
-            <Select
-              {...register('province')}
-              error={errors.province?.message}
-              label="Province"
-              items={states.map(s => s.name)}
-            />
-            <Input
-              {...register('postalCode')}
-              error={errors.postalCode?.message}
-              label="Postal code"
-              placeholder="80290"
-            />
-          </div>
-          <Input
-            {...register('references')}
-            error={errors.references?.message}
-            label="References"
-            placeholder="In a corner"
-          />
+          {customer ? (
+            <ShippingAddressSelector customer={customer} countries={countries} cart={cart} />
+          ) : (
+            <>
+              <Input
+                {...register('phoneNumber')}
+                error={errors.phoneNumber?.message}
+                label="Phone number"
+                placeholder=""
+              />
+              <Select
+                {...register('country')}
+                error={errors.country?.message}
+                label="Country"
+                items={countries.map(c => c.name)}
+                placeholder="Select a country"
+              />
+              <Input
+                {...register('streetLine1')}
+                error={errors.streetLine1?.message}
+                label="Address"
+                placeholder=""
+              />
+              <Input
+                {...register('streetLine2')}
+                error={errors.streetLine2?.message}
+                label="Apartment, suite, etc."
+                placeholder=""
+              />
+              <div className="grid grid-cols-3 gap-4">
+                <Input
+                  {...register('city')}
+                  error={errors.city?.message}
+                  label="City"
+                  placeholder="Culiacán"
+                />
+                <Select
+                  {...register('province')}
+                  error={errors.province?.message}
+                  label="Province"
+                  items={states.map(s => s.name)}
+                />
+                <Input
+                  {...register('postalCode')}
+                  error={errors.postalCode?.message}
+                  label="Postal code"
+                  placeholder="80290"
+                />
+              </div>
+              <Input
+                {...register('references')}
+                error={errors.references?.message}
+                label="References"
+                placeholder="In a corner"
+              />
+            </>
+          )}
         </CheckoutFormCard>
 
         <hr />
 
         <div className="flex justify-end">
           <Button
-            isLoading={isLoading}
+            disabled={isEditing || !customer?.addresses.items.length}
+            isLoading={isLoading || undefined}
             size="lg"
             type="submit"
             className="w-full font-light lg:w-fit"

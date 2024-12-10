@@ -60,7 +60,9 @@ export type AddressJson = {
   __typename?: 'AddressJson';
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
-  fullName?: Maybe<Scalars['String']['output']>;
+  fullName: Scalars['String']['output'];
+  isDefault: Scalars['Boolean']['output'];
+  phoneNumber: Scalars['String']['output'];
   postalCode: Scalars['String']['output'];
   /** State or region */
   province: Scalars['String']['output'];
@@ -825,6 +827,8 @@ export type CartFragment = {
   } | null;
   shippingAddress?: {
     __typename?: 'AddressJson';
+    fullName: string;
+    phoneNumber: string;
     streetLine1: string;
     streetLine2?: string | null;
     postalCode: string;
@@ -1320,6 +1324,8 @@ export const CartFragmentDoc = new TypedDocumentString(
     phoneNumber
   }
   shippingAddress {
+    fullName
+    phoneNumber
     streetLine1
     streetLine2
     postalCode
@@ -1581,6 +1587,8 @@ export const GetCartDocument = new TypedDocumentString(`
     phoneNumber
   }
   shippingAddress {
+    fullName
+    phoneNumber
     streetLine1
     streetLine2
     postalCode

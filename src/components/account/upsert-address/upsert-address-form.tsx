@@ -1,14 +1,19 @@
 import { type FC } from 'react';
 
 import { Button, Dialog, Input, Select } from '@/components/ui';
-import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
+import {
+  type Address,
+  type CustomerDetailsFragment,
+  type GetCountriesQuery
+} from '@/lib/vendyx/types';
 
 import { useUpsertAddressForm } from './use-upsert-address-form';
 
-export const UpsertAddressForm: FC<Props> = ({ countries, address }) => {
+export const UpsertAddressForm: FC<Props> = ({ countries, address, onFinish }) => {
   const { register, formState, onSubmit, isLoading, watch } = useUpsertAddressForm(
     countries,
-    address
+    address,
+    onFinish
   );
   const { errors } = formState;
 
@@ -90,4 +95,5 @@ export const UpsertAddressForm: FC<Props> = ({ countries, address }) => {
 type Props = {
   countries: GetCountriesQuery['countries'];
   address?: CustomerDetailsFragment['addresses']['items'][0];
+  onFinish?: (address: Address) => void;
 };

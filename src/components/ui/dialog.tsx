@@ -29,7 +29,7 @@ const Trigger: FC<{ className?: string } & PropsWithChildren> = ({ className, ch
   const { setIsOpen } = useDialog();
 
   return (
-    <button onClick={() => setIsOpen(true)} className={className}>
+    <button type="button" onClick={() => setIsOpen(true)} className={className}>
       {children}
     </button>
   );
@@ -55,9 +55,6 @@ const Close: FC<PropsWithChildren & { className?: string }> = ({ children, class
 
 const Content: FC<PropsWithChildren & { className?: string }> = ({ children, className }) => {
   const { isOpen, setIsOpen } = useDialog();
-  console.log({
-    isOpen
-  });
 
   return (
     <HDialog open={isOpen} onClose={setIsOpen} className="relative z-10">

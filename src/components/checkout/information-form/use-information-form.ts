@@ -15,8 +15,9 @@ import { type CartFragment, type CustomerDetailsFragment } from '@/lib/vendyx/ty
 export const useInformationForm = (cart: CartFragment, account: CustomerDetailsFragment | null) => {
   const [isLoading, startTransition] = useTransition();
 
-  const { shippingAddress } = cart;
-  const customer = cart.customer ?? account;
+  const defaultCustomerAddress = account?.addresses.items.find(address => address.isDefault);
+  const shippingAddress = cart.shippingAddress ?? defaultCustomerAddress;
+  const customer = account ?? cart.customer;
 
   const form = useForm<InformationFormInput>({
     mode: 'onBlur',
@@ -26,6 +27,8 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
       email: customer?.email,
       firstName: customer?.firstName ?? undefined,
       lastName: customer?.lastName,
+      phoneNumber: shippingAddress?.phoneNumber ?? undefined,
+      fullName: shippingAddress?.fullName ?? undefined,
       country: shippingAddress?.country,
       streetLine1: shippingAddress?.streetLine1,
       streetLine2: shippingAddress?.streetLine2 ?? undefined,
@@ -38,8 +41,26 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
   });
 
   const onSubmit = async (input: InformationFormInput) => {
+    if (input.isEditing) return;
+
+    // if is buying as logged in, has to have at least one address
+    if (account && !account.addresses.items.length) return;
+
     startTransition(async () => {
-      const result = await addCustomerInfoToCart(input);
+      const result = await addCustomerInfoToCart({
+        email: input.email,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        fullName: input.fullName ?? `${input.firstName} ${input.lastName}`,
+        phoneNumber: input.phoneNumber,
+        country: input.country,
+        streetLine1: input.streetLine1,
+        streetLine2: input.streetLine2,
+        city: input.city,
+        province: input.province,
+        postalCode: input.postalCode,
+        references: input.references
+      });
 
       if (result.error) {
         notification.error(result.error);
@@ -58,6 +79,8 @@ const schema = z.object({
   email: z.string().email(FormMessages.invalidEmail),
   firstName: z.string().min(2, FormMessages.minChars(2)).optional(),
   lastName: z.string().min(2, FormMessages.minChars(2)),
+  fullName: z.string().optional(),
+  phoneNumber: z.string().min(1, FormMessages.required),
   country: z.string({ message: FormMessages.required }),
   streetLine1: z.string().min(5, FormMessages.minChars(5)),
   streetLine2: z.string().optional(),
@@ -72,6 +95,8 @@ export type InformationFormInput = {
   email: string;
   firstName: string;
   lastName: string;
+  fullName?: string;
+  phoneNumber: string;
   country: string;
   streetLine1: string;
   streetLine2: string;

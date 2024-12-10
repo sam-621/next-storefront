@@ -7,11 +7,16 @@ import { z } from 'zod';
 import { useDialog } from '@/components/ui';
 import { createAddress, updateAddress } from '@/lib/address/actions';
 import { FormMessages } from '@/lib/shared/forms';
-import { type CustomerDetailsFragment, type GetCountriesQuery } from '@/lib/vendyx/types';
+import {
+  type Address,
+  type CustomerDetailsFragment,
+  type GetCountriesQuery
+} from '@/lib/vendyx/types';
 
 export const useUpsertAddressForm = (
   countries: GetCountriesQuery['countries'],
-  address?: CustomerDetailsFragment['addresses']['items'][0]
+  address?: CustomerDetailsFragment['addresses']['items'][0],
+  onFinish?: (address: Address) => void
 ) => {
   const { setIsOpen } = useDialog();
   const [isLoading, startTransition] = useTransition();
@@ -47,11 +52,13 @@ export const useUpsertAddressForm = (
 
   const onSubmit = (input: FormInput) => {
     startTransition(async () => {
-      if (address) {
+      if (address?.id) {
         await updateAddress(address.id, input);
       } else {
         await createAddress(input);
       }
+
+      onFinish?.(input as Address);
       setIsSuccess(true);
     });
   };

@@ -45,6 +45,8 @@ export const CART_FRAGMENT = graphql(`
       phoneNumber
     }
     shippingAddress {
+      fullName
+      phoneNumber
       streetLine1
       streetLine2
       postalCode

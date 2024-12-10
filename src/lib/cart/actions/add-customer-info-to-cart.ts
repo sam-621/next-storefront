@@ -23,11 +23,7 @@ export const addCustomerInfoToCart = async (input: Input) => {
     return { error: customerResult.error, errorCode: customerResult.errorCode };
   }
 
-  const shippingAddressResult = await CartService.addShippingAddress(cartId, {
-    fullName: `${firstName} ${lastName}`,
-    phoneNumber: '', // TODO: add phone number to the form
-    ...shippingAddress
-  });
+  const shippingAddressResult = await CartService.addShippingAddress(cartId, shippingAddress);
 
   if (!shippingAddressResult.success) {
     return { error: shippingAddressResult.error, errorCode: shippingAddressResult.errorCode };
@@ -41,6 +37,8 @@ type Input = {
   email: string;
   firstName: string;
   lastName: string;
+  fullName: string;
+  phoneNumber: string;
   country: string;
   streetLine1: string;
   streetLine2: string;

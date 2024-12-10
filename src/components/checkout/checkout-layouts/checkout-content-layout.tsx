@@ -4,9 +4,7 @@ import { cn } from '@/lib/shared/utils';
 
 const Root: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <main className="flex flex-col-reverse min-h-[calc(100vh-85px)] xl:grid grid-cols-2">
-      {children}
-    </main>
+    <main className="flex flex-col min-h-[calc(100vh-85px)] xl:grid grid-cols-2">{children}</main>
   );
 };
 
