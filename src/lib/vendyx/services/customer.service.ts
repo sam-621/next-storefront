@@ -4,7 +4,7 @@ import { CookiesNames } from '@/lib/shared/constants';
 
 import { getFragmentData } from '../codegen';
 import { getCustomerError } from '../errors';
-import { fetcher } from '../fetcher';
+import { ApiError, fetcher } from '../fetcher';
 import {
   CREATE_CUSTOMER_MUTATION,
   CUSTOMER_DETAILS_FRAGMENT,
@@ -28,20 +28,31 @@ export const CustomerService = {
     const accessTokenInCookies = cookies().get(CookiesNames.accessToken)?.value;
     if (!accessTokenInCookies && !accessToken) return null;
 
-    const result = await fetcher(
-      ME_QUERY,
-      {},
-      {
-        tags: [CustomerService.Tags.customer],
-        headers: accessToken
-          ? {
-              Authorization: `Bearer ${accessToken}`
-            }
-          : undefined
+    try {
+      const result = await fetcher(
+        ME_QUERY,
+        {},
+        {
+          tags: [CustomerService.Tags.customer],
+          headers: accessToken
+            ? {
+                Authorization: `Bearer ${accessToken}`
+              }
+            : undefined
+        }
+      );
+      const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.me);
+
+      return customer;
+    } catch (error) {
+      // corner case: if there is an existing access token in cookies, but it's invalid
+      // we should return null instead of throwing an error
+      if (error instanceof ApiError && error.code === 401) {
+        return null;
       }
-    );
-    const customer = getFragmentData(CUSTOMER_DETAILS_FRAGMENT, result.me);
-    return customer;
+
+      throw error;
+    }
   },
 
   async create(input: CreateCustomerInput): Promise<Result> {
