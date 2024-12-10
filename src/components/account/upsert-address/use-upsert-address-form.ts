@@ -33,7 +33,8 @@ export const useUpsertAddressForm = (
       province: defaultState,
       streetLine1: address?.streetLine1 ?? '',
       streetLine2: address?.streetLine2 ?? '',
-      references: address?.references ?? ''
+      references: address?.references ?? '',
+      isDefault: address?.isDefault ?? false
     },
     resolver: zodResolver(schema)
   });
@@ -71,7 +72,8 @@ const schema = z.object({
   province: z.string().min(1, FormMessages.required),
   postalCode: z.string().min(1, FormMessages.required),
   phoneNumber: z.string().min(1, FormMessages.required),
-  references: z.string().min(1, FormMessages.required)
+  references: z.string().optional(),
+  isDefault: z.boolean().optional()
 });
 
 type FormInput = z.infer<typeof schema>;

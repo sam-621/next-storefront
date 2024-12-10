@@ -1075,6 +1075,7 @@ export type CustomerDetailsFragment = {
       province: string;
       country: string;
       phoneNumber: string;
+      isDefault: boolean;
       references?: string | null;
     }>;
   };
@@ -1385,6 +1386,7 @@ export const CustomerDetailsFragmentDoc = new TypedDocumentString(
       province
       country
       phoneNumber
+      isDefault
       references
     }
   }
@@ -1831,6 +1833,7 @@ export const MeDocument = new TypedDocumentString(`
       province
       country
       phoneNumber
+      isDefault
       references
     }
   }

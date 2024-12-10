@@ -19,6 +19,7 @@ export const UpsertAddressForm: FC<Props> = ({ countries, address }) => {
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
         <Input {...register('fullName')} error={errors.fullName?.message} label="Full name" />
+
         <Select
           {...register('country')}
           error={errors.country?.message}
@@ -65,6 +66,14 @@ export const UpsertAddressForm: FC<Props> = ({ countries, address }) => {
           label="References"
           placeholder="In a corner"
         />
+        <label className="flex items-center gap-2 text-sm font-medium leading-6 text-gray-700">
+          <input
+            {...register('isDefault')}
+            type="checkbox"
+            className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+          />
+          Default address
+        </label>
       </div>
       <div className="flex items-center justify-end gap-3">
         <Dialog.Close className="w-fit rounded-md bg-white px-6 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">

@@ -18,6 +18,7 @@ export const CUSTOMER_DETAILS_FRAGMENT = graphql(`
         province
         country
         phoneNumber
+        isDefault
         references
       }
     }

@@ -11,7 +11,14 @@ export const AddressCard: FC<Props> = ({ title, address, countries }) => {
     <article className="flex flex-col gap-6 bg-gray-50 border rounded-lg p-6">
       <header className="flex items-start justify-between">
         <div className="flex flex-col gap-1 font-medium">
-          <span className="text-sm">{title}</span>
+          <div>
+            <span className="text-sm">{title}</span>
+            {address.isDefault && (
+              <span className="text-xs text-gray-700 border border-dashed rounded-full px-2 py-1 ml-2 ">
+                Default
+              </span>
+            )}
+          </div>
           <p>{address.fullName}</p>
         </div>
         <div className="flex gap-2">
