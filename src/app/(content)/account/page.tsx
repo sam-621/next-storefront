@@ -4,6 +4,7 @@ import {
   AccountAddresses,
   AccountDetailsForm,
   AccountLayout,
+  DeactivateAccountButton,
   UpdatePasswordButton
 } from '@/components/account';
 import { getCustomer } from '@/lib/customer/data';
@@ -41,10 +42,10 @@ export default async function AccountPage() {
           <hr />
 
           <div className="flex justify-between">
-            <div>Disable account</div>
+            <div>Deactivate account</div>
             <div></div>
             <div>
-              <button className="text-[#EF4444] font-semibold text-sm">Disable</button>
+              <DeactivateAccountButton />
             </div>
           </div>
         </div>
