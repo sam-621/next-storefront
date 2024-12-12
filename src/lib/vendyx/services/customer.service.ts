@@ -10,12 +10,14 @@ import {
   CUSTOMER_DETAILS_FRAGMENT,
   GENERATE_ACCESS_TOKEN_MUTATION,
   ME_QUERY,
-  UPDATE_CUSTOMER_MUTATION
+  UPDATE_CUSTOMER_MUTATION,
+  UPDATE_PASSWORD_MUTATION
 } from '../operations';
 import {
   type CreateCustomerInput,
   type CustomerErrorCode,
-  type UpdateCustomerInput
+  type UpdateCustomerInput,
+  type UpdateCustomerPasswordInput
 } from '../types';
 
 export const CustomerService = {
@@ -95,6 +97,20 @@ export const CustomerService = {
     }
 
     return { success: true, accessToken: accessToken ?? '' };
+  },
+
+  async updatePassword(input: UpdateCustomerPasswordInput): Promise<Result> {
+    const {
+      updateCustomerPassword: { apiErrors, customer }
+    } = await fetcher(UPDATE_PASSWORD_MUTATION, { input });
+
+    const error = getCustomerError(apiErrors[0]);
+
+    if (error) {
+      return { success: false, error, errorCode: apiErrors[0].code };
+    }
+
+    return { success: true, customerId: customer?.id ?? '' };
   }
 };
 

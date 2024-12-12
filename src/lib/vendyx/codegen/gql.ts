@@ -61,6 +61,8 @@ const documents = {
     types.GenerateAccessTokenDocument,
   '\n  mutation UpdateCustomer($input: UpdateCustomerInput!) {\n    updateCustomer(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n':
     types.UpdateCustomerDocument,
+  '\n  mutation UpdatePassword($input: UpdateCustomerPasswordInput!) {\n    updateCustomerPassword(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n':
+    types.UpdatePasswordDocument,
   '\n  fragment Order on Order {\n    id\n    code\n    subtotal\n    total\n    totalQuantity\n    lines {\n      items {\n        id\n        linePrice\n        quantity\n        unitPrice\n        productVariant {\n          id\n          stock\n          optionValues {\n            id\n            name\n          }\n          product {\n            name\n            slug\n            assets(input: { take: 1 }) {\n              items {\n                id\n                source\n              }\n            }\n          }\n        }\n      }\n    }\n    customer {\n      id\n      firstName\n      lastName\n      email\n      phoneNumber\n    }\n    shippingAddress {\n      streetLine1\n      streetLine2\n      postalCode\n      city\n      province\n      country\n      references\n    }\n    shipment {\n      id\n      amount\n      method\n    }\n    payment {\n      id\n      amount\n      transactionId\n      method\n    }\n  }\n':
     types.OrderFragmentDoc,
   '\n  query GetOrder($code: String!) {\n    order(code: $code) {\n      ...Order\n    }\n  }\n':
@@ -221,6 +223,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation UpdateCustomer($input: UpdateCustomerInput!) {\n    updateCustomer(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n'
 ): typeof import('./graphql').UpdateCustomerDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation UpdatePassword($input: UpdateCustomerPasswordInput!) {\n    updateCustomerPassword(input: $input) {\n      apiErrors {\n        code\n        message\n      }\n      customer {\n        id\n      }\n    }\n  }\n'
+): typeof import('./graphql').UpdatePasswordDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

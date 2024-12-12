@@ -72,3 +72,17 @@ export const UPDATE_CUSTOMER_MUTATION = graphql(`
     }
   }
 `);
+
+export const UPDATE_PASSWORD_MUTATION = graphql(`
+  mutation UpdatePassword($input: UpdateCustomerPasswordInput!) {
+    updateCustomerPassword(input: $input) {
+      apiErrors {
+        code
+        message
+      }
+      customer {
+        id
+      }
+    }
+  }
+`);
