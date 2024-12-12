@@ -1,6 +1,11 @@
 import { redirect } from 'next/navigation';
 
-import { AccountAddresses, AccountDetailsForm, AccountLayout } from '@/components/account';
+import {
+  AccountAddresses,
+  AccountDetailsForm,
+  AccountLayout,
+  UpdatePasswordButton
+} from '@/components/account';
 import { getCustomer } from '@/lib/customer/data';
 
 export default async function AccountPage() {
@@ -29,7 +34,7 @@ export default async function AccountPage() {
             <div>Password</div>
             <div>********</div>
             <div>
-              <button className="text-indigo-600 font-semibold text-sm">Update</button>
+              <UpdatePasswordButton />
             </div>
           </div>
 

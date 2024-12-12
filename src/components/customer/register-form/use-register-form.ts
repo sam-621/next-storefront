@@ -52,7 +52,7 @@ const schema = z.object({
   firstName: z.string().min(1, FormMessages.required),
   lastName: z.string().min(1, FormMessages.required),
   email: z.string().email(FormMessages.invalidEmail),
-  password: z.string().min(8, FormMessages.minChars(8))
+  password: z.string().min(6, FormMessages.minChars(6))
 });
 
 type FormInput = z.infer<typeof schema>;

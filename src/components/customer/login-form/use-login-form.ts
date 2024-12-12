@@ -41,7 +41,7 @@ export const useLoginForm = () => {
 
 const schema = z.object({
   email: z.string().email(FormMessages.invalidEmail),
-  password: z.string().min(8, FormMessages.minChars(8))
+  password: z.string().min(1, FormMessages.required)
 });
 
 type FormInput = z.infer<typeof schema>;
