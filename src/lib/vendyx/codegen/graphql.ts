@@ -202,6 +202,7 @@ export type CustomerOrdersArgs = {
 };
 
 export enum CustomerErrorCode {
+  DisabledCustomer = 'DISABLED_CUSTOMER',
   EmailAlreadyExists = 'EMAIL_ALREADY_EXISTS',
   InvalidAccessToken = 'INVALID_ACCESS_TOKEN',
   InvalidCredentials = 'INVALID_CREDENTIALS',

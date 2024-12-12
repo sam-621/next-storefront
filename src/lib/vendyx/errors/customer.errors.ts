@@ -24,5 +24,9 @@ export const getCustomerError = (error?: CustomerErrorResult) => {
     return 'Invalid access token.';
   }
 
+  if (error.code === CustomerErrorCode.DisabledCustomer) {
+    return 'This account has been disabled.';
+  }
+
   return GenericError;
 };
