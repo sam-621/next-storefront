@@ -86,3 +86,17 @@ export const UPDATE_PASSWORD_MUTATION = graphql(`
     }
   }
 `);
+
+export const DISABLE_CUSTOMER_MUTATION = graphql(`
+  mutation DisableCustomer {
+    disableCustomer {
+      apiErrors {
+        code
+        message
+      }
+      customer {
+        id
+      }
+    }
+  }
+`);

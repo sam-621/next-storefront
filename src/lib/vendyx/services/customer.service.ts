@@ -8,6 +8,7 @@ import { ApiError, fetcher } from '../fetcher';
 import {
   CREATE_CUSTOMER_MUTATION,
   CUSTOMER_DETAILS_FRAGMENT,
+  DISABLE_CUSTOMER_MUTATION,
   GENERATE_ACCESS_TOKEN_MUTATION,
   ME_QUERY,
   UPDATE_CUSTOMER_MUTATION,
@@ -103,6 +104,20 @@ export const CustomerService = {
     const {
       updateCustomerPassword: { apiErrors, customer }
     } = await fetcher(UPDATE_PASSWORD_MUTATION, { input });
+
+    const error = getCustomerError(apiErrors[0]);
+
+    if (error) {
+      return { success: false, error, errorCode: apiErrors[0].code };
+    }
+
+    return { success: true, customerId: customer?.id ?? '' };
+  },
+
+  async disable(): Promise<Result> {
+    const {
+      disableCustomer: { apiErrors, customer }
+    } = await fetcher(DISABLE_CUSTOMER_MUTATION);
 
     const error = getCustomerError(apiErrors[0]);
 

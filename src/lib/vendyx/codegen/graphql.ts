@@ -1165,6 +1165,21 @@ export type UpdatePasswordMutation = {
   };
 };
 
+export type DisableCustomerMutationVariables = Exact<{ [key: string]: never }>;
+
+export type DisableCustomerMutation = {
+  __typename?: 'Mutation';
+  disableCustomer: {
+    __typename?: 'CustomerResult';
+    apiErrors: Array<{
+      __typename?: 'CustomerErrorResult';
+      code: CustomerErrorCode;
+      message: string;
+    }>;
+    customer?: { __typename?: 'Customer'; id: string } | null;
+  };
+};
+
 export type OrderFragment = {
   __typename?: 'Order';
   id: string;
@@ -1919,6 +1934,19 @@ export const UpdatePasswordDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<UpdatePasswordMutation, UpdatePasswordMutationVariables>;
+export const DisableCustomerDocument = new TypedDocumentString(`
+    mutation DisableCustomer {
+  disableCustomer {
+    apiErrors {
+      code
+      message
+    }
+    customer {
+      id
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<DisableCustomerMutation, DisableCustomerMutationVariables>;
 export const GetOrderDocument = new TypedDocumentString(`
     query GetOrder($code: String!) {
   order(code: $code) {
