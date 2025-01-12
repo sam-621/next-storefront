@@ -135,7 +135,7 @@ export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
 
         <div className="flex justify-end">
           <Button
-            disabled={isEditing || !customer?.addresses.items.length}
+            disabled={Boolean(customer) && (isEditing || !customer?.addresses.items.length)}
             isLoading={isLoading || undefined}
             size="lg"
             type="submit"

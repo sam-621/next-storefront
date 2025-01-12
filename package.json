@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn dotenv -e .env.development yarn codegen && yarn dotenv -e .env.development next dev",
-    "local": "yarn dotenv -e .env.local -- yarn codegen && next dev",
+    "local": "yarn dotenv -e .env.local yarn codegen && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

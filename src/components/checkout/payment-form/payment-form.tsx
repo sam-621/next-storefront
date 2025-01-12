@@ -80,7 +80,7 @@ export const PaymentForm: FC<Props> = ({ methods }) => {
           size="lg"
           className="w-full font-light md:w-fit"
         >
-          Continue to payment
+          Pay now
         </Button>
       </div>
     </div>

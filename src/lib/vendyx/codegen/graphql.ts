@@ -423,6 +423,7 @@ export type OrderLinesArgs = {
 export enum OrderErrorCode {
   CustomerDisabled = 'CUSTOMER_DISABLED',
   CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
+  FailedAddingShippingMethod = 'FAILED_ADDING_SHIPPING_METHOD',
   ForbiddenOrderAction = 'FORBIDDEN_ORDER_ACTION',
   MissingShippingAddress = 'MISSING_SHIPPING_ADDRESS',
   NotEnoughStock = 'NOT_ENOUGH_STOCK',
