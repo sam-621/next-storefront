@@ -108,6 +108,8 @@ export type BooleanFilter = {
 export type Collection = Node & {
   __typename?: 'Collection';
   assets: AssetList;
+  /** The collection's content type indicating if the collection contains products or other collections */
+  contentType: CollectionContentType;
   createdAt: Scalars['Date']['output'];
   /** The collection's description */
   description?: Maybe<Scalars['String']['output']>;
@@ -119,6 +121,7 @@ export type Collection = Node & {
   products: ProductList;
   /** The collection's slug used in the URL */
   slug: Scalars['String']['output'];
+  subCollections: CollectionList;
   updatedAt: Scalars['Date']['output'];
 };
 
@@ -132,11 +135,34 @@ export type CollectionProductsArgs = {
   input?: InputMaybe<ProductListInput>;
 };
 
+/** A collection is a group of products that are displayed together in the storefront. */
+export type CollectionSubCollectionsArgs = {
+  input?: InputMaybe<CollectionListInput>;
+};
+
+export enum CollectionContentType {
+  Collections = 'COLLECTIONS',
+  Products = 'PRODUCTS'
+}
+
+export type CollectionFilters = {
+  name?: InputMaybe<StringFilter>;
+};
+
 export type CollectionList = List & {
   __typename?: 'CollectionList';
   count: Scalars['Int']['output'];
   items: Array<Collection>;
   pageInfo: PageInfo;
+};
+
+export type CollectionListInput = {
+  /** Filters to apply */
+  filters?: InputMaybe<CollectionFilters>;
+  /** Skip the first n results */
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  /** takes n result from where the skip position is */
+  take?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Country = Node & {
@@ -625,7 +651,7 @@ export type QueryCollectionArgs = {
 };
 
 export type QueryCollectionsArgs = {
-  input?: InputMaybe<ListInput>;
+  input?: InputMaybe<CollectionListInput>;
 };
 
 export type QueryOrderArgs = {
