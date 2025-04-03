@@ -19,9 +19,9 @@ export const Select: FC<Props> = forwardRef<HTMLSelectElement, Props>(
             )}
             {...rest}
           >
-            {items.map(value => (
-              <option key={value} value={value}>
-                {value}
+            {items.map(item => (
+              <option key={item.value} value={item.value}>
+                {item.label}
               </option>
             ))}
           </select>
@@ -36,7 +36,7 @@ Select.displayName = 'Select';
 
 type Props = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
-  items: string[];
+  items: { value: string; label: string }[];
   error?: string;
   placeholder?: string;
 };

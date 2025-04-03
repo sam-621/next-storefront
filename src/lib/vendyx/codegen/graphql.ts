@@ -23,6 +23,14 @@ export type Scalars = {
   JSON: { input: any; output: any };
 };
 
+export type ActiveDiscount = {
+  __typename?: 'ActiveDiscount';
+  applicationMode: DiscountApplicationMode;
+  discountedAmount: Scalars['Int']['output'];
+  handle: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+};
+
 export type AddCustomerToOrderInput = {
   email: Scalars['String']['input'];
   firstName?: InputMaybe<Scalars['String']['input']>;
@@ -60,6 +68,7 @@ export type AddressJson = {
   __typename?: 'AddressJson';
   city: Scalars['String']['output'];
   country: Scalars['String']['output'];
+  countryId: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
   isDefault: Scalars['Boolean']['output'];
   phoneNumber: Scalars['String']['output'];
@@ -195,6 +204,18 @@ export type CreateCustomerInput = {
   phoneNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateOrderAddressInput = {
+  city: Scalars['String']['input'];
+  countryId: Scalars['String']['input'];
+  fullName: Scalars['String']['input'];
+  phoneNumber?: InputMaybe<Scalars['String']['input']>;
+  postalCode: Scalars['String']['input'];
+  province: Scalars['String']['input'];
+  references?: InputMaybe<Scalars['String']['input']>;
+  streetLine1: Scalars['String']['input'];
+  streetLine2?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type CreateOrderInput = {
   line?: InputMaybe<CreateOrderLineInput>;
 };
@@ -256,6 +277,11 @@ export type CustomerResult = {
   customer?: Maybe<Customer>;
 };
 
+export enum DiscountApplicationMode {
+  Automatic = 'AUTOMATIC',
+  Code = 'CODE'
+}
+
 export type GenerateCustomerAccessTokenResult = {
   __typename?: 'GenerateCustomerAccessTokenResult';
   accessToken?: Maybe<Scalars['String']['output']>;
@@ -279,6 +305,8 @@ export type ListInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addCustomerToOrder: OrderResult;
+  /** Add a discount code to the order. */
+  addDiscountCodeToOrder: OrderResult;
   addLineToOrder: OrderResult;
   addPaymentToOrder: OrderResult;
   addShipmentToOrder: OrderResult;
@@ -293,9 +321,17 @@ export type Mutation = {
   disableCustomer: CustomerResult;
   /** Generate a token for a customer. This token is used to modify the customer's data. */
   generateCustomerAccessToken: GenerateCustomerAccessTokenResult;
+  /**
+   * Re calculate the order discounts.
+   * This is useful when you need to show a most up to date order without the need to modify the order.
+   * (discounts only recalculate when order is mutated)
+   */
+  recalculateDiscounts: OrderResult;
   /** Change the customer's password with the token received from the request recovery password email */
   recoverCustomerPassword: CustomerResult;
   removeCustomerAddress: Address;
+  /** Remove a discount code from the order. */
+  removeDiscountCodeFromOrder: OrderResult;
   removeOrderLine: OrderResult;
   /** Send an email to the customer with a link to reset the password. The link contains a token that is used to execute the recoverCustomerPassword mutation. */
   requestRecoveryCustomerPassword: CustomerResult;
@@ -309,6 +345,11 @@ export type Mutation = {
 
 export type MutationAddCustomerToOrderArgs = {
   input: AddCustomerToOrderInput;
+  orderId: Scalars['ID']['input'];
+};
+
+export type MutationAddDiscountCodeToOrderArgs = {
+  code: Scalars['String']['input'];
   orderId: Scalars['ID']['input'];
 };
 
@@ -328,7 +369,7 @@ export type MutationAddShipmentToOrderArgs = {
 };
 
 export type MutationAddShippingAddressToOrderArgs = {
-  input: CreateAddressInput;
+  input: CreateOrderAddressInput;
   orderId: Scalars['ID']['input'];
 };
 
@@ -353,6 +394,10 @@ export type MutationGenerateCustomerAccessTokenArgs = {
   password: Scalars['String']['input'];
 };
 
+export type MutationRecalculateDiscountsArgs = {
+  orderId: Scalars['ID']['input'];
+};
+
 export type MutationRecoverCustomerPasswordArgs = {
   password: Scalars['String']['input'];
   urlToken: Scalars['String']['input'];
@@ -360,6 +405,11 @@ export type MutationRecoverCustomerPasswordArgs = {
 
 export type MutationRemoveCustomerAddressArgs = {
   addressId: Scalars['ID']['input'];
+};
+
+export type MutationRemoveDiscountCodeFromOrderArgs = {
+  code: Scalars['String']['input'];
+  orderId: Scalars['ID']['input'];
 };
 
 export type MutationRemoveOrderLineArgs = {
@@ -425,6 +475,12 @@ export type Order = Node & {
   code: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   customer?: Maybe<Customer>;
+  /**
+   * Array of all order-level discount handles applied to the order
+   * Populated every time order is modified.
+   * Use this field to show data of current discounts applied to the order
+   */
+  discounts: Array<ActiveDiscount>;
   id: Scalars['ID']['output'];
   lines: OrderLineList;
   payment?: Maybe<Payment>;
@@ -449,8 +505,19 @@ export type OrderLinesArgs = {
 export enum OrderErrorCode {
   CustomerDisabled = 'CUSTOMER_DISABLED',
   CustomerInvalidEmail = 'CUSTOMER_INVALID_EMAIL',
+  /**
+   * Error thrown when the discount code is not applicable to the order
+   * due to validation rules but the discount code itself is active
+   */
+  DiscountCodeNotApplicable = 'DISCOUNT_CODE_NOT_APPLICABLE',
   FailedAddingShippingMethod = 'FAILED_ADDING_SHIPPING_METHOD',
   ForbiddenOrderAction = 'FORBIDDEN_ORDER_ACTION',
+  /**
+   * Error thrown when trying to add a discount code to an order and the discount code provided
+   * | does not exist
+   * | is not enabled
+   */
+  InvalidDiscountCode = 'INVALID_DISCOUNT_CODE',
   MissingShippingAddress = 'MISSING_SHIPPING_ADDRESS',
   NotEnoughStock = 'NOT_ENOUGH_STOCK',
   OrderTransitionError = 'ORDER_TRANSITION_ERROR',
@@ -474,8 +541,15 @@ export type OrderFilters = {
 export type OrderLine = Node & {
   __typename?: 'OrderLine';
   createdAt: Scalars['Date']['output'];
+  /**
+   * Array of all order-line-level discount handles applied to the line
+   * Populated every time order line is modified.
+   * Use this field to show data of current discounts applied to the order line
+   */
+  discounts: Array<ActiveDiscount>;
   id: Scalars['ID']['output'];
-  linePrice: Scalars['Int']['output'];
+  lineSubtotal: Scalars['Int']['output'];
+  lineTotal: Scalars['Int']['output'];
   productVariant: Variant;
   quantity: Scalars['Int']['output'];
   unitPrice: Scalars['Int']['output'];
@@ -673,9 +747,16 @@ export type Shipment = Node & {
   amount: Scalars['Int']['output'];
   carrier?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Date']['output'];
+  /**
+   * Array of all shipment-level discount handles applied to the shipment
+   * Populated every time order shipment is modified.
+   * Use this field to show data of current discounts applied to the shipment
+   */
+  discounts: Array<ActiveDiscount>;
   id: Scalars['ID']['output'];
   method: Scalars['String']['output'];
   order: Order;
+  total: Scalars['Int']['output'];
   trackingCode?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['Date']['output'];
 };
@@ -819,14 +900,26 @@ export type CartFragment = {
   subtotal: number;
   total: number;
   totalQuantity: number;
+  discounts: Array<{
+    __typename?: 'ActiveDiscount';
+    handle: string;
+    applicationMode: DiscountApplicationMode;
+    discountedAmount: number;
+  }>;
   lines: {
     __typename?: 'OrderLineList';
     items: Array<{
       __typename?: 'OrderLine';
       id: string;
-      linePrice: number;
+      lineTotal: number;
       quantity: number;
       unitPrice: number;
+      discounts: Array<{
+        __typename?: 'ActiveDiscount';
+        handle: string;
+        applicationMode: DiscountApplicationMode;
+        discountedAmount: number;
+      }>;
       productVariant: {
         __typename?: 'Variant';
         id: string;
@@ -863,9 +956,20 @@ export type CartFragment = {
     city: string;
     province: string;
     country: string;
+    countryId: string;
     references?: string | null;
   } | null;
-  shipment?: { __typename?: 'Shipment'; id: string; amount: number; method: string } | null;
+  shipment?: {
+    __typename?: 'Shipment';
+    id: string;
+    amount: number;
+    method: string;
+    discounts: Array<{
+      __typename?: 'ActiveDiscount';
+      handle: string;
+      applicationMode: DiscountApplicationMode;
+    }>;
+  } | null;
   payment?: {
     __typename?: 'Payment';
     id: string;
@@ -988,7 +1092,7 @@ export type AddCustomerToCartMutation = {
 
 export type AddShippingAddressToCartMutationVariables = Exact<{
   cartId: Scalars['ID']['input'];
-  input: CreateAddressInput;
+  input: CreateOrderAddressInput;
 }>;
 
 export type AddShippingAddressToCartMutation = {
@@ -1215,14 +1319,26 @@ export type OrderFragment = {
   subtotal: number;
   total: number;
   totalQuantity: number;
+  discounts: Array<{
+    __typename?: 'ActiveDiscount';
+    handle: string;
+    applicationMode: DiscountApplicationMode;
+    discountedAmount: number;
+  }>;
   lines: {
     __typename?: 'OrderLineList';
     items: Array<{
       __typename?: 'OrderLine';
       id: string;
-      linePrice: number;
+      lineTotal: number;
       quantity: number;
       unitPrice: number;
+      discounts: Array<{
+        __typename?: 'ActiveDiscount';
+        handle: string;
+        applicationMode: DiscountApplicationMode;
+        discountedAmount: number;
+      }>;
       productVariant: {
         __typename?: 'Variant';
         id: string;
@@ -1346,12 +1462,22 @@ export const CartFragmentDoc = new TypedDocumentString(
   subtotal
   total
   totalQuantity
+  discounts {
+    handle
+    applicationMode
+    discountedAmount
+  }
   lines {
     items {
       id
-      linePrice
+      lineTotal
       quantity
       unitPrice
+      discounts {
+        handle
+        applicationMode
+        discountedAmount
+      }
       productVariant {
         id
         stock
@@ -1392,12 +1518,17 @@ export const CartFragmentDoc = new TypedDocumentString(
     city
     province
     country
+    countryId
     references
   }
   shipment {
     id
     amount
     method
+    discounts {
+      handle
+      applicationMode
+    }
   }
   payment {
     id
@@ -1468,12 +1599,22 @@ export const OrderFragmentDoc = new TypedDocumentString(
   subtotal
   total
   totalQuantity
+  discounts {
+    handle
+    applicationMode
+    discountedAmount
+  }
   lines {
     items {
       id
-      linePrice
+      lineTotal
       quantity
       unitPrice
+      discounts {
+        handle
+        applicationMode
+        discountedAmount
+      }
       productVariant {
         id
         stock
@@ -1609,12 +1750,22 @@ export const GetCartDocument = new TypedDocumentString(`
   subtotal
   total
   totalQuantity
+  discounts {
+    handle
+    applicationMode
+    discountedAmount
+  }
   lines {
     items {
       id
-      linePrice
+      lineTotal
       quantity
       unitPrice
+      discounts {
+        handle
+        applicationMode
+        discountedAmount
+      }
       productVariant {
         id
         stock
@@ -1655,12 +1806,17 @@ export const GetCartDocument = new TypedDocumentString(`
     city
     province
     country
+    countryId
     references
   }
   shipment {
     id
     amount
     method
+    discounts {
+      handle
+      applicationMode
+    }
   }
   payment {
     id
@@ -1774,7 +1930,7 @@ export const AddCustomerToCartDocument = new TypedDocumentString(`
   AddCustomerToCartMutationVariables
 >;
 export const AddShippingAddressToCartDocument = new TypedDocumentString(`
-    mutation addShippingAddressToCart($cartId: ID!, $input: CreateAddressInput!) {
+    mutation addShippingAddressToCart($cartId: ID!, $input: CreateOrderAddressInput!) {
   addShippingAddressToOrder(orderId: $cartId, input: $input) {
     apiErrors {
       code
@@ -1987,12 +2143,22 @@ export const GetOrderDocument = new TypedDocumentString(`
   subtotal
   total
   totalQuantity
+  discounts {
+    handle
+    applicationMode
+    discountedAmount
+  }
   lines {
     items {
       id
-      linePrice
+      lineTotal
       quantity
       unitPrice
+      discounts {
+        handle
+        applicationMode
+        discountedAmount
+      }
       productVariant {
         id
         stock

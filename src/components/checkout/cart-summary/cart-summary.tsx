@@ -1,5 +1,7 @@
 import { type FC } from 'react';
 
+import { TagIcon } from '@heroicons/react/24/outline';
+
 import { cn, formatPrice } from '@/lib/shared/utils';
 import { type CartFragment } from '@/lib/vendyx/types';
 
@@ -22,6 +24,21 @@ export const CartSummary: FC<Props> = ({ cart }) => {
       </div>
       <div>
         <div className="flex flex-col gap-6">
+          {!!cart.discounts.length && (
+            <div className="flex justify-between text-base font-medium text-gray-900">
+              <p className="text-gray-600 text-sm font-normal">Discounts</p>
+              <div className="flex flex-grow-0">
+                {cart.discounts.map(d => (
+                  <div key={d.handle} className="flex items-center gap-1">
+                    <TagIcon className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm text-gray-500">
+                      {d.handle} ({formatPrice(d.discountedAmount)})
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p className="text-gray-600 text-sm font-normal">Subtotal</p>
             <p className="ml-4 text-sm font-medium">{formatPrice(cart.subtotal)}</p>

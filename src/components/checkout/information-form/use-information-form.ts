@@ -16,7 +16,7 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
   const [isLoading, startTransition] = useTransition();
 
   const defaultCustomerAddress = account?.addresses.items.find(address => address.isDefault);
-  const shippingAddress = cart.shippingAddress ?? defaultCustomerAddress;
+  const shippingAddress = cart.shippingAddress ?? (defaultCustomerAddress as any); // TODO: in defaultCustomerAddress, ass countryId
   const customer = account ?? cart.customer;
 
   const form = useForm<InformationFormInput>({
@@ -29,7 +29,7 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
       lastName: customer?.lastName,
       phoneNumber: shippingAddress?.phoneNumber ?? undefined,
       fullName: shippingAddress?.fullName ?? undefined,
-      country: shippingAddress?.country,
+      country: shippingAddress?.countryId,
       streetLine1: shippingAddress?.streetLine1,
       streetLine2: shippingAddress?.streetLine2 ?? undefined,
       city: shippingAddress?.city,
@@ -53,7 +53,7 @@ export const useInformationForm = (cart: CartFragment, account: CustomerDetailsF
         lastName: input.lastName,
         fullName: input.fullName ?? `${input.firstName} ${input.lastName}`,
         phoneNumber: input.phoneNumber,
-        country: input.country,
+        countryId: input.country,
         streetLine1: input.streetLine1,
         streetLine2: input.streetLine2,
         city: input.city,

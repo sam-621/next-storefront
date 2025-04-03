@@ -29,7 +29,7 @@ export const UpsertAddressForm: FC<Props> = ({ countries, address, onFinish }) =
           {...register('country')}
           error={errors.country?.message}
           label="Country"
-          items={countries.map(c => c.name)}
+          items={countries.map(c => ({ label: c.name, value: c.id }))}
           placeholder="Select a country"
         />
         <Input
@@ -55,7 +55,7 @@ export const UpsertAddressForm: FC<Props> = ({ countries, address, onFinish }) =
             {...register('province')}
             error={errors.province?.message}
             label="Province"
-            items={states.map(s => s.name)}
+            items={states.map(s => ({ label: s.name, value: s.name }))}
           />
           <Input
             {...register('postalCode')}

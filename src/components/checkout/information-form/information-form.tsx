@@ -17,13 +17,16 @@ import { ShippingAddressSelector } from './shipping-address-selector';
 import { useInformationForm } from './use-information-form';
 
 export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
+  console.log({
+    cart
+  });
   const form = useInformationForm(cart, customer);
   const { onSubmit, formState, register, isLoading, watch } = form;
   const { errors } = formState;
 
   const isEditing = watch('isEditing');
-  const country = watch('country') ?? cart.shippingAddress?.country ?? countries[0].name;
-  const states = countries.find(c => c.name === country)?.states ?? [];
+  const country = watch('country') ?? cart.shippingAddress?.countryId ?? countries[0].id;
+  const states = countries.find(c => c.id === country)?.states ?? [];
 
   const control = (e: KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter' && form.getValues('isEditing')) {
@@ -86,7 +89,7 @@ export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
                 {...register('country')}
                 error={errors.country?.message}
                 label="Country"
-                items={countries.map(c => c.name)}
+                items={countries.map(c => ({ label: c.name, value: c.id }))}
                 placeholder="Select a country"
               />
               <Input
@@ -112,7 +115,7 @@ export const InformationForm: FC<Props> = ({ cart, countries, customer }) => {
                   {...register('province')}
                   error={errors.province?.message}
                   label="Province"
-                  items={states.map(s => s.name)}
+                  items={states.map(s => ({ label: s.name, value: s.name }))}
                 />
                 <Input
                   {...register('postalCode')}

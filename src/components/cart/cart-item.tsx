@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 
+import { TagIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
 import { CartQuantityButton, CartRemoveButton } from '@/lib/cart/components';
@@ -7,7 +8,7 @@ import { formatPrice } from '@/lib/shared/utils';
 import { type CartFragment } from '@/lib/vendyx/types';
 
 export const CartItem: FC<Props> = ({ line }) => {
-  const { unitPrice, quantity } = line;
+  const { quantity, lineTotal } = line;
   const variantImage = line.productVariant.asset?.source;
   const { name, assets } = line.productVariant.product;
   const image = variantImage ?? assets.items[0]?.source;
@@ -27,8 +28,16 @@ export const CartItem: FC<Props> = ({ line }) => {
               <span className="text-gray-500 text-sm font-normal">
                 {line.productVariant.optionValues?.map(v => v.name).join(' / ')}
               </span>
+              {line.discounts.map(d => (
+                <div key={d.handle} className="flex items-center gap-1">
+                  <TagIcon className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-500">
+                    {d.handle} ({formatPrice(d.discountedAmount)})
+                  </span>
+                </div>
+              ))}
             </div>
-            <p className="ml-4">{formatPrice(unitPrice)}</p>
+            <p className="ml-4">{formatPrice(lineTotal)}</p>
           </div>
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">

@@ -7,12 +7,22 @@ export const ORDER_FRAGMENT = graphql(`
     subtotal
     total
     totalQuantity
+    discounts {
+      handle
+      applicationMode
+      discountedAmount
+    }
     lines {
       items {
         id
-        linePrice
+        lineTotal
         quantity
         unitPrice
+        discounts {
+          handle
+          applicationMode
+          discountedAmount
+        }
         productVariant {
           id
           stock

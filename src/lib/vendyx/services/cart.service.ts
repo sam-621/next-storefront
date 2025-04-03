@@ -24,7 +24,7 @@ import {
   type AddCustomerToOrderInput,
   type AddPaymentToOrderInput,
   type AddShipmentToOrderInput,
-  type CreateAddressInput,
+  type CreateOrderAddressInput,
   type CreateOrderInput,
   type CreateOrderLineInput,
   type OrderErrorCode,
@@ -147,7 +147,7 @@ export const CartService = {
     return { success: true, cartId: order?.id ?? '' };
   },
 
-  async addShippingAddress(cartId: string, input: CreateAddressInput): Promise<Result> {
+  async addShippingAddress(cartId: string, input: CreateOrderAddressInput): Promise<Result> {
     const {
       addShippingAddressToOrder: { apiErrors, order }
     } = await fetcher(ADD_SHIPPING_ADDRESS_TO_CART_MUTATION, {

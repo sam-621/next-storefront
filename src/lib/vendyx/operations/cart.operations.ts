@@ -7,12 +7,22 @@ export const CART_FRAGMENT = graphql(`
     subtotal
     total
     totalQuantity
+    discounts {
+      handle
+      applicationMode
+      discountedAmount
+    }
     lines {
       items {
         id
-        linePrice
+        lineTotal
         quantity
         unitPrice
+        discounts {
+          handle
+          applicationMode
+          discountedAmount
+        }
         productVariant {
           id
           stock
@@ -53,12 +63,17 @@ export const CART_FRAGMENT = graphql(`
       city
       province
       country
+      countryId
       references
     }
     shipment {
       id
       amount
       method
+      discounts {
+        handle
+        applicationMode
+      }
     }
     payment {
       id
@@ -181,7 +196,7 @@ export const ADD_CUSTOMER_TO_CART_MUTATION = graphql(`
 `);
 
 export const ADD_SHIPPING_ADDRESS_TO_CART_MUTATION = graphql(`
-  mutation addShippingAddressToCart($cartId: ID!, $input: CreateAddressInput!) {
+  mutation addShippingAddressToCart($cartId: ID!, $input: CreateOrderAddressInput!) {
     addShippingAddressToOrder(orderId: $cartId, input: $input) {
       apiErrors {
         code

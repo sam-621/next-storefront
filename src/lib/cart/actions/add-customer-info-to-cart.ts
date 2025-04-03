@@ -39,7 +39,7 @@ type Input = {
   lastName: string;
   fullName: string;
   phoneNumber: string;
-  country: string;
+  countryId: string;
   streetLine1: string;
   streetLine2: string;
   city: string;
